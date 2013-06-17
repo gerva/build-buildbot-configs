@@ -34,7 +34,7 @@ GLOBAL_VARS = {
     'graph_selector': '/server/collect.cgi',
     'compare_locales_repo_path': 'build/compare-locales',
     'compare_locales_tag': 'RELEASE_AUTOMATION',
-    'mozharness_repo_path': 'build/mozharness',
+    'mozharness_repo_path': 'users/mgervasini_mozilla.com/mozharness',
     'mozharness_tag': 'production',
     'multi_locale_merge': True,
     'default_build_space': 5,
@@ -1587,6 +1587,10 @@ BRANCHES['mozilla-central']['platforms']['android-armv6']['nightly_signing_serve
 BRANCHES['mozilla-central']['platforms']['macosx64-debug']['nightly_signing_servers'] = 'mac-nightly-signing'
 BRANCHES['mozilla-central']['platforms']['macosx64']['nightly_signing_servers'] = 'mac-nightly-signing'
 BRANCHES['mozilla-central']['l10n_extra_configure_args'] = ['--with-macbundlename-prefix=Firefox']
+
+# using mozharness for repacks
+BRANCHES['mozilla-central']['is_desktop_l10n'] = True
+BRANCHES['mozilla-central']['l10n_chunks'] = 10
 
 ######## mozilla-release
 BRANCHES['mozilla-release']['repo_path'] = 'releases/mozilla-release'

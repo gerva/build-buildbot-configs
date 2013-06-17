@@ -27,8 +27,8 @@ TRY_SLAVES = deepcopy(SLAVES)
 
 GLOBAL_VARS = {
     'staging': True,
-    'config_repo_path': 'build/buildbot-configs',
-    'buildbotcustom_repo_path': 'build/buildbotcustom',
+    'config_repo_path': 'users/mgervasini_mozilla.com/buildbot-configs',
+    'buildbotcustom_repo_path': 'users/mgervasini_mozilla.com/buildbotcustom',
     'stage_server': 'dev-stage01.srv.releng.scl3.mozilla.com',
     'aus2_host': 'dev-stage01.srv.releng.scl3.mozilla.com',
     'aus2_user': 'ffxbld',
