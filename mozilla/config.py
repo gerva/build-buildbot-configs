@@ -250,6 +250,8 @@ PLATFORM_VARS = {
             'talos_masters': GLOBAL_VARS['talos_masters'],
             'test_pretty_names': True,
             'l10n_check_test': True,
+            'enable_l10n' : True,
+            'l10n_chucks' : 2,
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/releng.manifest',
