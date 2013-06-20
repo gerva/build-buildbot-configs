@@ -35,7 +35,7 @@ GLOBAL_VARS = {
     'compare_locales_repo_path': 'build/compare-locales',
     'compare_locales_tag': 'RELEASE_AUTOMATION',
     'mozharness_repo_path': 'users/mgervasini_mozilla.com/mozharness',
-    'mozharness_tag': 'production',
+    'mozharness_tag': 'default',
     'multi_locale_merge': True,
     'default_build_space': 5,
     'default_l10n_space': 3,
@@ -206,6 +206,9 @@ PLATFORM_VARS = {
             ],
         },
         'linux64': {
+	    'enable_nightly' : True,
+            'is_desktop_l10n': True,
+            'l10n_chunks' : 20,
             'product_name': 'firefox',
             'unittest_platform': 'linux64-opt',
             'app_name': 'browser',
@@ -250,8 +253,6 @@ PLATFORM_VARS = {
             'talos_masters': GLOBAL_VARS['talos_masters'],
             'test_pretty_names': True,
             'l10n_check_test': True,
-            'enable_l10n' : True,
-            'l10n_chucks' : 2,
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/releng.manifest',
@@ -1589,10 +1590,6 @@ BRANCHES['mozilla-central']['platforms']['android-armv6']['nightly_signing_serve
 BRANCHES['mozilla-central']['platforms']['macosx64-debug']['nightly_signing_servers'] = 'mac-nightly-signing'
 BRANCHES['mozilla-central']['platforms']['macosx64']['nightly_signing_servers'] = 'mac-nightly-signing'
 BRANCHES['mozilla-central']['l10n_extra_configure_args'] = ['--with-macbundlename-prefix=Firefox']
-
-# using mozharness for repacks
-BRANCHES['mozilla-central']['is_desktop_l10n'] = True
-BRANCHES['mozilla-central']['l10n_chunks'] = 10
 
 ######## mozilla-release
 BRANCHES['mozilla-release']['repo_path'] = 'releases/mozilla-release'
