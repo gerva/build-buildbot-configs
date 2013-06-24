@@ -206,7 +206,7 @@ PLATFORM_VARS = {
             ],
         },
         'linux64': {
-	    'enable_nightly' : True,
+            'enable_nightly' : True,
             'is_desktop_l10n': True,
             'l10n_chunks' : 20,
             'product_name': 'firefox',
@@ -615,14 +615,14 @@ PLATFORM_VARS = {
             # random new branches to accidentally use nightly-signing, which signs
             # with valid keys. Any branch that needs to be signed with these keys
             # must be overridden explicitly.
-	    'enable_nightly' : True,
+            'enable_nightly' : True,
             'is_desktop_l10n': True,
             'l10n_chunks' : 20,
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
         },
         'win64': {
-	    'enable_nightly' : True,
+            'enable_nightly' : True,
             'is_desktop_l10n': True,
             'l10n_chunks' : 20,
             'product_name': 'firefox',
@@ -641,7 +641,7 @@ PLATFORM_VARS = {
             'enable_installer': True,
             'packageTests': True,
             'try_by_default': False,
-            'slaves': SLAVES['win64'],
+            'slaves': SLAVES['mock'],
             'platform_objdir': OBJDIR,
             'stage_product': 'firefox',
             'stage_platform': 'win64',
