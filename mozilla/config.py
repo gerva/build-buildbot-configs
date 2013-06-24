@@ -615,10 +615,16 @@ PLATFORM_VARS = {
             # random new branches to accidentally use nightly-signing, which signs
             # with valid keys. Any branch that needs to be signed with these keys
             # must be overridden explicitly.
+	    'enable_nightly' : True,
+            'is_desktop_l10n': True,
+            'l10n_chunks' : 20,
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
         },
         'win64': {
+	    'enable_nightly' : True,
+            'is_desktop_l10n': True,
+            'l10n_chunks' : 20,
             'product_name': 'firefox',
             'unittest_platform': 'win64-opt',
             'app_name': 'browser',
@@ -662,9 +668,11 @@ PLATFORM_VARS = {
             'talos_masters': GLOBAL_VARS['talos_masters'],
             'test_pretty_names': True,
             'l10n_check_test': True,
+            'nightly_signing_servers': 'dep-signing',
+            'dep_signing_servers': 'dep-signing',
             # The status of this build doesn't affect the last good revision
             # algorithm for nightlies
-            'consider_for_nightly': False,
+            'consider_for_nightly': True,
         },
         'linux-debug': {
             'enable_nightly': False,
@@ -1585,6 +1593,7 @@ BRANCHES['mozilla-central']['platforms']['linux']['nightly_signing_servers'] = '
 
 BRANCHES['mozilla-central']['platforms']['linux64']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['mozilla-central']['platforms']['win32']['nightly_signing_servers'] = 'nightly-signing'
+BRANCHES['mozilla-central']['platforms']['win64']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['mozilla-central']['platforms']['android']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['mozilla-central']['platforms']['android-armv6']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['mozilla-central']['platforms']['macosx64-debug']['nightly_signing_servers'] = 'mac-nightly-signing'
