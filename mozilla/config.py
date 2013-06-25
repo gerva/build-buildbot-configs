@@ -67,6 +67,7 @@ GLOBAL_VARS = {
         'android-armv6': {},
         'android-noion': {},
         'android-debug': {},
+        'win32-repacks': {},
     },
     'pgo_strategy': None,
     'pgo_platforms': ('linux', 'linux64', 'win32',),
