@@ -586,7 +586,7 @@ PLATFORM_VARS = {
             'enable_installer': True,
             'enable_post_linker_size': True,
             'packageTests': True,
-            'slaves': SLAVES['win64'],
+            'slaves': SLAVES['mock'],
             'l10n_slaves': SLAVES['mock'],
             'platform_objdir': OBJDIR,
             'stage_product': 'firefox',
