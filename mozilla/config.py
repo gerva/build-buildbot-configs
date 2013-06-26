@@ -675,7 +675,7 @@ PLATFORM_VARS = {
             'unittest_platform': 'win32-opt',
             'app_name': 'browser',
             'brand_name': 'Minefield',
-            'base_name': 'WINNT 5.2 %(branch)s',
+            'base_name': 'WINNT 5.2 repacks %(branch)s',
             'mozconfig': 'win32/%(branch)s/nightly',
             'src_mozconfig': 'browser/config/mozconfigs/win32/nightly',
             'src_xulrunner_mozconfig': 'xulrunner/config/mozconfigs/win32/xulrunner',
