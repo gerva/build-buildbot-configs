@@ -260,7 +260,7 @@ PLATFORM_VARS = {
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux32/releng.manifest',
             'use_mock': True,
-            'mock_target': 'mozilla-centos6-x86_64',
+            'mock_target': 'mozilla-centos6-i386',
             'mock_packages': \
                        ['autoconf213', 'python', 'zip', 'mozilla-python27-mercurial', 'git', 'ccache',
                         'glibc-static.i686', 'libstdc++-static.i686', 'perl-Test-Simple', 'perl-Config-General',
