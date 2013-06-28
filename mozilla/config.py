@@ -757,7 +757,7 @@ PLATFORM_VARS = {
             'build_space': 12,
             'upload_symbols': True,
             'download_symbols': True,
-            'slaves': SLAVES['mock'],
+            'slaves': SLAVES['macosx64-lion'],
             'platform_objdir': "%s/i386" % OBJDIR,
             'stage_product': 'firefox',
             'stage_platform': 'macosx64',
