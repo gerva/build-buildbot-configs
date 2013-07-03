@@ -901,6 +901,7 @@ PLATFORM_VARS = {
             'is_desktop_l10n': True,
             'l10n_chunks' : 20,
             'product_name': 'firefox',
+            'enable_pymake' : True,
             'unittest_platform': 'win32-opt',
             'app_name': 'browser',
             'brand_name': 'Minefield',
