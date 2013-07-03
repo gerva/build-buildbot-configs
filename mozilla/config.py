@@ -2327,6 +2327,8 @@ for b in ('mozilla-esr17',):
             continue
         BRANCHES[b]['platforms'][p]['enable_pymake'] = False
 
+BRANCHES['mozilla-central']['platforms']['win32-repacks']['enable_pymake'] = True
+
 # XXX bug 789373 hack until we get b2g testing going.
 # Delete all references to android-noion once we have b2g jsreftests not in an emulator.
 for b in BRANCHES.keys():
