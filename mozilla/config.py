@@ -949,8 +949,8 @@ PLATFORM_VARS = {
             # random new branches to accidentally use nightly-signing, which signs
             # with valid keys. Any branch that needs to be signed with these keys
             # must be overridden explicitly.
-            #'nightly_signing_servers': 'dep-signing',
-            #'dep_signing_servers': 'dep-signing',
+            'nightly_signing_servers': 'dep-signing',
+            'dep_signing_servers': 'dep-signing',
         },
         'linux-debug': {
             'enable_nightly': False,
