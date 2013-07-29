@@ -24,6 +24,7 @@ PROJECT_BRANCHES = {
         'create_snippet': True,
         'create_partial': True,
         'pgo_strategy': 'periodic',
+        'branch_projects': [ 'spidermonkey_tier_1', 'spidermonkey_info' ],
     },
     # Please sync any customizations made to mozilla-inbound to cypress.
     'mozilla-inbound': {
@@ -45,7 +46,6 @@ PROJECT_BRANCHES = {
                 'nightly_signing_servers': 'nightly-signing',
             },
             'macosx64-debug': {
-                'enable_leaktests': True,
                 'nightly_signing_servers': 'mac-nightly-signing',
             },
             'macosx64': {
@@ -55,6 +55,7 @@ PROJECT_BRANCHES = {
                 'nightly_signing_servers': 'nightly-signing',
             },
         },
+        'branch_projects': [ 'spidermonkey_tier_1', 'spidermonkey_info' ],
     },
     # Customized to be the same as inbound. bug 866314
     'cypress': {
@@ -75,7 +76,6 @@ PROJECT_BRANCHES = {
                 'nightly_signing_servers': 'nightly-signing',
             },
             'macosx64-debug': {
-                'enable_leaktests': True,
                 'nightly_signing_servers': 'mac-nightly-signing',
             },
             'macosx64': {
@@ -83,6 +83,37 @@ PROJECT_BRANCHES = {
             },
             'win32': {
                 'nightly_signing_servers': 'nightly-signing',
+            },
+        },
+        'branch_projects': [ 'spidermonkey_tier_1', 'spidermonkey_info' ],
+    },
+    # Please sync any customizations made to birch to b2g-inbound.
+    'b2g-inbound': {
+        'repo_path': 'integration/b2g-inbound',
+        'enable_perproduct_builds': True,
+        'mozconfig_dir': 'mozilla-central',
+        'pgo_strategy': 'periodic',
+        'periodic_pgo_interval': 3,
+        'talos_suites': {
+            'xperf': 1,
+        },
+        'platforms': {
+            'win32': {
+                'enable_checktests': False,
+                'slave_platforms': ['win8'],
+                'talos_slave_platforms': ['win8'],
+            },
+            'win32-debug': {
+                'enable_checktests': False,
+                'slave_platforms': ['win8'],
+            },
+            'macosx64': {
+                'enable_checktests': False,
+                'slave_platforms': ['mountainlion'],
+            },
+            'macosx64-debug': {
+                'enable_checktests': False,
+                'slave_platforms': ['mountainlion'],
             },
         },
     },
@@ -199,10 +230,11 @@ PROJECT_BRANCHES = {
         },
         'mobile_platforms': {
             'android': {
-                'slave_platforms': ['panda_android'],
+                'slave_platforms': ['panda_android', 'panda_android-nomozpool'],
             },
         },
     },
+    # Please sync any customizations made to birch to b2g-inbound.
     'birch': {
         'enable_perproduct_builds': True,
         'mozconfig_dir': 'mozilla-central',
@@ -233,8 +265,12 @@ PROJECT_BRANCHES = {
     },
     'cedar': {
         'mozharness_tag': 'default',
+        'mozharness_talos': True,
         'lock_platforms': True,
         'enable_talos': True,
+        'talos_suites': {
+            'xperf': 1,
+        },
         'enable_nightly': True,
         'create_snippet': True,
         'create_mobile_snippet': True,
@@ -250,7 +286,6 @@ PROJECT_BRANCHES = {
             'win32': {
                 'enable_nightly': False,
                 'create_snippet': False,
-                'talos_slave_platforms': ['xp', 'xp-ix', 'win7', 'win7-ix'],
             },
             'macosx64': {
                 'enable_nightly': False,
@@ -278,7 +313,7 @@ PROJECT_BRANCHES = {
                 'enable_nightly': True,
                 'create_snippet': True,
                 'create_mobile_snippet': True,
-             },
+            },
             'android-debug': {
                 'enable_nightly': False,
                 'create_snippet': False,
@@ -286,7 +321,13 @@ PROJECT_BRANCHES = {
             },
         },
     },
-    'date': {},
+    'date': {
+        'platforms': {
+            'win64': {
+                'enable_opt_unittests': True,
+            },
+        },
+    },
     # customizations for windows update service changes (bug 481815)
     'elm': {
         'enable_nightly': True,
@@ -317,12 +358,35 @@ PROJECT_BRANCHES = {
     'fig': {
         'lock_platforms': True,
         'platforms': {},
+        'enable_nightly': True,
+        'create_snippet': True,
+        'create_mobile_snippet': True,
         'mobile_platforms': {
-            'android': {},
-            'android-debug': {},
-            'android-noion': {},
-            'android-armv6': {},
-            'android-x86': {},
+            'android': {
+                'enable_nightly': True,
+                'create_snippet': True,
+                'create_mobile_snippet': True,
+            },
+            'android-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+                'create_mobile_snippet': False,
+            },
+            'android-noion': {
+                'enable_nightly': False,
+                'create_snippet': False,
+                'create_mobile_snippet': False,
+            },
+            'android-armv6': {
+                'enable_nightly': False,
+                'create_snippet': False,
+                'create_mobile_snippet': False,
+            },
+            'android-x86': {
+                'enable_nightly': False,
+                'create_snippet': False,
+                'create_mobile_snippet': False,
+            },
         },
     },
     'gum': {},

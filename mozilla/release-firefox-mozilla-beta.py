@@ -20,23 +20,23 @@ releaseConfig['messagePrefix']       = '[release] '
 releaseConfig['productName']         = 'firefox'
 releaseConfig['appName']             = 'browser'
 #  Current version info
-releaseConfig['version']             = '22.0b6'
-releaseConfig['appVersion']          = '22.0'
+releaseConfig['version']             = '23.0b9'
+releaseConfig['appVersion']          = '23.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FIREFOX_22_0b6'
+releaseConfig['baseTag']             = 'FIREFOX_23_0b9'
 releaseConfig['partialUpdates']      = {
 
-    '22.0b4': {
-        'appVersion': '22.0',
+    '23.0b7': {
+        'appVersion': '23.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_22_0b4',
+        'baseTag': 'FIREFOX_23_0b7',
     },
 
-    '22.0b5': {
-        'appVersion': '22.0',
+    '23.0b8': {
+        'appVersion': '23.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_22_0b5',
+        'baseTag': 'FIREFOX_23_0b8',
     },
 
 }
@@ -48,7 +48,7 @@ releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-beta',
         'path': 'releases/mozilla-beta',
-        'revision': '9f0d4fe5db55',
+        'revision': '7499e60e458b',
         'relbranch': None,
         'bumpFiles': {
             'browser/config/version.txt': {
@@ -117,10 +117,10 @@ releaseConfig['verifyConfigs']       = {
     'win32':  'mozBeta-firefox-win32.cfg'
 }
 releaseConfig['mozconfigs']          = {
-    'linux': 'browser/config/mozconfigs/linux32/release',
-    'linux64': 'browser/config/mozconfigs/linux64/release',
-    'macosx64': 'browser/config/mozconfigs/macosx-universal/release',
-    'win32': 'browser/config/mozconfigs/win32/release',
+    'linux': 'browser/config/mozconfigs/linux32/beta',
+    'linux64': 'browser/config/mozconfigs/linux64/beta',
+    'macosx64': 'browser/config/mozconfigs/macosx-universal/beta',
+    'win32': 'browser/config/mozconfigs/win32/beta',
 }
 releaseConfig['xulrunner_mozconfigs']          = {
     'linux': 'xulrunner/config/mozconfigs/linux32/xulrunner',

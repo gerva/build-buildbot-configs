@@ -57,13 +57,13 @@ GLOBAL_VARS = {
     # and if a failure to notify the talos master should result in a warning,
     # and sendchange retry count before give up
     'talos_masters': [
-        ('buildbot-master36.build.mozilla.org:9301', True, 5),
+        ('buildbot-master81.build.mozilla.org:9301', True, 5),
     ],
     # List of unittest masters to notify of new builds to test,
     # if a failure to notify the master should result in a warning,
     # and sendchange retry count before give up
     'unittest_masters': [
-        ('buildbot-master36.build.mozilla.org:9301', True, 5),
+        ('buildbot-master81.build.mozilla.org:9301', True, 5),
     ],
     'xulrunner_tinderbox_tree': 'XULRunner',
     'weekly_tinderbox_tree': 'Testing',
@@ -166,40 +166,29 @@ PROJECTS = {
         'tinderbox_tree': 'Nanojit',
         'disable_tinderbox_mail': False,
     },
-    'spidermonkey_cypress': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'idle_slaves': 0,
-        'tinderbox_tree': 'Cypress',
-        'disable_tinderbox_mail': False,
-    },
-    'spidermonkey_mozilla-inbound': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'idle_slaves': 0,
-        'tinderbox_tree': 'Mozilla-Inbound',
-        'disable_tinderbox_mail': False,
-    },
-    'spidermonkey_ionmonkey': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'idle_slaves': 0,
-        'tinderbox_tree': 'Ionmonkey',
-    },
     'dxr_mozilla-central': {
         'scripts_repo': 'http://hg.mozilla.org/build/tools',
         'upload_host': GLOBAL_VARS['stage_server'],
         'upload_user': 'ffxbld',
         'upload_sshkey': '/home/cltbld/.ssh/ffxbld_dsa',
     },
+}
+
+BRANCH_PROJECTS = {
+    'spidermonkey_tier_1': {
+        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'idle_slaves': 0,
+        'disable_tinderbox_mail': False,
+    },
     'spidermonkey_try': {
         'scripts_repo': 'http://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
+        'disable_tinderbox_mail': False,
     },
-    'spidermonkey_ggc_try': {
+    'spidermonkey_info': {
         'scripts_repo': 'http://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
-    },
-    'spidermonkey_exact_try': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'idle_slaves': 0,
+        'disable_tinderbox_mail': False,
     },
 }
 

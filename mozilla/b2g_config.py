@@ -37,6 +37,7 @@ GLOBAL_VARS.update({
         'leo_eng': {},
         'hamachi': {},
         'hamachi_eng': {},
+        'helix': {},
         'emulator': {},
         'emulator_debug': {},
     },
@@ -134,7 +135,6 @@ PLATFORM_VARS = {
         'create_snippet': False,
         'create_partial': False,
         'enable_xulrunner': False,
-        'enable_leaktests': False,
         'slaves': SLAVES['mock'],
         'platform_objdir': 'obj-b2g',
         'disable_symbols': False,
@@ -231,6 +231,7 @@ PLATFORM_VARS = {
                           'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
                           'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
+                          'gcc472_0moz1',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
                           'gstreamer-devel', 'gstreamer-plugins-base-devel'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
@@ -303,6 +304,7 @@ PLATFORM_VARS = {
                           'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
                           'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
+                          'gcc472_0moz1',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
                           'gstreamer-devel', 'gstreamer-plugins-base-devel'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux64/releng.manifest',
@@ -483,7 +485,8 @@ PLATFORM_VARS = {
                           'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
-                          'gstreamer-devel', 'gstreamer-plugins-base-devel'],
+                          'gstreamer-devel', 'gstreamer-plugins-base-devel',
+                          'gcc472_0moz1'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -557,7 +560,8 @@ PLATFORM_VARS = {
                           'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
-                          'gstreamer-devel', 'gstreamer-plugins-base-devel'],
+                          'gstreamer-devel', 'gstreamer-plugins-base-devel',
+                          'gcc472_0moz1'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux64/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -837,12 +841,27 @@ PLATFORM_VARS = {
         'base_name': builder_prefix + '_%(branch)s_%(platform)s',
         'slaves': SLAVES['mock'],
     },
+    'helix': {
+        'mozharness_config': {
+            'script_name': 'scripts/b2g_build.py',
+            # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
+            # --target name below
+            'extra_args': ['--target', 'helix', '--config', 'b2g/releng-private-updates.py',
+                           '--gaia-languages-file', 'locales/languages_dev.json',
+                           '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
+            'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+        },
+        'stage_product': 'b2g',
+        'product_name': 'b2g',
+        'base_name': builder_prefix + '_%(branch)s_%(platform)s',
+        'slaves': SLAVES['mock'],
+    },
     'emulator': {
         'mozharness_config': {
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
-            'extra_args': ['--target', 'generic', '--config', 'b2g/releng.py',
+            'extra_args': ['--target', 'generic', '--config', 'b2g/releng-emulator.py',
                            '--b2g-config-dir', 'emulator',
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
@@ -858,7 +877,7 @@ PLATFORM_VARS = {
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
-            'extra_args': ['--target', 'generic', '--config', 'b2g/releng.py',
+            'extra_args': ['--target', 'generic', '--config', 'b2g/releng-emulator.py',
                            '--b2g-config-dir', 'emulator', '--debug',
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
@@ -939,6 +958,7 @@ BRANCHES = {
         'leo': {},
         'leo_eng': {},
         'hamachi': {},
+        'helix': {},
     },
     'try': {
     },
@@ -1031,6 +1051,7 @@ BRANCHES['mozilla-central']['start_minute'] = [2]
 BRANCHES['mozilla-central']['aus2_base_upload_dir'] = 'fake'
 BRANCHES['mozilla-central']['aus2_base_upload_dir_l10n'] = 'fake'
 BRANCHES['mozilla-central']['platforms']['unagi']['enable_nightly'] = True
+BRANCHES['mozilla-central']['platforms']['unagi']['mozharness_config']['extra_args'] = ['--target', 'unagi', '--config', 'b2g/releng-beta.py', '--gaia-languages-file', 'locales/languages_dev.json', '--gecko-languages-file', 'gecko/b2g/locales/all-locales']
 BRANCHES['mozilla-central']['platforms']['unagi_eng']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['unagi_eng']['enable_dep'] = False
 BRANCHES['mozilla-central']['platforms']['inari']['enable_nightly'] = True
@@ -1067,6 +1088,7 @@ BRANCHES['mozilla-b2g18']['platforms']['macosx64_gecko_localizer']['gaia_repo'] 
 BRANCHES['mozilla-b2g18']['platforms']['win32_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
 BRANCHES['mozilla-b2g18']['platforms']['otoro']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['inari']['enable_nightly'] = True
+BRANCHES['mozilla-b2g18']['platforms']['inari_eng']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['leo']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['leo_eng']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['hamachi']['enable_nightly'] = True
@@ -1164,6 +1186,7 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['inari']['enable_nightly'] = Tr
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['leo']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['leo_eng']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['hamachi']['enable_nightly'] = True
+BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['helix']['enable_nightly'] = True
 # Disable desktop B2G checktests on the b2g18 branch
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux32_gecko']['enable_checktests'] = False
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux32_gecko']['gaia_revision_file'] = None
@@ -1223,31 +1246,37 @@ for branch in BRANCHES:
             'otoro' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['otoro']
 
-# MERGE DAY: inari is only for central + birch + b2g18 + b2g18_v1_0_1
+# MERGE DAY: inari is only for central + b2g-inbound (birch) + b2g18 +
+# b2g18_v1_0_1
 for branch in BRANCHES:
-    if branch not in ('mozilla-central', 'birch', 'mozilla-b2g18', 'mozilla-b2g18_v1_0_1') and \
+    if branch not in ('mozilla-central', 'b2g-inbound', 'birch',
+                      'mozilla-b2g18', 'mozilla-b2g18_v1_0_1') and \
             'inari' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['inari']
 
-# MERGE DAY: inari_eng is only for central + birch + b2g18_v1_0_1
+# MERGE DAY: inari_eng is only for central + b2g-inbound + b2g18 + b2g18_v1_0_1
 for branch in BRANCHES:
-    if branch not in ('mozilla-central', 'birch', 'mozilla-b2g18_v1_0_1',) and \
+    if branch not in ('mozilla-central', 'b2g-inbound', 'birch',
+                      'mozilla-b2g18', 'mozilla-b2g18_v1_0_1',) and \
             'inari_eng' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['inari_eng']
 
-# MERGE DAY: leo/leo_eng is only for birch, m-c, b2g18
+# MERGE DAY: leo/leo_eng is only for b2g-inbound (birch), m-c, b2g18
 for branch in BRANCHES:
-    if branch not in ('mozilla-central', 'birch', 'mozilla-b2g18',) and \
+    if branch not in ('mozilla-central', 'b2g-inbound', 'birch',
+                      'mozilla-b2g18',) and \
             'leo' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['leo']
 for branch in BRANCHES:
-    if branch not in ('mozilla-central', 'birch', 'mozilla-b2g18',) and \
+    if branch not in ('mozilla-central', 'b2g-inbound', 'birch',
+                      'mozilla-b2g18',) and \
             'leo_eng' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['leo_eng']
 
-# MERGE DAY: hamachi is only for m-c, birch, b2g18, b2g18_v1_0_1
+# MERGE DAY: hamachi is only for m-c, b2g-inbound (birch), b2g18, b2g18_v1_0_1
 for branch in BRANCHES:
-    if branch not in ('mozilla-central', 'birch', 'mozilla-b2g18', 'mozilla-b2g18_v1_0_1') and \
+    if branch not in ('mozilla-central', 'b2g-inbound', 'birch',
+                      'mozilla-b2g18', 'mozilla-b2g18_v1_0_1') and \
             'hamachi' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['hamachi']
 
@@ -1257,11 +1286,24 @@ for branch in BRANCHES:
             'hamachi_eng' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['hamachi_eng']
 
+# MERGE DAY: helix is only for b2g18_v1_1_0_hd
+for branch in BRANCHES:
+    if branch not in ('mozilla-b2g18_v1_1_0_hd',) and \
+            'helix' in BRANCHES[branch]['platforms']:
+        del BRANCHES[branch]['platforms']['helix']
+
 # MERGE DAY: unagi_eng is only for b2g18 + b2g18_v1_0_1
 for branch in BRANCHES:
     if branch not in ('mozilla-b2g18', 'mozilla-b2g18_v1_0_1', 'mozilla-central',) and \
             'unagi_eng' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['unagi_eng']
+
+# MERGE DAY: get rid of ics_armv7a_gecko opt+debug on non-b2g18 level repos
+for branch in BRANCHES:
+    if branch not in ('mozilla-b2g18', 'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd',):
+        for platform in ('ics_armv7a_gecko', 'ics_armv7a_gecko-debug'):
+            if platform in BRANCHES[branch]['platforms']:
+                del BRANCHES[branch]['platforms'][platform]
 
 # MERGE DAY - gstreamer-devel packages ride the trains (bug 881589)
 # MERGE DAY - remove branches from this list if gecko 24 merges into them
@@ -1306,14 +1348,12 @@ for branch in ACTIVE_PROJECT_BRANCHES:
         else:
             BRANCHES[branch]['platforms'][platform]['mozconfig'] = platform + '/' + branchConfig.get('mozconfig_dir', 'generic') + '/nightly'
 
-# B2G WORK WEEK
-for b in ('birch',):
+# We don't run these tests on b2g-inbound (birch)
+for b in ('b2g-inbound', 'birch',):
     BRANCHES[b]['platforms']['linux32_gecko']['enable_checktests'] = False
     BRANCHES[b]['platforms']['linux64_gecko']['enable_checktests'] = False
     BRANCHES[b]['platforms']['linux32_gecko_localizer']['enable_checktests'] = False
     BRANCHES[b]['platforms']['linux64_gecko_localizer']['enable_checktests'] = False
-    del BRANCHES[b]['platforms']['ics_armv7a_gecko-debug']
-# END B2G WORK WEEK
 
 
 if __name__ == "__main__":

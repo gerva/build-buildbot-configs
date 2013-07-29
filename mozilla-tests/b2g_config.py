@@ -26,6 +26,7 @@ BRANCHES = {
     'mozilla-b2g18_v1_1_0_hd': {},
     'mozilla-central': {},
     'mozilla-inbound': {},
+    'b2g-inbound': {},
     'services-central': {},
     'ionmonkey': {},
     'try': {'coallesce_jobs': False},
@@ -35,7 +36,7 @@ PLATFORMS = {
     'ics_armv7a_gecko': {},
     'linux32_gecko': {},
     'linux64_gecko': {},
-    'b2g_emulator': {},
+    'emulator': {},
 }
 
 builder_prefix = "b2g"
@@ -75,13 +76,13 @@ PLATFORMS['linux64_gecko']['mozharness_config'] = {
     'reboot_command': ['/tools/buildbot/bin/python'] + MOZHARNESS_REBOOT_CMD,
 }
 
-PLATFORMS['b2g_emulator']['slave_platforms'] = ['fedora-b2g-emulator', 'ubuntu64_vm-b2g-emulator', 'ubuntu64_hw-b2g-emulator']
-PLATFORMS['b2g_emulator']['env_name'] = 'linux-perf'
-PLATFORMS['b2g_emulator']['fedora-b2g-emulator'] = {'name': "b2g_emulator"}
-PLATFORMS['b2g_emulator']['ubuntu64_vm-b2g-emulator'] = {'name': "b2g_emulator_vm"}
-PLATFORMS['b2g_emulator']['ubuntu64_hw-b2g-emulator'] = {'name': "b2g_emulator_hw"}
-PLATFORMS['b2g_emulator']['stage_product'] = 'b2g'
-PLATFORMS['b2g_emulator']['mozharness_config'] = {
+PLATFORMS['emulator']['slave_platforms'] = ['fedora-b2g-emulator', 'ubuntu64_vm-b2g-emulator', 'ubuntu64_hw-b2g-emulator']
+PLATFORMS['emulator']['env_name'] = 'linux-perf'
+PLATFORMS['emulator']['fedora-b2g-emulator'] = {'name': "b2g_emulator"}
+PLATFORMS['emulator']['ubuntu64_vm-b2g-emulator'] = {'name': "b2g_emulator_vm"}
+PLATFORMS['emulator']['ubuntu64_hw-b2g-emulator'] = {'name': "b2g_emulator_hw"}
+PLATFORMS['emulator']['stage_product'] = 'b2g'
+PLATFORMS['emulator']['mozharness_config'] = {
     'mozharness_python': '/tools/buildbot/bin/python',
     'use_mozharness': True,
     'hg_bin': 'hg',
@@ -104,7 +105,7 @@ BRANCH_UNITTEST_VARS = {
         'ics_armv7a_gecko': {},
         'linux32_gecko': {},
         'linux64_gecko': {},
-        'b2g_emulator': {},
+        'emulator': {},
     },
 }
 
@@ -114,134 +115,134 @@ MOCHITEST = [
     ('mochitest-1', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-2', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-3', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-4', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-5', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-6', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-7', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-8', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('mochitest-9', {'suite': 'mochitest-plain',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
 ]
 REFTEST = [
     ('reftest-1', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-2', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-3', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-4', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-5', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-6', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-7', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-8', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-9', {'suite': 'reftest',
                    'use_mozharness': True,
                    'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                   },
+     ),
     ('reftest-10', {'suite': 'reftest',
-                   'use_mozharness': True,
-                   'script_path': 'scripts/b2g_emulator_unittest.py',
-                  },
-    ),
+                    'use_mozharness': True,
+                    'script_path': 'scripts/b2g_emulator_unittest.py',
+                    },
+     ),
 ]
 
 REFTEST_SANITY = [
     ('reftest', {'suite': 'reftest',
                  'use_mozharness': True,
                  'script_path': 'scripts/b2g_emulator_unittest.py',
-                },
-    ),
+                 },
+     ),
 ]
 
 CRASHTEST = [
     ('crashtest-1', {'suite': 'crashtest',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('crashtest-2', {'suite': 'crashtest',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
     ('crashtest-3', {'suite': 'crashtest',
                      'use_mozharness': True,
                      'script_path': 'scripts/b2g_emulator_unittest.py',
-                    },
-    ),
+                     },
+     ),
 ]
 
 MARIONETTE = [
     ('marionette-webapi', {'suite': 'marionette-webapi',
                            'use_mozharness': True,
                            'script_path': 'scripts/marionette.py',
-                          },
-    ),
+                           },
+     ),
 ]
 
 XPCSHELL = [
@@ -249,7 +250,7 @@ XPCSHELL = [
                   'use_mozharness': True,
                   'script_path': 'scripts/b2g_emulator_unittest.py',
                   },
-    ),
+     ),
 ]
 
 GAIA_UNITTESTS = [(
@@ -257,6 +258,14 @@ GAIA_UNITTESTS = [(
         'suite': 'gaia-unit',
         'use_mozharness': True,
         'script_path': 'scripts/gaia_unit.py',
+    },
+)]
+
+GAIA_UI = [(
+    'gaia-ui-test', {
+        'suite': 'gaia-ui-test',
+        'use_mozharness': True,
+        'script_path': 'scripts/marionette.py',
     },
 )]
 
@@ -749,12 +758,17 @@ PLATFORM_UNITTEST_VARS = {
         'enable_opt_unittests': True,
         'enable_debug_unittests': False,
         'ubuntu32_vm-b2gdt': {
-            'opt_unittest_suites': GAIA_UNITTESTS[:],
+            'opt_unittest_suites': GAIA_UI[:],
             'debug_unittest_suites': [],
             'suite_config': {
                 'gaia-unit': {
                     'extra_args': [
                         '--cfg', 'b2g/gaia_unit_production_config.py',
+                    ],
+                },
+                'gaia-ui-test': {
+                    'extra_args': [
+                        '--cfg', 'marionette/gaia_ui_test_prod_config.py',
                     ],
                 },
             },
@@ -777,10 +791,15 @@ PLATFORM_UNITTEST_VARS = {
                         '--cfg', 'b2g/gaia_unit_production_config.py',
                     ],
                 },
+                'gaia-ui-test': {
+                    'extra_args': [
+                        '--cfg', 'marionette/gaia_ui_test_prod_config.py',
+                    ],
+                },
             },
         },
     },
-    'b2g_emulator': {
+    'emulator': {
         'product_name': 'b2g',
         'app_name': 'b2g',
         'brand_name': 'Gecko',
@@ -789,8 +808,8 @@ PLATFORM_UNITTEST_VARS = {
         'enable_opt_unittests': True,
         'enable_debug_unittests': False,
         'fedora-b2g-emulator': {
-            'opt_unittest_suites': UNITTEST_SUITES['opt_unittest_suites'][:],
-            'debug_unittest_suites': UNITTEST_SUITES['debug_unittest_suites'][:],
+            'opt_unittest_suites': REFTEST + MARIONETTE,
+            'debug_unittest_suites': [],
             'suite_config': {
                 'crashtest-1': {
                     'extra_args': [
@@ -992,8 +1011,8 @@ PLATFORM_UNITTEST_VARS = {
             },
         },
         'ubuntu64_vm-b2g-emulator': {
-            'opt_unittest_suites': MOCHITEST + MARIONETTE + XPCSHELL + CRASHTEST,
-            'debug_unittest_suites': MOCHITEST + MARIONETTE + XPCSHELL + CRASHTEST,
+            'opt_unittest_suites': MOCHITEST + CRASHTEST + XPCSHELL,
+            'debug_unittest_suites': [],
             'suite_config': {
                 'marionette-webapi': {
                     'extra_args': [
@@ -1407,9 +1426,12 @@ BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['fedora-b2g']['debug_unittest
 BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['ubuntu64_vm-b2g']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
 BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['slave_platforms'] = ['fedora-b2g', 'ubuntu64_vm-b2g', 'ubuntu64_hw-b2g']
-BRANCHES['cedar']['platforms']['b2g_emulator']['fedora-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
-BRANCHES['cedar']['platforms']['b2g_emulator']['ubuntu64_vm-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
-BRANCHES['cedar']['platforms']['b2g_emulator']['enable_debug_unittests'] = True
+BRANCHES['cedar']['platforms']['emulator']['fedora-b2g-emulator']['opt_unittest_suites'] = ALL_UNITTESTS[:]
+BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unittest_suites'] = MOCHITEST + CRASHTEST + MARIONETTE + XPCSHELL
+BRANCHES['cedar']['platforms']['emulator']['fedora-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
+BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
+BRANCHES['cedar']['platforms']['emulator']['enable_debug_unittests'] = True
+BRANCHES['cedar']['platforms']['linux64_gecko']['ubuntu64_vm-b2gdt']['opt_unittest_suites'] = GAIA_UNITTESTS[:] + GAIA_UI[:]
 BRANCHES['cypress']['branch_name'] = "Cypress"
 BRANCHES['cypress']['repo_path'] = "projects/cypress"
 BRANCHES['fx-team']['repo_path'] = "integration/fx-team"
@@ -1429,6 +1451,7 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['fedora-b2g
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
 BRANCHES['mozilla-central']['branch_name'] = "Firefox"
 BRANCHES['mozilla-inbound']['repo_path'] = "integration/mozilla-inbound"
+BRANCHES['b2g-inbound']['repo_path'] = "integration/b2g-inbound"
 BRANCHES['services-central']['repo_path'] = "services/services-central"
 BRANCHES['try']['pgo_strategy'] = "try"
 BRANCHES['try']['enable_try'] = True
@@ -1457,8 +1480,8 @@ for branch in set(BRANCHES.keys()) - set(['cedar']):
     for suite_type in ('opt_unittest_suites', 'debug_unittest_suites'):
         if nested_haskey(BRANCHES[branch]['platforms'], 'ics_armv7a_gecko',
                          'ubuntu64_vm-b2g', suite_type) and \
-           nested_haskey(BRANCHES[branch]['platforms'], 'ics_armv7a_gecko',
-                         'fedora-b2g', suite_type):
+            nested_haskey(BRANCHES[branch]['platforms'], 'ics_armv7a_gecko',
+                          'fedora-b2g', suite_type):
             # Don't run tests on Fedora if they listed in Ubuntu
             for suite in BRANCHES[branch]['platforms']['ics_armv7a_gecko']['ubuntu64_vm-b2g'][suite_type]:
                 BRANCHES[branch]['platforms']['ics_armv7a_gecko']['fedora-b2g'][suite_type] = \
@@ -1472,12 +1495,33 @@ for branch in set(BRANCHES.keys()) - set(['cedar']):
         if 'ubuntu64_hw-b2g' in BRANCHES[branch]['platforms'][platform]:
             del BRANCHES[branch]['platforms'][platform]['ubuntu64_hw-b2g']
 
-# Disable linux{32,64}_gecko, b2g_emulator on all branches but cedar
+# Disable linux32_gecko on all branches but cedar
 for branch in set(BRANCHES.keys()) - set(['cedar']):
-    for platform in ('linux32_gecko', 'linux64_gecko', 'b2g_emulator'):
+    for platform in ('linux32_gecko',):
         if platform not in BRANCHES[branch]['platforms']:
             continue
         del BRANCHES[branch]['platforms'][platform]
+
+# emulator hacks.  See bug 885456
+# MERGE DAY This will someday ride trains...
+for branch in BRANCHES.keys():
+    if branch in ('mozilla-aurora', 'mozilla-beta', 'mozilla-release',
+                  'mozilla-esr17', 'mozilla-b2g18_v1_0_0',
+                  'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd'):
+        if 'emulator' in BRANCHES[branch]['platforms']:
+            del BRANCHES[branch]['platforms']['emulator']
+    elif branch not in ('mozilla-b2g18', ):
+        if 'ics_armv7a_gecko' in BRANCHES[branch]['platforms']:
+            del BRANCHES[branch]['platforms']['ics_armv7a_gecko']
+
+# linux64_gecko hacks.  See bug 891973
+# MERGE DAY This will someday ride trains...
+for branch in BRANCHES.keys():
+    if branch in ('mozilla-aurora', 'mozilla-beta', 'mozilla-release',
+                  'mozilla-esr17', 'mozilla-b2g18', 'mozilla-b2g18_v1_0_0',
+                  'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd'):
+        if 'linux64_gecko' in BRANCHES[branch]['platforms']:
+            del BRANCHES[branch]['platforms']['linux64_gecko']
 
 
 if __name__ == "__main__":

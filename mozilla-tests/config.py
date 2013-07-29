@@ -79,6 +79,7 @@ PLATFORMS = {
     'win32': {},
     'linux': {},
     'linux64': {},
+    'win64': {},
 }
 
 PLATFORMS['macosx64']['slave_platforms'] = ['snowleopard', 'lion', 'mountainlion']
@@ -106,6 +107,15 @@ PLATFORMS['win32']['mozharness_config'] = {
     'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
     'hg_bin': 'c:\\mozilla-build\\hg\\hg',
     'reboot_command': ['c:/mozilla-build/python27/python', '-u'] + MOZHARNESS_REBOOT_CMD,
+}
+
+PLATFORMS['win64']['slave_platforms'] = ['win64_vm']
+PLATFORMS['win64']['win64_vm'] = {'name': 'win64_vm'}
+PLATFORMS['win64']['stage_product'] = 'firefox'
+PLATFORMS['win64']['mozharness_config'] = {
+    'mozharness_python': ['c:/python27/python', '-u'],
+    'hg_bin': 'c:\\mozilla-build\\hg\\hg',
+    'reboot_command': ['c:/python27/python', '-u'] + MOZHARNESS_REBOOT_CMD,
 }
 
 PLATFORMS['linux']['slave_platforms'] = ['fedora', 'ubuntu32_vm']
@@ -155,7 +165,7 @@ WIN7_ONLY = ['win7-ix']
 
 SUITES = {
     'xperf': {
-        'enable_by_default': False,
+        'enable_by_default': True,
         'suites': GRAPH_CONFIG + ['--activeTests', 'tp5n', '--sampleConfig', 'xperf.config', '--mozAfterPaint', '--xperf_path', '"c:/Program Files/Microsoft Windows Performance Toolkit/xperf.exe"', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': (TALOS_TP_NEW_OPTS, WIN7_ONLY),
     },
@@ -177,6 +187,11 @@ SUITES = {
     'svgr': {
         'enable_by_default': True,
         'suites': GRAPH_CONFIG + ['--activeTests', 'tsvgr:tsvgr_opacity', '--filter', 'ignore_first:5', '--filter', 'median'],
+        'options': ({}, ALL_TALOS_PLATFORMS),
+    },
+    'rafx': {
+        'enable_by_default': False,
+        'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollx:tsvgx:tcanvasmark', '--filter', 'ignore_first:1', '--filter', 'median'],
         'options': ({}, ALL_TALOS_PLATFORMS),
     },
     'dirtypaint': {
@@ -204,6 +219,7 @@ BRANCH_UNITTEST_VARS = {
         'linux64': {},
         'macosx64': {},
         'win32': {},
+        'win64': {},
     },
 }
 
@@ -324,7 +340,7 @@ MOCHITEST = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'browser-chrome'],
-        'script_maxtime': 7200,
+        'script_maxtime': 9000,
     }),
     ('mochitest-other', {
         'use_mozharness': True,
@@ -901,6 +917,71 @@ PLATFORM_UNITTEST_VARS = {
             },
         }
     },
+    'win64': {
+        'product_name': 'firefox',
+        'app_name': 'browser',
+        'brand_name': 'Minefield',
+        'builds_before_reboot': 1,
+        'mochitest_leak_threshold': 484,
+        'crashtest_leak_threshold': 484,
+        'env_name': 'win64-perf-unittest',
+        'enable_opt_unittests': True,
+        'enable_debug_unittests': True,
+        'win64_vm': {
+            'opt_unittest_suites': UNITTEST_SUITES['opt_unittest_suites'][:] + REFTEST_NOACCEL[:],
+            'debug_unittest_suites': MOCHITEST + REFTEST_NO_IPC + XPCSHELL,  # No marionette except on Try
+            'suite_config': {
+                'mochitest-1': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'mochitest-2': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'mochitest-3': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'mochitest-4': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'mochitest-5': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'mochitest-browser-chrome': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'metro-immersive': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'mochitest-other': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'reftest': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'jsreftest': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'crashtest': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'reftest-no-accel': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'reftest-ipc': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'crashtest-ipc': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'xpcshell': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'marionette': {
+                    'config_files': ["marionette/windows_config.py"],
+                },
+            },
+        }
+    },
     'macosx64': {
         'product_name': 'firefox',
         'app_name': 'browser',
@@ -1194,12 +1275,16 @@ BRANCHES['mozilla-central']['branch_name'] = "Firefox"
 BRANCHES['mozilla-central']['repo_path'] = "mozilla-central"
 BRANCHES['mozilla-central']['build_branch'] = "1.9.2"
 BRANCHES['mozilla-central']['pgo_strategy'] = 'periodic'
-BRANCHES['mozilla-central']['xperf_tests'] = (1, True, TALOS_TP_NEW_OPTS, WIN7_ONLY)
+BRANCHES['mozilla-central']['rafx_tests'] = (1, True, {}, ALL_TALOS_PLATFORMS)
 
 ######### mozilla-release
 BRANCHES['mozilla-release']['release_tests'] = 1
 BRANCHES['mozilla-release']['repo_path'] = "releases/mozilla-release"
 BRANCHES['mozilla-release']['pgo_strategy'] = 'per-checkin'
+
+# MERGE DAY remove the below when Firefox 25 merges in
+BRANCHES['mozilla-release']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
+# END MERGE DAY remove the below when Firefox 25 merges in
 
 # MERGE DAY remove the below when Firefox 23 merges in
 del BRANCHES['mozilla-release']['platforms']['win32']['win7-ix']
@@ -1211,15 +1296,18 @@ BRANCHES['mozilla-release']['platforms']['win32']['talos_slave_platforms'] = ['x
 BRANCHES['mozilla-beta']['release_tests'] = 1
 BRANCHES['mozilla-beta']['repo_path'] = "releases/mozilla-beta"
 BRANCHES['mozilla-beta']['pgo_strategy'] = 'per-checkin'
-# MERGE DAY remove the below when Firefox 23 merges in
-del BRANCHES['mozilla-beta']['platforms']['win32']['win7-ix']
-del BRANCHES['mozilla-beta']['platforms']['win32']['xp-ix']
-BRANCHES['mozilla-beta']['platforms']['win32']['talos_slave_platforms'] = ['xp', 'win7', 'win8']
-# End MERGE DAY remove the above when Firefox 23 merges in
+
+# MERGE DAY remove the below when Firefox 25 merges in
+BRANCHES['mozilla-beta']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
+# END MERGE DAY remove the below when Firefox 25 merges in
 
 ######### mozilla-aurora
 BRANCHES['mozilla-aurora']['repo_path'] = "releases/mozilla-aurora"
 BRANCHES['mozilla-aurora']['pgo_strategy'] = 'per-checkin'
+
+# MERGE DAY remove the below when Firefox 25 merges in
+BRANCHES['mozilla-aurora']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
+# END MERGE DAY remove the below when Firefox 25 merges in
 
 ######### mozilla-esr17
 BRANCHES['mozilla-esr17']['release_tests'] = 1
@@ -1271,6 +1359,7 @@ del BRANCHES['mozilla-b2g18']['platforms']['win32']['win8']
 del BRANCHES['mozilla-b2g18']['platforms']['win32']['win7-ix']
 del BRANCHES['mozilla-b2g18']['platforms']['win32']['xp-ix']
 BRANCHES['mozilla-b2g18']['platforms']['win32']['talos_slave_platforms'] = ['xp', 'win7']
+BRANCHES['mozilla-b2g18']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 
 ######### mozilla-b2g18_v1_0_1
 BRANCHES['mozilla-b2g18_v1_0_1']['release_tests'] = 1
@@ -1296,6 +1385,7 @@ del BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['win32']['win8']
 del BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['win32']['win7-ix']
 del BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['win32']['xp-ix']
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['win32']['talos_slave_platforms'] = ['xp', 'win7']
+BRANCHES['mozilla-b2g18_v1_0_1']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 
 ######### mozilla-b2g18_v1_1_0_hd
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['release_tests'] = 1
@@ -1321,8 +1411,10 @@ del BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['win32']['win8']
 del BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['win32']['win7-ix']
 del BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['win32']['xp-ix']
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['win32']['talos_slave_platforms'] = ['xp', 'win7']
+BRANCHES['mozilla-b2g18_v1_1_0_hd']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 
 ######## try
+BRANCHES['try']['mozharness_talos'] = True
 BRANCHES['try']['xperf_tests'] = (1, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 BRANCHES['try']['tp5o_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
 BRANCHES['try']['pgo_strategy'] = 'try'
@@ -1393,7 +1485,7 @@ def get_ubuntu_unittests(branch, test_type):
     FF24_TESTS = {"opt_unittest_suites":
                   ["mochitest-browser-chrome", "mochitest-other"],
                   "debug_unittest_suites": ["mochitest-other"]}
-    if branch not in ("mozilla-aurora", "mozilla-beta", "mozilla-release"):
+    if branch not in ("mozilla-beta", "mozilla-release"):
         return UBUNTU_TESTS[test_type] + FF24_TESTS[test_type]
     else:
         return list(UBUNTU_TESTS[test_type])
@@ -1443,8 +1535,8 @@ for branch in BRANCHES:
                                 pass
 
 # MERGE DAY: remove branches when Firefox 23 merges in
-NON_UBUNTU_TALOS_BRANCHES = ("mozilla-beta", "mozilla-release",
-                             "mozilla-esr17", "mozilla-b2g18")
+NON_UBUNTU_TALOS_BRANCHES = ("mozilla-release", "mozilla-esr17",
+                             "mozilla-b2g18")
 for branch in set(BRANCHES.keys()) - set(NON_UBUNTU_TALOS_BRANCHES):
     for s in SUITES.iterkeys():
         if nested_haskey(BRANCHES[branch], 'suites', s, 'options'):
@@ -1459,8 +1551,7 @@ for branch in set(BRANCHES.keys()) - set(NON_UBUNTU_TALOS_BRANCHES):
             BRANCHES[branch]['%s_tests' % s] = tuple(tests)
 
 # MERGE DAY: remove branches when Firefox 23 merges in
-WIN32_REV3_BRANCHES = ("mozilla-beta", "mozilla-release",
-                       "mozilla-esr17", "mozilla-b2g18",
+WIN32_REV3_BRANCHES = ("mozilla-release", "mozilla-esr17", "mozilla-b2g18",
                        "mozilla-b2g18_v1_0_1")
 # Disable Rev3 winxp and win7 machines for FF23+
 for branch in set(BRANCHES.keys()) - set(WIN32_REV3_BRANCHES):
@@ -1486,6 +1577,13 @@ for branch in BRANCHES.keys():
                 tests = list(BRANCHES[branch]['%s_tests' % s])
                 tests[3] = [x for x in tests[3] if x not in platforms_for_os or x in enabled_platforms_for_os]
                 BRANCHES[branch]['%s_tests' % s] = tuple(tests)
+
+# LOOOOOOOOOOOOOOOPS
+# Enable win64 testing on select branches only
+WIN64_TESTING_BRANCHES = ('date', 'try')
+for branch in set(BRANCHES.keys()) - set(WIN64_TESTING_BRANCHES):
+    if 'win64' in BRANCHES[branch]['platforms']:
+        del BRANCHES[branch]['platforms']['win64']
 
 if __name__ == "__main__":
     import sys

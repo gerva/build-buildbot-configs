@@ -86,6 +86,9 @@ GLOBAL_VARS = {
     'enable_valgrind': True,
     'valgrind_platforms': ('linux', 'linux64'),
 
+    # List of keys in BRANCH_PROJECTS that will be activated for the BRANCH
+    'branch_projects': ['spidermonkey_tier_1'],
+
     # if true, this branch will get bundled and uploaded to ftp.m.o for users
     # to download and thereby accelerate their cloning
     'enable_weekly_bundle': False,
@@ -106,7 +109,6 @@ GLOBAL_VARS = {
             'toolkit',
             ],
     'use_old_updater': False,
-    'run_make_alive_tests': True,
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
@@ -128,7 +130,7 @@ PLATFORM_VARS = {
             'src_xulrunner_mozconfig': 'xulrunner/config/mozconfigs/linux32/xulrunner',
             'profiled_build': False,
             'builds_before_reboot': localconfig.BUILDS_BEFORE_REBOOT,
-            'build_space': 9,
+            'build_space': 12,
             'upload_symbols': True,
             'download_symbols': True,
             'packageTests': True,
@@ -207,6 +209,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
         },
         'linux-repacks': {
@@ -316,7 +319,7 @@ PLATFORM_VARS = {
             'src_xulrunner_mozconfig': 'xulrunner/config/mozconfigs/linux64/xulrunner',
             'profiled_build': False,
             'builds_before_reboot': localconfig.BUILDS_BEFORE_REBOOT,
-            'build_space': 12,
+            'build_space': 14,
             'upload_symbols': True,
             'download_symbols': False,
             'packageTests': True,
@@ -376,6 +379,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
         },
         'linux64-asan': {
@@ -426,7 +430,7 @@ PLATFORM_VARS = {
             'create_partial': False,
             'test_pretty_names': False,
             'l10n_check_test': False,
-            'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/clang.manifest',
+            'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/asan.manifest',
             'use_mock': True,
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': \
@@ -450,6 +454,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
             # The status of this build doesn't affect the last good revision
             # algorithm for nightlies
@@ -503,7 +508,7 @@ PLATFORM_VARS = {
             'create_partial': False,
             'test_pretty_names': False,
             'l10n_check_test': False,
-            'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/clang.manifest',
+            'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/asan.manifest',
             'use_mock': True,
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': \
@@ -527,6 +532,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
             # The status of this build doesn't affect the last good revision
             # algorithm for nightlies
@@ -604,6 +610,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
             # The status of this build doesn't affect the last good revision
             # algorithm for nightlies
@@ -956,7 +963,6 @@ PLATFORM_VARS = {
         'linux-debug': {
             'enable_nightly': False,
             'enable_xulrunner': False,
-            'enable_leaktests': True,
             'product_name': 'firefox',
             'app_name': 'browser',
             'brand_name': 'Minefield',
@@ -967,7 +973,7 @@ PLATFORM_VARS = {
             'builds_before_reboot': localconfig.BUILDS_BEFORE_REBOOT,
             'download_symbols': True,
             'packageTests': True,
-            'build_space': 12,
+            'build_space': 14,
             'slaves': SLAVES['mock'],
             'platform_objdir': OBJDIR,
             'stage_product': 'firefox',
@@ -1034,12 +1040,12 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
         },
         'linux64-debug': {
             'enable_nightly': False,
             'enable_xulrunner': False,
-            'enable_leaktests': True,
             'product_name': 'firefox',
             'app_name': 'browser',
             'brand_name': 'Minefield',
@@ -1050,7 +1056,7 @@ PLATFORM_VARS = {
             'builds_before_reboot': localconfig.BUILDS_BEFORE_REBOOT,
             'download_symbols': False,
             'packageTests': True,
-            'build_space': 12,
+            'build_space': 14,
             'slaves': SLAVES['mock'],
             'platform_objdir': OBJDIR,
             'stage_product': 'firefox',
@@ -1096,18 +1102,17 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/builds/gapi.data', '/builds/gapi.data'),
             ],
         },
         'macosx64-debug': {
             'enable_nightly': False,
             'enable_xulrunner': False,
-            'enable_leaktests': True,
             'product_name': 'firefox',
             'app_name': 'browser',
             'brand_name': 'Minefield',
             'base_name': 'OS X 10.7 64-bit %(branch)s leak test',
             'mozconfig': 'macosx64/%(branch)s/debug',
-            'enable_leaktests': True,
             'src_mozconfig': 'browser/config/mozconfigs/macosx64/debug',
             'packageTests': True,
             'profiled_build': False,
@@ -1146,7 +1151,6 @@ PLATFORM_VARS = {
         'win32-debug': {
             'enable_nightly': False,
             'enable_xulrunner': False,
-            'enable_leaktests': True,
             'product_name': 'firefox',
             'app_name': 'browser',
             'brand_name': 'Minefield',
@@ -1209,8 +1213,9 @@ PLATFORM_VARS = {
                               'android-ndk5', 'android-ndk8', 'zip',
                               'java-1.6.0-openjdk-devel', 'zlib-devel',
                               'glibc-static', 'openssh-clients', 'mpfr',
-                              'wget', 'glibc.i686', 'libstdc++.i686',
-                              'zlib.i686', 'freetype-2.3.11-6.el6_1.8.x86_64'],
+                              "gcc472_0moz1", 'wget', 'glibc.i686',
+                              'libstdc++.i686', 'zlib.i686',
+                              'freetype-2.3.11-6.el6_1.8.x86_64'],
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
@@ -1274,8 +1279,9 @@ PLATFORM_VARS = {
                               'android-ndk5', 'android-ndk8', 'zip',
                               'java-1.6.0-openjdk-devel', 'zlib-devel',
                               'glibc-static', 'openssh-clients', 'mpfr', 'bc',
-                              'wget', 'glibc.i686', 'libstdc++.i686',
-                              'zlib.i686', 'freetype-2.3.11-6.el6_1.8.x86_64'],
+                              "gcc472_0moz1", 'wget', 'glibc.i686',
+                              'libstdc++.i686', 'zlib.i686',
+                              'freetype-2.3.11-6.el6_1.8.x86_64'],
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
@@ -1338,8 +1344,8 @@ PLATFORM_VARS = {
                               'android-ndk7', 'android-ndk8', 'yasm', 'zip',
                               'java-1.6.0-openjdk-devel', 'zlib-devel',
                               'glibc-static', 'openssh-clients', 'mpfr', 'bc',
-                              'glibc.i686', 'libstdc++.i686', 'zlib.i686',
-                              'freetype-2.3.11-6.el6_1.8.x86_64'],
+                              "gcc472_0moz1", 'glibc.i686', 'libstdc++.i686',
+                              'zlib.i686', 'freetype-2.3.11-6.el6_1.8.x86_64'],
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
@@ -1404,7 +1410,7 @@ PLATFORM_VARS = {
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': ['autoconf213', 'mozilla-python27-mercurial',
                               'ccache', 'android-sdk15', 'android-sdk16',
-                              'android-ndk5', 'android-ndk8', 'zip',
+                              'android-ndk5', 'android-ndk8', 'zip', "gcc472_0moz1",
                               'java-1.6.0-openjdk-devel', 'zlib-devel',
                               'glibc-static', 'openssh-clients', 'mpfr',
                               'wget', 'glibc.i686', 'libstdc++.i686',
@@ -1458,7 +1464,6 @@ PLATFORM_VARS = {
             'upload_symbols': True,
             'download_symbols': False,
             'packageTests': True,
-            'enable_leaktests': False,
             'create_snippet': False,
             'create_partial': False,
             'slaves': SLAVES['mock'],
@@ -1472,7 +1477,7 @@ PLATFORM_VARS = {
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': ['autoconf213', 'mozilla-python27-mercurial',
                               'ccache', 'android-sdk15', 'android-sdk16',
-                              'android-ndk5', 'android-ndk8', 'zip',
+                              'android-ndk5', 'android-ndk8', 'zip', "gcc472_0moz1",
                               'java-1.6.0-openjdk-devel', 'zlib-devel',
                               'glibc-static', 'openssh-clients', 'mpfr',
                               'wget', 'glibc.i686', 'libstdc++.i686',
@@ -1526,114 +1531,6 @@ PROJECTS = {
         'hgurl': 'http://hg.mozilla.org',
         'repo_path': 'projects/nanojit-central',
     },
-    'spidermonkey_try': {
-        'enable_try': True,
-        'try_by_default': True,
-        'variants': {
-            'linux64-debug':  ['rootanalysis'],
-        },
-        'platforms': {
-            'linux64-debug': {}, # Filled in with branch-specific values below
-        },
-        'hgurl': 'http://hg.mozilla.org/',
-        'repo_path': 'try',
-        'branch': 'try',
-    },
-    'spidermonkey_ggc_try': {
-        'enable_try': True,
-        'try_by_default': False,
-        'variants': {
-            'linux64-debug':  ['generational'],
-        },
-        'platforms': {
-            'linux64-debug': {}, # Filled in with branch-specific values below
-        },
-        'hgurl': 'http://hg.mozilla.org/',
-        'repo_path': 'try',
-        'branch': 'try',
-    },
-    'spidermonkey_exact_try': {
-        'enable_try': True,
-        'try_by_default': False,
-        'variants': {
-            'linux64-debug':  ['exactrooting'],
-        },
-        'platforms': {
-            'linux64-debug': {}, # Filled in with branch-specific values below
-        },
-        'hgurl': 'http://hg.mozilla.org/',
-        'repo_path': 'try',
-        'branch': 'try',
-    },
-    'spidermonkey_mozilla-inbound': {
-        'variants': {
-            'linux':          ['warnaserr'],
-            'linux-debug':    ['warnaserrdebug'],
-            'linux64':        ['warnaserr'],
-            'linux64-debug':  ['rootanalysis', 'warnaserrdebug', 'generational'],
-            'macosx64':           ['warnaserr'],
-            'macosx64-debug':     ['dtrace', 'warnaserrdebug'],
-        },
-        'platforms': {
-            'linux': {},
-            'linux-debug': {},
-            'linux64': {},
-            'linux64-debug': {},
-            'win32': {},
-            'win32-debug': {},
-            'macosx64': {},
-            'macosx64-debug': {},
-        },
-        'hgurl': 'http://hg.mozilla.org/',
-        'repo_path': 'integration/mozilla-inbound',
-        'branch': 'mozilla-inbound',
-    },
-    'spidermonkey_cypress': {
-        'variants': {
-            'linux':          ['warnaserr'],
-            'linux-debug':    ['warnaserrdebug'],
-            'linux64':        ['warnaserr'],
-            'linux64-debug':  ['rootanalysis', 'warnaserrdebug', 'generational'],
-            'macosx64':           ['warnaserr'],
-            'macosx64-debug':     ['dtrace', 'warnaserrdebug'],
-        },
-        'platforms': {
-            'linux': {},
-            'linux-debug': {},
-            'linux64': {},
-            'linux64-debug': {},
-            'win32': {},
-            'win32-debug': {},
-            'macosx64': {},
-            'macosx64-debug': {},
-        },
-        'hgurl': 'http://hg.mozilla.org/',
-        'repo_path': 'projects/cypress',
-        'branch': 'cypress',
-    },
-    'spidermonkey_ionmonkey': {
-        'variants': {
-            'linux':          ['warnaserr'],
-            'linux-debug':    ['warnaserrdebug'],
-            'linux64':        ['warnaserr'],
-            'linux64-debug':  ['rootanalysis', 'warnaserrdebug', 'generational'],
-            'macosx64':           ['warnaserr'],
-            'macosx64-debug':     ['dtrace', 'warnaserrdebug'],
-        },
-        'platforms': {
-            'linux': {},
-            'linux-debug': {},
-            'linux64': {},
-            'linux64-debug': {},
-            'win32': {},
-            'win32-debug': {},
-            'macosx64': {},
-            'macosx64-debug': {},
-        },
-        'hgurl': 'http://hg.mozilla.org/',
-        'repo_path': 'projects/ionmonkey',
-        'branch': 'ionmonkey',
-    },
     'dxr_mozilla-central': {
         'platform': 'mock',
         'repo_path': 'mozilla-central',
@@ -1641,11 +1538,106 @@ PROJECTS = {
     },
 }
 
-for k, v in localconfig.PROJECTS.items():
-    if k not in PROJECTS:
-        PROJECTS[k] = {}
-    for k1, v1 in v.items():
-        PROJECTS[k][k1] = v1
+
+# Override config settings with local settings
+def apply_localconfig(config, local):
+    for k, v in local.items():
+        if k not in config:
+            config[k] = {}
+        config[k].update(v)
+
+apply_localconfig(PROJECTS, localconfig.PROJECTS)
+
+# Branch-associated projects
+#
+# BRANCHES values contain a 'branch_projects' key containing a list of
+# BRANCH_PROJECTS keys to instantiate for that branch. These are intended for
+# builds that are associated with one or more branches, but use separate
+# scheduling and build mechanisms. Each project will have a 'branch' key filled
+# in with the name of the branch to which it applies.
+#
+# Configuration keys:
+#
+#  project_name - pattern used to construct (part of) the builder name. It
+#    can use %-interpolation to select anything from the config, which
+#    usually means it will contain "%(branch)s".
+#
+# Spidermonkey-specific configuration keys:
+#
+#  variants - mapping of platforms (with build configuration, eg linux64-debug)
+#    to an array of variant names. These names correspond to files in
+#    build-tools/scripts/spidermonkey_builds/.
+#
+#  enable_try - this project should be active for the try server
+#
+#  try_by_default - list of variants that should be triggered by default on
+#    try. If a variant is missing from this list, then the build will only be
+#    triggered if the corresponding base platform is explicitly requested in
+#    the -p option of trychooser. For example, |-p all| will not trigger such a
+#    project, but either |-p linux64| or |-p all,linux64| will (assuming the
+#    project has both 'platforms' and 'variants' entries for 'linux' or
+#    'linux64'.)
+#
+BRANCH_PROJECTS = {
+    # Builds that should trigger backouts if they break. Should be on all trees
+    # feeding into mozilla-central.
+    'spidermonkey_tier_1': {
+        'variants': {
+            'linux64-debug':  ['rootanalysis', 'generational'],
+        },
+        'platforms': {
+            'linux': {},
+            'linux-debug': {},
+            'linux64': {},
+            'linux64-debug': {},
+            'win32': {},
+            'win32-debug': {},
+            'macosx64': {},
+            'macosx64-debug': {},
+        },
+        'hgurl': 'http://hg.mozilla.org/',
+    },
+
+    # Try server builds only triggered on changes to the spidermonkey source
+    'spidermonkey_try': {
+        'enable_try': True,
+        'try_by_default': ['rootanalysis', 'generational'],
+        'variants': {
+            'linux64-debug':  ['rootanalysis', 'generational', 'exactrooting'],
+        },
+        'platforms': {
+            'linux64-debug': {}, # Filled in with branch-specific values below
+        },
+        'hgurl': 'http://hg.mozilla.org/',
+    },
+
+    # Non-tier-1 builds that provide useful information but are hidden on tbpl.
+    # These will probably be run on the subset of the trees that the relevant
+    # developers will actually look.
+    'spidermonkey_info': {
+        'variants': {
+            'linux':          ['warnaserr'],
+            'linux-debug':    ['warnaserrdebug'],
+            'linux64':        ['warnaserr'],
+            'linux64-debug':  ['warnaserrdebug'],
+            'macosx64':           ['warnaserr'],
+            'macosx64-debug':     ['dtrace', 'warnaserrdebug'],
+        },
+        'platforms': {
+            'linux': {},
+            'linux-debug': {},
+            'linux64': {},
+            'linux64-debug': {},
+            'win32': {},
+            'win32-debug': {},
+            'macosx64': {},
+            'macosx64-debug': {},
+        },
+        'hgurl': 'http://hg.mozilla.org/',
+    },
+}
+
+apply_localconfig(BRANCH_PROJECTS, localconfig.BRANCH_PROJECTS)
 
 # All branches (not in project_branches) that are to be built MUST be listed here, along with their
 # platforms (if different from the default set).
@@ -1653,12 +1645,16 @@ BRANCHES = {
     'mozilla-central': {
     },
     'mozilla-release': {
+        'branch_projects': []
     },
     'mozilla-beta': {
+        'branch_projects': []
     },
     'mozilla-aurora': {
+        'branch_projects': []
     },
     'mozilla-esr17': {
+        'branch_projects': [],
         'lock_platforms': True,
         'platforms': {
             'linux': {},
@@ -1672,6 +1668,7 @@ BRANCHES = {
         },
     },
     'mozilla-b2g18': {
+        'branch_projects': [],
         'lock_platforms': True,
         'platforms': {
             # desktop for gecko security reproduciton (per akeybl
@@ -1688,6 +1685,7 @@ BRANCHES = {
         },
     },
     'mozilla-b2g18_v1_0_1': {
+        'branch_projects': [],
         'lock_platforms': True,
         'platforms': {
             # desktop for gecko security reproduciton (per akeybl
@@ -1704,6 +1702,7 @@ BRANCHES = {
         },
     },
     'mozilla-b2g18_v1_1_0_hd': {
+        'branch_projects': [],
         'lock_platforms': True,
         'platforms': {
             # desktop for gecko security reproduciton (per akeybl
@@ -1720,6 +1719,7 @@ BRANCHES = {
         },
     },
     'try': {
+        'branch_projects': ['spidermonkey_try'],
     },
 }
 
@@ -1739,13 +1739,11 @@ for branch in BRANCHES.keys():
         if key == 'platforms' and 'platforms' in BRANCHES[branch] and BRANCHES[branch].get('lock_platforms'):
             continue
         # Don't override something that's set
-        elif key in ('enable_weekly_bundle',) and key in BRANCHES[branch]:
+        elif key in ('enable_weekly_bundle','branch_projects',) and key in BRANCHES[branch]:
             continue
         # If the key is already set then we won't override with GLOBAL_VARS
         # The "platforms" key is handle separatedely (see next for loop)
-        elif key in BRANCHES[branch] and key != 'platforms':
-            continue
-        else:
+        elif key == 'platforms' or key not in BRANCHES[branch]:
             BRANCHES[branch][key] = deepcopy(value)
 
     for platform, platform_config in PLATFORM_VARS.items():
@@ -1753,7 +1751,7 @@ for branch in BRANCHES.keys():
             for key, value in platform_config.items():
                 # put default platform set in all branches, but grab any
                 # project_branches.py overrides/additional keys
-                if branch in ACTIVE_PROJECT_BRANCHES and PROJECT_BRANCHES[branch].has_key('platforms'):
+                if branch in ACTIVE_PROJECT_BRANCHES and 'platforms' in PROJECT_BRANCHES[branch]:
                     if platform in PROJECT_BRANCHES[branch]['platforms'].keys():
                         if key in PROJECT_BRANCHES[branch]['platforms'][platform].keys():
                             value = deepcopy(PROJECT_BRANCHES[branch]['platforms'][platform][key])
@@ -1774,6 +1772,7 @@ for branch in BRANCHES.keys():
                     else:
                         value = deepcopy(value)
                     BRANCHES[branch]['platforms'][platform][key] = value
+
     # Copy in local config
     if branch in localconfig.BRANCHES:
         for key, value in localconfig.BRANCHES[branch].items():
@@ -1807,17 +1806,8 @@ for branch in BRANCHES.keys():
                     if platform_config.get('dont_build'):
                         del BRANCHES[branch]['platforms'][platform]
 
-    if BRANCHES[branch]['platforms'].has_key('win64') and branch not in ('try', 'mozilla-central'):
+    if BRANCHES[branch]['platforms'].has_key('win64') and branch not in ('try', 'mozilla-central', 'date'):
         del BRANCHES[branch]['platforms']['win64']
-
-# Point projects to BRANCHES values
-for v in PROJECTS.values():
-    if 'branch' in v:
-        bconfig = BRANCHES[v['branch']]
-        v['branchconfig'] = bconfig
-        if 'platforms' in v:
-            for p in v['platforms']:
-                v['platforms'][p] = bconfig['platforms'][p]
 
 ######## mozilla-central
 # This is a path, relative to HGURL, where the repository is located
@@ -2068,7 +2058,6 @@ del BRANCHES['mozilla-esr17']['platforms']['linux-debug']['env']['PATH']
 del BRANCHES['mozilla-esr17']['platforms']['linux64-debug']['env']['PATH']
 # mock disabled block stop
 BRANCHES['mozilla-esr17']['platforms']['win32']['l10n_slaves'] = SLAVES['win32']
-BRANCHES['mozilla-esr17']["run_make_alive_tests"] = False
 
 ######## mozilla-b2g18
 BRANCHES['mozilla-b2g18']['repo_path'] = 'releases/mozilla-b2g18'
@@ -2100,7 +2089,6 @@ BRANCHES['mozilla-b2g18']['aus2_base_upload_dir_l10n'] = '/opt/aus2/incoming/2/F
 BRANCHES['mozilla-b2g18']['enable_blocklist_update'] = False
 BRANCHES['mozilla-b2g18']['enable_valgrind'] = False
 BRANCHES['mozilla-b2g18']['enabled_products'] = ['firefox', 'mobile']
-BRANCHES['mozilla-b2g18']["run_make_alive_tests"] = False
 
 ######## mozilla-b2g18_v1_0_1
 BRANCHES['mozilla-b2g18_v1_0_1']['repo_path'] = 'releases/mozilla-b2g18_v1_0_1'
@@ -2132,7 +2120,6 @@ BRANCHES['mozilla-b2g18_v1_0_1']['aus2_base_upload_dir_l10n'] = '/opt/aus2/incom
 BRANCHES['mozilla-b2g18_v1_0_1']['enable_blocklist_update'] = False
 BRANCHES['mozilla-b2g18_v1_0_1']['enable_valgrind'] = False
 BRANCHES['mozilla-b2g18_v1_0_1']['enabled_products'] = ['firefox', 'mobile']
-BRANCHES['mozilla-b2g18_v1_0_1']["run_make_alive_tests"] = False
 
 ######## mozilla-b2g18_v1_1_0_hd
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['repo_path'] = 'releases/mozilla-b2g18_v1_1_0_hd'
@@ -2164,7 +2151,6 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['aus2_base_upload_dir_l10n'] = '/opt/aus2/in
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['enable_blocklist_update'] = False
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['enable_valgrind'] = False
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['enabled_products'] = ['firefox', 'mobile']
-BRANCHES['mozilla-b2g18_v1_1_0_hd']["run_make_alive_tests"] = False
 
 ######## try
 # Try-specific configs
@@ -2273,7 +2259,7 @@ for branch in ACTIVE_PROJECT_BRANCHES:
         BRANCHES[branch]['platforms']['linux64']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = 'linux64-' + branch
     if 'win32' in BRANCHES[branch]['platforms']:
         BRANCHES[branch]['platforms']['win32']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = branch
-    if 'win64' in BRANCHES[branch]['platforms']:
+    if 'win64' in BRANCHES[branch]['platforms'] and branch not in ('date',):
         del BRANCHES[branch]['platforms']['win64']
     if 'macosx64' in BRANCHES[branch]['platforms']:
         BRANCHES[branch]['platforms']['macosx64']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = 'macosx64-' + branch
@@ -2319,6 +2305,23 @@ for branch in branches:
             'LD_LIBRARY_PATH': '/tools/gcc-4.3.3/installed/lib64',
         }
 
+# Expand out the branch_projects into a full PROJECT object per branch. This
+# must come after the BRANCHES configuration above, so that
+# BRANCHES[*]['enable_try'] is set when appropriate.
+for b, branch in BRANCHES.items():
+    for name in branch.get('branch_projects', []):
+        branch_project = BRANCH_PROJECTS[name]
+        if branch.get('enable_try', False) != branch_project.get('enable_try', False):
+            continue
+
+        project = deepcopy(branch_project)
+        project['project_name'] = name
+        project['branch'] = b
+        project['branchconfig'] = branch
+        branch_project_name = '%s__%s' % (name, b)
+        assert branch_project_name not in PROJECTS, '%s already in PROJECTS' % project_name
+        PROJECTS[branch_project_name] = project
+
 # MERGE DAY
 # When Firefox 18 merges into these branches, they can be removed from the list
 for b in ('mozilla-esr17',):
@@ -2333,7 +2336,7 @@ for b in ('mozilla-esr17',):
 for b in BRANCHES.keys():
     if b not in ('mozilla-central', 'mozilla-inbound', 'mozilla-b2g18',
                  'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd', 'try',
-                 'birch', 'date', 'cypress',
+                 'b2g-inbound', 'birch', 'date', 'cypress',
                  ):
         if 'android-noion' in BRANCHES[b]['platforms']:
             del BRANCHES[b]['platforms']['android-noion']
@@ -2341,7 +2344,7 @@ for b in BRANCHES.keys():
 # ASan builds are only on mozilla-central for now
 for b in BRANCHES:
     if b not in ('mozilla-central',):
-        for p in 'linux64-asan', 'linux64-dbg-asan', 'linux64-dbg-st-an':
+        for p in 'linux64-asan', 'linux64-dbg-asan':
             if p in BRANCHES[b]['platforms']:
                 del BRANCHES[b]['platforms'][p]
 
@@ -2406,9 +2409,15 @@ for b in ("mozilla-beta", "mozilla-release",
                     'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
                 )]
 
+# Static analysis happens only on m-c and derived branches.
+for branch in ("mozilla-aurora", "mozilla-beta", "mozilla-release",
+               "mozilla-b2g18", "mozilla-b2g18_v1_0_1",
+               "mozilla-b2g18_v1_1_0_hd", "mozilla-esr17"):
+    if 'linux64-dbg-st-an' in BRANCHES[branch]['platforms']:
+        del BRANCHES[branch]['platforms']['linux64-dbg-st-an']
 
 # B2G's INBOUND
-for b in ('birch',):
+for b in ('b2g-inbound', 'birch',):
     for p in ['win32-debug', 'macosx64-debug', 'android', 'android-armv6', 'android-debug', 'android-x86']:
         if p in BRANCHES[b]['platforms']:
             del(BRANCHES[b]['platforms'][p])
