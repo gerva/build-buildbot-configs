@@ -14,6 +14,7 @@ PROJECT_BRANCHES = {
         'mozconfig_dir': 'mozilla-central',
         'enable_nightly': False,
         'pgo_strategy': 'periodic',
+        'enable_weekly_bundle': True,
     },
     'graphics': {
         'enable_talos': False,
@@ -94,6 +95,7 @@ PROJECT_BRANCHES = {
         'mozconfig_dir': 'mozilla-central',
         'pgo_strategy': 'periodic',
         'periodic_pgo_interval': 3,
+        'enable_weekly_bundle': True,
         'talos_suites': {
             'xperf': 1,
         },
@@ -213,7 +215,6 @@ PROJECT_BRANCHES = {
         'mozharness_repo_path': 'users/asasaki_mozilla.com/ash-mozharness',
         'mozharness_repo': 'http://hg.mozilla.org/users/asasaki_mozilla.com/ash-mozharness',
         'mozharness_tag': 'default',
-        'mozharness_talos': True,
         'lock_platforms': True,
         'talos_suites': {
             'xperf': 1,
@@ -265,7 +266,6 @@ PROJECT_BRANCHES = {
     },
     'cedar': {
         'mozharness_tag': 'default',
-        'mozharness_talos': True,
         'lock_platforms': True,
         'enable_talos': True,
         'talos_suites': {
@@ -322,6 +322,7 @@ PROJECT_BRANCHES = {
         },
     },
     'date': {
+        'lock_platforms': True,
         'platforms': {
             'win64': {
                 'enable_opt_unittests': True,

@@ -450,6 +450,8 @@ ANDROID_MOZHARNESS_XPCSHELL = [
              'use_mozharness': True,
              'script_path': 'scripts/android_panda.py',
              'extra_args': ['--cfg', 'android/android_panda_releng.py', '--xpcshell-suite', 'xpcshell'],
+             'timeout': 2400,
+             'script_maxtime': 14400,
              },
         ),
 ]
@@ -605,7 +607,7 @@ for suite in ANDROID_UNITTEST_DICT['opt_unittest_suites']:
     ANDROID_PLAIN_UNITTEST_DICT['opt_unittest_suites'].append(suite)
 
 ANDROID_MOZHARNESS_PANDA_UNITTEST_DICT = {
-   'opt_unittest_suites': ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_PLAIN_ROBOCOP + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_MOCHITESTGL + ANDROID_MOZHARNESS_PLAIN_REFTEST,
+   'opt_unittest_suites': ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_PLAIN_ROBOCOP + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_MOCHITESTGL + ANDROID_MOZHARNESS_PLAIN_REFTEST + ANDROID_MOZHARNESS_XPCSHELL,
    'debug_unittest_suites': ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_PLAIN_ROBOCOP + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_MOCHITESTGL,
 }
 
@@ -757,7 +759,7 @@ for branch in BRANCHES.keys():
     BRANCHES[branch]['fetch_symbols'] = True
     BRANCHES[branch]['fetch_release_symbols'] = False
     BRANCHES[branch]['talos_from_source_code'] = True
-    BRANCHES[branch]['support_url_base'] = 'http://build.mozilla.org/talos'
+    BRANCHES[branch]['support_url_base'] = 'http://talos-bundles.pvt.build.mozilla.org'
     loadTalosSuites(BRANCHES, SUITES, branch)
     BRANCHES[branch]['pgo_strategy'] = None
     BRANCHES[branch]['pgo_platforms'] = []
@@ -866,8 +868,7 @@ for branch in BRANCHES:
 # MERGE DAY, drop trees from branch list as Firefox 23 rides forward.
 for branch in BRANCHES:
     # Loop removes it from any branch that gets beyond here
-    if branch not in ('mozilla-release', 'mozilla-esr17',
-                      'mozilla-b2g18', 'mozilla-b2g18_v1_0_1',
+    if branch not in ('mozilla-esr17', 'mozilla-b2g18', 'mozilla-b2g18_v1_0_1',
                       'mozilla-b2g18_v1_1_0_hd'):
         continue
 
@@ -886,10 +887,33 @@ for branch in BRANCHES:
                     if "xpcshell" in suite[0]:
                         BRANCHES[branch]['platforms'][platform][slave_plat][type].remove(suite)
 
-#bug 882324 - Support reftests for pandaboards on Cedar
+# Panda XPCShell on try only
 for branch in BRANCHES:
     # Loop removes it from any branch that gets beyond here
-    if branch in ('cedar',):
+    if branch in ('try', ):
+        continue
+
+    for platform in BRANCHES[branch]['platforms']:
+        if not platform in PLATFORMS:
+            continue
+        if not platform.startswith('android'):
+            continue
+        if platform.endswith('-debug'):
+            continue  # no slave_platform for debug
+        for slave_plat in PLATFORMS[platform]['slave_platforms']:
+            if not slave_plat in BRANCHES[branch]['platforms'][platform]:
+                continue
+            if not 'panda' in slave_plat:
+                continue
+            for type in BRANCHES[branch]['platforms'][platform][slave_plat]:
+                for suite in BRANCHES[branch]['platforms'][platform][slave_plat][type][:]:
+                    if "xpcshell" in suite[0]:
+                        BRANCHES[branch]['platforms'][platform][slave_plat][type].remove(suite)
+
+#Support reftests for pandaboards on Cedar and Try
+for branch in BRANCHES:
+    # Loop removes it from any branch that gets beyond here
+    if branch in ('cedar', 'try'):
         continue
     for platform in BRANCHES[branch]['platforms']:
         if not platform in PLATFORMS:

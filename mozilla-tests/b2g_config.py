@@ -219,6 +219,15 @@ REFTEST_SANITY = [
      ),
 ]
 
+
+JSREFTEST = [
+    ('jsreftest', {'suite': 'reftest',
+                   'use_mozharness': True,
+                   'script_path': 'scripts/b2g_emulator_unittest.py',
+                   },
+     ),
+]
+
 CRASHTEST = [
     ('crashtest-1', {'suite': 'crashtest',
                      'use_mozharness': True,
@@ -1001,6 +1010,13 @@ PLATFORM_UNITTEST_VARS = {
                         '--no-update',
                     ],
                 },
+                'jsreftest': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--no-update',
+                    ],
+                },
                 'xpcshell': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
@@ -1211,6 +1227,13 @@ PLATFORM_UNITTEST_VARS = {
                         '--no-update',
                     ],
                 },
+                'jsreftest': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--no-update',
+                    ],
+                },
             },
         },
         'ubuntu64_hw-b2g-dt': {
@@ -1329,6 +1352,13 @@ PLATFORM_UNITTEST_VARS = {
                         '--no-update',
                     ],
                 },
+                'jsreftest': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--no-update',
+                    ],
+                },
             },
         },
     },
@@ -1426,8 +1456,8 @@ BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['fedora-b2g']['debug_unittest
 BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['ubuntu64_vm-b2g']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
 BRANCHES['cedar']['platforms']['ics_armv7a_gecko']['slave_platforms'] = ['fedora-b2g', 'ubuntu64_vm-b2g', 'ubuntu64_hw-b2g']
-BRANCHES['cedar']['platforms']['emulator']['fedora-b2g-emulator']['opt_unittest_suites'] = ALL_UNITTESTS[:]
-BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unittest_suites'] = MOCHITEST + CRASHTEST + MARIONETTE + XPCSHELL
+BRANCHES['cedar']['platforms']['emulator']['fedora-b2g-emulator']['opt_unittest_suites'] = ALL_UNITTESTS[:] + JSREFTEST
+BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unittest_suites'] = MOCHITEST + CRASHTEST + MARIONETTE + XPCSHELL + JSREFTEST
 BRANCHES['cedar']['platforms']['emulator']['fedora-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['cedar']['platforms']['emulator']['enable_debug_unittests'] = True
@@ -1441,6 +1471,7 @@ BRANCHES['mozilla-b2g18']['repo_path'] = "releases/mozilla-b2g18"
 BRANCHES['mozilla-b2g18']['platforms']['ics_armv7a_gecko']['fedora-b2g']['opt_unittest_suites'] = [x for x in ALL_UNITTESTS if x not in REFTEST] + REFTEST_SANITY
 BRANCHES['mozilla-b2g18']['platforms']['ics_armv7a_gecko']['fedora-b2g']['debug_unittest_suites'] = MOCHITEST + XPCSHELL
 BRANCHES['mozilla-b2g18']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
+BRANCHES['mozilla-b2g18']['platforms']['emulator']['fedora-b2g-emulator']['opt_unittest_suites'] = [x for x in ALL_UNITTESTS if x not in REFTEST] + REFTEST_SANITY
 BRANCHES['mozilla-b2g18_v1_0_1']['repo_path'] = "releases/mozilla-b2g18_v1_0_1"
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['ics_armv7a_gecko']['fedora-b2g']['opt_unittest_suites'] = [x for x in ALL_UNITTESTS if x not in CRASHTEST + REFTEST] + REFTEST_SANITY
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['ics_armv7a_gecko']['fedora-b2g']['debug_unittest_suites'] = MOCHITEST + XPCSHELL
@@ -1451,6 +1482,7 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['fedora-b2g
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
 BRANCHES['mozilla-central']['branch_name'] = "Firefox"
 BRANCHES['mozilla-inbound']['repo_path'] = "integration/mozilla-inbound"
+BRANCHES['b2g-inbound']['branch_name'] = "B2g-Inbound"
 BRANCHES['b2g-inbound']['repo_path'] = "integration/b2g-inbound"
 BRANCHES['services-central']['repo_path'] = "services/services-central"
 BRANCHES['try']['pgo_strategy'] = "try"

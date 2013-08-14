@@ -20,17 +20,17 @@ releaseConfig['messagePrefix']       = '[release] '
 releaseConfig['productName']         = 'firefox'
 releaseConfig['appName']             = 'browser'
 #  Current version info
-releaseConfig['version']             = '22.0'
-releaseConfig['appVersion']          = '22.0'
+releaseConfig['version']             = '23.0.1'
+releaseConfig['appVersion']          = '23.0.1'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FIREFOX_22_0'
+releaseConfig['baseTag']             = 'FIREFOX_23_0_1'
 releaseConfig['partialUpdates']      = {
 
-    '20.0.1': {
-        'appVersion': '20.0.1',
+    '22.0': {
+        'appVersion': '22.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_20_0_1',
+        'baseTag': 'FIREFOX_22_0',
     },
 
     '21.0': {
@@ -39,10 +39,10 @@ releaseConfig['partialUpdates']      = {
         'baseTag': 'FIREFOX_21_0',
     },
 
-    '19.0.2': {
-        'appVersion': '19.0.2',
+    '23.0': {
+        'appVersion': '23.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_19_0_2',
+        'baseTag': 'FIREFOX_23_0',
     },
 
 }
@@ -54,7 +54,7 @@ releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-release',
         'path': 'releases/mozilla-release',
-        'revision': '67c554a06d47',
+        'revision': 'b41d7bb7cae8',
         'relbranch': None,
         'bumpFiles': {
             'browser/config/version.txt': {
@@ -138,6 +138,7 @@ releaseConfig['xulrunner_mozconfigs']          = {
 # Partner repack configuration
 releaseConfig['doPartnerRepacks']    = True
 releaseConfig['partnersRepoPath']    = 'build/partner-repacks'
+releaseConfig['syncPartnerBundles']  = True
 
 # Tuxedo/Bouncer configuration
 releaseConfig['tuxedoConfig']        = 'firefox-tuxedo.ini'

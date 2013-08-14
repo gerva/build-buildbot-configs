@@ -27,10 +27,8 @@ GLOBAL_VARS.update({
         'linux64_gecko_localizer': {},
         'macosx64_gecko_localizer': {},
         'win32_gecko_localizer': {},
-        'panda': {},
         'unagi': {},
         'unagi_eng': {},
-        'otoro': {},
         'inari': {},
         'inari_eng': {},
         'leo': {},
@@ -231,7 +229,7 @@ PLATFORM_VARS = {
                           'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
                           'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
-                          'gcc472_0moz1',
+                          'gcc472_0moz1', 'gcc473_0moz1',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
                           'gstreamer-devel', 'gstreamer-plugins-base-devel'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
@@ -304,7 +302,7 @@ PLATFORM_VARS = {
                           'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
                           'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
-                          'gcc472_0moz1',
+                          'gcc472_0moz1', 'gcc473_0moz1',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
                           'gstreamer-devel', 'gstreamer-plugins-base-devel'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux64/releng.manifest',
@@ -486,7 +484,7 @@ PLATFORM_VARS = {
                           'imake', 'ccache', 'wget',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
                           'gstreamer-devel', 'gstreamer-plugins-base-devel',
-                          'gcc472_0moz1'],
+                          'gcc472_0moz1', 'gcc473_0moz1'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -561,7 +559,7 @@ PLATFORM_VARS = {
                           'imake', 'ccache', 'wget',
                           'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
                           'gstreamer-devel', 'gstreamer-plugins-base-devel',
-                          'gcc472_0moz1'],
+                          'gcc472_0moz1', 'gcc473_0moz1'],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux64/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -689,22 +687,6 @@ PLATFORM_VARS = {
         ],
         'gecko_languages_file': 'build/b2g/locales/all-locales',
     },
-    'panda': {
-        'mozharness_config': {
-            'script_name': 'scripts/b2g_build.py',
-            # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
-            # --target name below
-            'extra_args': ['--target', 'panda', '--config', 'b2g/releng.py',
-                           '--gaia-languages-file', 'locales/languages_dev.json',
-                           '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
-                           '--additional-source-tarballs', 'download-panda.tar.bz2'],
-            'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-        },
-        'stage_product': 'b2g',
-        'product_name': 'b2g',
-        'base_name': builder_prefix + '_%(branch)s_%(platform)s',
-        'slaves': SLAVES['mock'],
-    },
     'unagi': {
         'mozharness_config': {
             'script_name': 'scripts/b2g_build.py',
@@ -729,21 +711,6 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            ],
-            'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-        },
-        'stage_product': 'b2g',
-        'product_name': 'b2g',
-        'base_name': builder_prefix + '_%(branch)s_%(platform)s',
-        'slaves': SLAVES['mock'],
-    },
-    'otoro': {
-        'mozharness_config': {
-            'script_name': 'scripts/b2g_build.py',
-            # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
-            # --target name below
-            'extra_args': ['--target', 'otoro', '--config', 'b2g/releng-otoro.py',
-                           '--gaia-languages-file', 'locales/languages_dev.json',
-                           '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
         },
         'stage_product': 'b2g',
@@ -908,10 +875,8 @@ BRANCHES = {
         'linux64_gecko_localizer': {},
         'macosx64_gecko_localizer': {},
         'win32_gecko_localizer': {},
-        'panda': {},
         'unagi': {},
         'unagi_eng': {},
-        'otoro': {},
         'inari': {},
         'leo': {},
         'leo_eng': {},
@@ -929,10 +894,8 @@ BRANCHES = {
         'linux64_gecko_localizer': {},
         'macosx64_gecko_localizer': {},
         'win32_gecko_localizer': {},
-        'panda': {},
         'unagi': {},
         'unagi_eng': {},
-        'otoro': {},
         'inari': {},
         'inari_eng': {},
         'leo': {},
@@ -950,10 +913,8 @@ BRANCHES = {
         'linux64_gecko_localizer': {},
         'macosx64_gecko_localizer': {},
         'win32_gecko_localizer': {},
-        'panda': {},
         'unagi': {},
         'unagi_eng': {},
-        'otoro': {},
         'inari': {},
         'leo': {},
         'leo_eng': {},
@@ -1046,7 +1007,7 @@ for branch in BRANCHES.keys():
 BRANCHES['mozilla-central']['repo_path'] = 'mozilla-central'
 BRANCHES['mozilla-central']['gaia_l10n_root'] = 'https://hg.mozilla.org/gaia-l10n'
 BRANCHES['mozilla-central']['gecko_l10n_root'] = 'https://hg.mozilla.org/l10n-central'
-BRANCHES['mozilla-central']['start_hour'] = [3]
+BRANCHES['mozilla-central']['start_hour'] = [4]
 BRANCHES['mozilla-central']['start_minute'] = [2]
 BRANCHES['mozilla-central']['aus2_base_upload_dir'] = 'fake'
 BRANCHES['mozilla-central']['aus2_base_upload_dir_l10n'] = 'fake'
@@ -1060,6 +1021,7 @@ BRANCHES['mozilla-central']['platforms']['inari_eng']['enable_dep'] = False
 BRANCHES['mozilla-central']['platforms']['leo']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['leo_eng']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['hamachi']['enable_nightly'] = True
+BRANCHES['mozilla-central']['platforms']['helix']['enable_nightly'] = True
 
 ######## mozilla-b2g18
 # This is a path, relative to HGURL, where the repository is located
@@ -1071,8 +1033,8 @@ BRANCHES['mozilla-b2g18']['gecko_l10n_root'] = 'https://hg.mozilla.org/releases/
 # building
 BRANCHES['mozilla-b2g18']['enable_nightly_lastgood'] = False
 BRANCHES['mozilla-b2g18']['enable_perproduct_builds'] = True
-BRANCHES['mozilla-b2g18']['start_hour'] = [7, 23]
-BRANCHES['mozilla-b2g18']['start_minute'] = [2]
+BRANCHES['mozilla-b2g18']['start_hour'] = [4]
+BRANCHES['mozilla-b2g18']['start_minute'] = [12]
 BRANCHES['mozilla-b2g18']['aus2_base_upload_dir'] = 'fake'
 BRANCHES['mozilla-b2g18']['aus2_base_upload_dir_l10n'] = 'fake'
 BRANCHES['mozilla-b2g18']['platforms']['unagi']['enable_nightly'] = True
@@ -1086,7 +1048,6 @@ BRANCHES['mozilla-b2g18']['platforms']['linux32_gecko_localizer']['gaia_repo'] =
 BRANCHES['mozilla-b2g18']['platforms']['linux64_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
 BRANCHES['mozilla-b2g18']['platforms']['macosx64_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
 BRANCHES['mozilla-b2g18']['platforms']['win32_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
-BRANCHES['mozilla-b2g18']['platforms']['otoro']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['inari']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['inari_eng']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18']['platforms']['leo']['enable_nightly'] = True
@@ -1120,8 +1081,8 @@ BRANCHES['mozilla-b2g18_v1_0_1']['gecko_l10n_root'] = 'https://hg.mozilla.org/re
 # building
 BRANCHES['mozilla-b2g18_v1_0_1']['enable_nightly_lastgood'] = False
 BRANCHES['mozilla-b2g18_v1_0_1']['enable_perproduct_builds'] = True
-BRANCHES['mozilla-b2g18_v1_0_1']['start_hour'] = [7, 23]
-BRANCHES['mozilla-b2g18_v1_0_1']['start_minute'] = [2]
+BRANCHES['mozilla-b2g18_v1_0_1']['start_hour'] = [4]
+BRANCHES['mozilla-b2g18_v1_0_1']['start_minute'] = [32]
 BRANCHES['mozilla-b2g18_v1_0_1']['aus2_base_upload_dir'] = 'fake'
 BRANCHES['mozilla-b2g18_v1_0_1']['aus2_base_upload_dir_l10n'] = 'fake'
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['unagi']['enable_nightly'] = True
@@ -1134,7 +1095,6 @@ BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['linux32_gecko_localizer']['gaia_r
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['linux64_gecko_localizer']['gaia_repo'] = 'integration/gaia-1_0_1'
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['macosx64_gecko_localizer']['gaia_repo'] = 'integration/gaia-1_0_1'
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['win32_gecko_localizer']['gaia_repo'] = 'integration/gaia-1_0_1'
-BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['otoro']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['inari']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['inari_eng']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['hamachi']['enable_nightly'] = True
@@ -1167,8 +1127,8 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['gecko_l10n_root'] = 'https://hg.mozilla.org
 # building
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['enable_nightly_lastgood'] = False
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['enable_perproduct_builds'] = True
-BRANCHES['mozilla-b2g18_v1_1_0_hd']['start_hour'] = [7, 23]
-BRANCHES['mozilla-b2g18_v1_1_0_hd']['start_minute'] = [2]
+BRANCHES['mozilla-b2g18_v1_1_0_hd']['start_hour'] = [4]
+BRANCHES['mozilla-b2g18_v1_1_0_hd']['start_minute'] = [22]
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['aus2_base_upload_dir'] = 'fake'
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['aus2_base_upload_dir_l10n'] = 'fake'
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['unagi']['enable_nightly'] = True
@@ -1181,7 +1141,6 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux32_gecko_localizer']['gai
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux64_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['macosx64_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['win32_gecko_localizer']['gaia_repo'] = 'integration/gaia-v1-train'
-BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['otoro']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['inari']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['leo']['enable_nightly'] = True
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['leo_eng']['enable_nightly'] = True
@@ -1227,8 +1186,6 @@ BRANCHES['try']['platforms']['linux32_gecko']['slaves'] = TRY_SLAVES['mock']
 BRANCHES['try']['platforms']['linux64_gecko']['slaves'] = TRY_SLAVES['mock']
 BRANCHES['try']['platforms']['macosx64_gecko']['slaves'] = TRY_SLAVES['macosx64-lion']
 BRANCHES['try']['platforms']['win32_gecko']['slaves'] = TRY_SLAVES['win64']
-BRANCHES['try']['platforms']['panda']['slaves'] = TRY_SLAVES['mock']
-BRANCHES['try']['platforms']['panda']['mozharness_config']['extra_args'] = ['--target', 'panda', '--config', 'b2g/releng-try.py', '--gaia-languages-file', 'locales/languages_dev.json', '--gecko-languages-file', 'gecko/b2g/locales/all-locales', '--additional-source-tarballs', 'download-panda.tar.bz2']
 BRANCHES['try']['platforms']['unagi']['slaves'] = TRY_SLAVES['mock']
 BRANCHES['try']['platforms']['unagi']['mozharness_config']['extra_args'] = ['--target', 'unagi', '--config', 'b2g/releng-try.py', '--gaia-languages-file', 'locales/languages_dev.json', '--gecko-languages-file', 'gecko/b2g/locales/all-locales']
 BRANCHES['try']['platforms']['emulator']['slaves'] = TRY_SLAVES['mock']
@@ -1239,12 +1196,6 @@ BRANCHES['try']['platforms']['emulator_debug']['mozharness_config']['extra_args'
 
 # TODO: move the MERGE DAY items below to above the BRANCHES['mozilla-central']
 # chunk above, once the whole v1_0_1/kill_b2g18 stuff has calmed down
-
-# MERGE DAY: otoro is only for b2g18 + b2g18_v1_0_1
-for branch in BRANCHES:
-    if branch not in ('mozilla-b2g18', 'mozilla-b2g18_v1_0_1') and \
-            'otoro' in BRANCHES[branch]['platforms']:
-        del BRANCHES[branch]['platforms']['otoro']
 
 # MERGE DAY: inari is only for central + b2g-inbound (birch) + b2g18 +
 # b2g18_v1_0_1
@@ -1286,9 +1237,9 @@ for branch in BRANCHES:
             'hamachi_eng' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['hamachi_eng']
 
-# MERGE DAY: helix is only for b2g18_v1_1_0_hd
+# MERGE DAY: helix is only for b2g18_v1_1_0_hd, mozilla-central
 for branch in BRANCHES:
-    if branch not in ('mozilla-b2g18_v1_1_0_hd',) and \
+    if branch not in ('mozilla-b2g18_v1_1_0_hd', 'mozilla-central') and \
             'helix' in BRANCHES[branch]['platforms']:
         del BRANCHES[branch]['platforms']['helix']
 
@@ -1330,7 +1281,7 @@ for branch in ACTIVE_PROJECT_BRANCHES:
                                                             GLOBAL_VARS['enabled_products'])
     BRANCHES[branch]['enable_nightly'] = branchConfig.get('enable_nightly', False)
     BRANCHES[branch]['start_hour'] = branchConfig.get('start_hour', [4])
-    BRANCHES[branch]['start_minute'] = branchConfig.get('start_minute', [2])
+    BRANCHES[branch]['start_minute'] = branchConfig.get('start_minute', [42])
     # nightly updates
     BRANCHES[branch]['create_snippet'] = branchConfig.get('create_snippet', False)
     BRANCHES[branch]['update_channel'] = branchConfig.get('update_channel', 'nightly-%s' % branch)

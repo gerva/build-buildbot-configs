@@ -92,6 +92,8 @@ PLATFORMS['macosx64']['mozharness_config'] = {
     'mozharness_python': '/tools/buildbot/bin/python',
     'hg_bin': 'hg',
     'reboot_command': ['/tools/buildbot/bin/python'] + MOZHARNESS_REBOOT_CMD,
+    'system_bits': '64',
+    'config_file': 'talos/mac_config.py',
 }
 
 PLATFORMS['win32']['slave_platforms'] = ['xp', 'xp-ix', 'win7', 'win7-ix', 'win8']
@@ -107,6 +109,8 @@ PLATFORMS['win32']['mozharness_config'] = {
     'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
     'hg_bin': 'c:\\mozilla-build\\hg\\hg',
     'reboot_command': ['c:/mozilla-build/python27/python', '-u'] + MOZHARNESS_REBOOT_CMD,
+    'system_bits': '32',
+    'config_file': 'talos/windows_config.py',
 }
 
 PLATFORMS['win64']['slave_platforms'] = ['win64_vm']
@@ -116,6 +120,8 @@ PLATFORMS['win64']['mozharness_config'] = {
     'mozharness_python': ['c:/python27/python', '-u'],
     'hg_bin': 'c:\\mozilla-build\\hg\\hg',
     'reboot_command': ['c:/python27/python', '-u'] + MOZHARNESS_REBOOT_CMD,
+    'system_bits': '64',
+    'config_file': 'talos/windows_config.py',
 }
 
 PLATFORMS['linux']['slave_platforms'] = ['fedora', 'ubuntu32_vm']
@@ -129,6 +135,8 @@ PLATFORMS['linux']['mozharness_config'] = {
     'mozharness_python': '/tools/buildbot/bin/python',
     'hg_bin': 'hg',
     'reboot_command': ['/tools/buildbot/bin/python'] + MOZHARNESS_REBOOT_CMD,
+    'system_bits': '32',
+    'config_file': 'talos/linux_config.py',
 }
 
 PLATFORMS['linux64']['slave_platforms'] = ['fedora64', 'ubuntu64_vm']
@@ -142,6 +150,8 @@ PLATFORMS['linux64']['mozharness_config'] = {
     'mozharness_python': '/tools/buildbot/bin/python',
     'hg_bin': 'hg',
     'reboot_command': ['/tools/buildbot/bin/python'] + MOZHARNESS_REBOOT_CMD,
+    'system_bits': '64',
+    'config_file': 'talos/linux_config.py',
 }
 
 # Lets be explicit instead of magical.
@@ -1263,10 +1273,11 @@ for branch in BRANCHES.keys():
     BRANCHES[branch]['fetch_symbols'] = True
     BRANCHES[branch]['fetch_release_symbols'] = False
     BRANCHES[branch]['talos_from_source_code'] = True
-    BRANCHES[branch]['support_url_base'] = 'http://build.mozilla.org/talos'
+    BRANCHES[branch]['support_url_base'] = 'http://talos-bundles.pvt.build.mozilla.org'
     loadTalosSuites(BRANCHES, SUITES, branch)
     BRANCHES[branch]['pgo_strategy'] = None
     BRANCHES[branch]['pgo_platforms'] = ['linux', 'linux64', 'win32']
+    BRANCHES[branch]['mozharness_talos'] = True
 
 # The following are exceptions to the defaults
 
@@ -1283,14 +1294,9 @@ BRANCHES['mozilla-release']['repo_path'] = "releases/mozilla-release"
 BRANCHES['mozilla-release']['pgo_strategy'] = 'per-checkin'
 
 # MERGE DAY remove the below when Firefox 25 merges in
+BRANCHES['mozilla-release']['mozharness_talos'] = False
 BRANCHES['mozilla-release']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 # END MERGE DAY remove the below when Firefox 25 merges in
-
-# MERGE DAY remove the below when Firefox 23 merges in
-del BRANCHES['mozilla-release']['platforms']['win32']['win7-ix']
-del BRANCHES['mozilla-release']['platforms']['win32']['xp-ix']
-BRANCHES['mozilla-release']['platforms']['win32']['talos_slave_platforms'] = ['xp', 'win7', 'win8']
-# End MERGE DAY remove the above when Firefox 23 merges in
 
 ######### mozilla-beta
 BRANCHES['mozilla-beta']['release_tests'] = 1
@@ -1298,6 +1304,7 @@ BRANCHES['mozilla-beta']['repo_path'] = "releases/mozilla-beta"
 BRANCHES['mozilla-beta']['pgo_strategy'] = 'per-checkin'
 
 # MERGE DAY remove the below when Firefox 25 merges in
+BRANCHES['mozilla-beta']['mozharness_talos'] = False
 BRANCHES['mozilla-beta']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 # END MERGE DAY remove the below when Firefox 25 merges in
 
@@ -1305,14 +1312,11 @@ BRANCHES['mozilla-beta']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONL
 BRANCHES['mozilla-aurora']['repo_path'] = "releases/mozilla-aurora"
 BRANCHES['mozilla-aurora']['pgo_strategy'] = 'per-checkin'
 
-# MERGE DAY remove the below when Firefox 25 merges in
-BRANCHES['mozilla-aurora']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
-# END MERGE DAY remove the below when Firefox 25 merges in
-
 ######### mozilla-esr17
 BRANCHES['mozilla-esr17']['release_tests'] = 1
 BRANCHES['mozilla-esr17']['repo_path'] = "releases/mozilla-esr17"
 BRANCHES['mozilla-esr17']['pgo_strategy'] = 'per-checkin'
+BRANCHES['mozilla-esr17']['mozharness_talos'] = False
 BRANCHES['mozilla-esr17']['platforms']['linux']['fedora']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt_with_ipc'][:]
 BRANCHES['mozilla-esr17']['platforms']['linux']['fedora']['debug_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['debug'][:]
 BRANCHES['mozilla-esr17']['platforms']['linux64']['fedora64']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt'][:]
@@ -1339,6 +1343,7 @@ BRANCHES['mozilla-esr17']['platforms']['win32']['talos_slave_platforms'] = ['xp'
 BRANCHES['mozilla-b2g18']['release_tests'] = 1
 BRANCHES['mozilla-b2g18']['repo_path'] = "releases/mozilla-b2g18"
 BRANCHES['mozilla-b2g18']['pgo_strategy'] = 'per-checkin'
+BRANCHES['mozilla-b2g18']['mozharness_talos'] = False
 BRANCHES['mozilla-b2g18']['platforms']['linux']['fedora']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt_with_ipc'][:]
 BRANCHES['mozilla-b2g18']['platforms']['linux']['fedora']['debug_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['debug'] + MARIONETTE
 BRANCHES['mozilla-b2g18']['platforms']['linux64']['fedora64']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt'][:]
@@ -1365,6 +1370,7 @@ BRANCHES['mozilla-b2g18']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ON
 BRANCHES['mozilla-b2g18_v1_0_1']['release_tests'] = 1
 BRANCHES['mozilla-b2g18_v1_0_1']['repo_path'] = "releases/mozilla-b2g18_v1_0_1"
 BRANCHES['mozilla-b2g18_v1_0_1']['pgo_strategy'] = 'per-checkin'
+BRANCHES['mozilla-b2g18_v1_0_1']['mozharness_talos'] = False
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['linux']['fedora']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt_with_ipc'][:]
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['linux']['fedora']['debug_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['debug'] + MARIONETTE
 BRANCHES['mozilla-b2g18_v1_0_1']['platforms']['linux64']['fedora64']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt'][:]
@@ -1391,6 +1397,7 @@ BRANCHES['mozilla-b2g18_v1_0_1']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, 
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['release_tests'] = 1
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['repo_path'] = "releases/mozilla-b2g18_v1_1_0_hd"
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['pgo_strategy'] = 'per-checkin'
+BRANCHES['mozilla-b2g18_v1_1_0_hd']['mozharness_talos'] = False
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux']['fedora']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt_with_ipc'][:]
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux']['fedora']['debug_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['debug'] + MARIONETTE
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['linux64']['fedora64']['opt_unittest_suites'] = BUILDBOT_UNITTEST_SUITES['opt'][:]
@@ -1414,7 +1421,6 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['win32']['talos_slave_platforms
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 
 ######## try
-BRANCHES['try']['mozharness_talos'] = True
 BRANCHES['try']['xperf_tests'] = (1, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 BRANCHES['try']['tp5o_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
 BRANCHES['try']['pgo_strategy'] = 'try'
@@ -1485,7 +1491,7 @@ def get_ubuntu_unittests(branch, test_type):
     FF24_TESTS = {"opt_unittest_suites":
                   ["mochitest-browser-chrome", "mochitest-other"],
                   "debug_unittest_suites": ["mochitest-other"]}
-    if branch not in ("mozilla-beta", "mozilla-release"):
+    if branch not in ("mozilla-release"):
         return UBUNTU_TESTS[test_type] + FF24_TESTS[test_type]
     else:
         return list(UBUNTU_TESTS[test_type])
@@ -1535,8 +1541,7 @@ for branch in BRANCHES:
                                 pass
 
 # MERGE DAY: remove branches when Firefox 23 merges in
-NON_UBUNTU_TALOS_BRANCHES = ("mozilla-release", "mozilla-esr17",
-                             "mozilla-b2g18")
+NON_UBUNTU_TALOS_BRANCHES = ("mozilla-esr17", "mozilla-b2g18")
 for branch in set(BRANCHES.keys()) - set(NON_UBUNTU_TALOS_BRANCHES):
     for s in SUITES.iterkeys():
         if nested_haskey(BRANCHES[branch], 'suites', s, 'options'):
@@ -1551,8 +1556,7 @@ for branch in set(BRANCHES.keys()) - set(NON_UBUNTU_TALOS_BRANCHES):
             BRANCHES[branch]['%s_tests' % s] = tuple(tests)
 
 # MERGE DAY: remove branches when Firefox 23 merges in
-WIN32_REV3_BRANCHES = ("mozilla-release", "mozilla-esr17", "mozilla-b2g18",
-                       "mozilla-b2g18_v1_0_1")
+WIN32_REV3_BRANCHES = ("mozilla-esr17", "mozilla-b2g18", "mozilla-b2g18_v1_0_1")
 # Disable Rev3 winxp and win7 machines for FF23+
 for branch in set(BRANCHES.keys()) - set(WIN32_REV3_BRANCHES):
     if 'win32' not in BRANCHES[branch]['platforms']:

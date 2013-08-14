@@ -20,23 +20,23 @@ releaseConfig['messagePrefix']       = '[release] '
 releaseConfig['productName']         = 'firefox'
 releaseConfig['appName']             = 'browser'
 #  Current version info
-releaseConfig['version']             = '23.0b9'
-releaseConfig['appVersion']          = '23.0'
+releaseConfig['version']             = '24.0b2'
+releaseConfig['appVersion']          = '24.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FIREFOX_23_0b9'
+releaseConfig['baseTag']             = 'FIREFOX_24_0b2'
 releaseConfig['partialUpdates']      = {
 
-    '23.0b7': {
+    '23.0b9': {
         'appVersion': '23.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_23_0b7',
+        'baseTag': 'FIREFOX_23_0b9',
     },
 
-    '23.0b8': {
+    '23.0b10': {
         'appVersion': '23.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_23_0b8',
+        'baseTag': 'FIREFOX_23_0b10',
     },
 
 }
@@ -48,7 +48,7 @@ releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-beta',
         'path': 'releases/mozilla-beta',
-        'revision': '7499e60e458b',
+        'revision': '23b7a978c567',
         'relbranch': None,
         'bumpFiles': {
             'browser/config/version.txt': {
@@ -92,6 +92,7 @@ releaseConfig['enableUnittests']     = True
 releaseConfig['l10nPlatforms']       = releaseConfig['enUSPlatforms']
 releaseConfig['shippedLocalesPath']  = 'browser/locales/shipped-locales'
 releaseConfig['mergeLocales']        = True
+releaseConfig['l10nUsePymake']       = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'ffxbld'

@@ -137,6 +137,7 @@ PLATFORM_VARS = {
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'mail/config/tooltool-manifests/linux32/releng.manifest',
+            'tooltool_script': '/builds/tooltool.py',
             'use_mock': True,
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': \
@@ -150,7 +151,7 @@ PLATFORM_VARS = {
                         'mpfr',  # required for system compiler
                         'xorg-x11-font*',  # fonts required for PGO
                         'imake',  # required for makedepend!?!
-                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'yasm', 'ccache',  # <-- from releng repo
+                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'gcc473_0moz1', 'yasm', 'ccache',  # <-- from releng repo
                         'valgrind',
                         'pulseaudio-libs-devel.i686',
                         'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
@@ -180,6 +181,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/tools/tooltool.py', '/builds/tooltool.py'),
             ],
         },
         'linux64': {
@@ -230,6 +232,7 @@ PLATFORM_VARS = {
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'mail/config/tooltool-manifests/linux64/releng.manifest',
+            'tooltool_script': '/builds/tooltool.py',
             'use_mock': True,
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': \
@@ -243,7 +246,7 @@ PLATFORM_VARS = {
                         'mpfr', # required for system compiler
                         'xorg-x11-font*', # fonts required for PGO
                         'imake', # required for makedepend!?!
-                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'yasm', 'ccache', # <-- from releng repo
+                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'gcc473_0moz1', 'yasm', 'ccache', # <-- from releng repo
                         'valgrind',
                         'pulseaudio-libs-devel',
                         'gstreamer-devel', 'gstreamer-plugins-base-devel',
@@ -253,6 +256,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/tools/tooltool.py', '/builds/tooltool.py'),
             ],
         },
         'macosx64': {
@@ -441,7 +445,7 @@ PLATFORM_VARS = {
                         'mpfr',  # required for system compiler
                         'xorg-x11-font*',  # fonts required for PGO
                         'imake',  # required for makedepend!?!
-                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'yasm', 'ccache',  # <-- from releng repj
+                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'gcc473_0moz1', 'yasm', 'ccache',  # <-- from releng repj
                         'valgrind',
                         'pulseaudio-libs-devel.i686',
                         'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
@@ -520,7 +524,7 @@ PLATFORM_VARS = {
                         'mpfr', # required for system compiler
                         'xorg-x11-font*', # fonts required for PGO
                         'imake', # required for makedepend!?!
-                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'yasm', 'ccache', # <-- from releng repo
+                        'gcc45_0moz3', 'gcc454_0moz1', 'gcc472_0moz1', 'gcc473_0moz1', 'yasm', 'ccache', # <-- from releng repo
                         'pulseaudio-libs-devel',
                         'freetype-2.3.11-6.el6_1.8.x86_64',
                         'freetype-devel-2.3.11-6.el6_1.8.x86_64',
@@ -899,7 +903,6 @@ BRANCHES['comm-beta']['enable_nightly'] = False
 BRANCHES['comm-beta']['enable_blocklist_update'] = True
 BRANCHES['comm-beta']['blocklist_update_on_closed_tree'] = False
 BRANCHES['comm-beta']['enable_valgrind'] = False
-BRANCHES['comm-beta']['platforms']['win32']['l10n_slaves'] = SLAVES['win32']
 
 ######## comm-aurora
 BRANCHES['comm-aurora']['moz_repo_path'] = 'releases/mozilla-aurora'
@@ -1043,7 +1046,7 @@ for b in ['comm-release', 'comm-esr17']:
 
 # MERGE DAY building 32-bit linux in a x86_64 env rides the trains
 # MERGE DAY remove branches from this list when gecko 24 merges into them.
-for branch in ("comm-beta", "comm-release", "comm-esr17"):
+for branch in ("comm-release", "comm-esr17"):
     for platform in ['linux', 'linux-debug']:
         BRANCHES[branch]['platforms'][platform]['mock_target'] = \
             'mozilla-centos6-i386'
@@ -1070,8 +1073,7 @@ for branch in ("comm-beta", "comm-release", "comm-esr17"):
 
 # MERGE DAY - gstreamer-devel packages ride the trains (bug 881589)
 # MERGE DAY - remove branches from this list when gecko 24 merges into them.
-for b in ("comm-beta", "comm-release",
-          "comm-esr17"):
+for b in ("comm-release", "comm-esr17"):
     for p, pc in BRANCHES[b]['platforms'].items():
         if 'mock_packages' in pc:
             BRANCHES[b]['platforms'][p]['mock_packages'] = \
