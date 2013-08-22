@@ -320,42 +320,49 @@ MOCHITEST = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'plain1'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('mochitest-2', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'plain2'],
+        'blob_upload' : True,
         'script_maxtime': 7200,
     }),
     ('mochitest-3', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'plain3'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('mochitest-4', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'plain4'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('mochitest-5', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'plain5'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('mochitest-browser-chrome', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'browser-chrome'],
+        'blob_upload': True,
         'script_maxtime': 9000,
     }),
     ('mochitest-other', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'chrome,a11y,plugins'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
 ]
@@ -365,18 +372,21 @@ REFTEST_NO_IPC = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--reftest-suite', 'reftest'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('jsreftest', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--reftest-suite', 'jsreftest'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('crashtest', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--reftest-suite', 'crashtest'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
 ]
@@ -385,6 +395,7 @@ REFTEST_NOACCEL = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--reftest-suite', 'reftest-no-accel'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
 ]
@@ -393,12 +404,14 @@ REFTEST_IPC = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--reftest-suite', 'reftest-ipc'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
     ('crashtest-ipc', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--reftest-suite', 'crashtest-ipc'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
 ]
@@ -408,6 +421,16 @@ XPCSHELL = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--xpcshell-suite', 'xpcshell'],
+        'blob_upload': True,
+        'script_maxtime': 7200,
+    }),
+]
+
+CPPUNIT = [
+    ('cppunit', {
+        'use_mozharness': True,
+        'script_path': 'scripts/desktop_unittest.py',
+        'extra_args': ['--cppunittest-suite', 'cppunittest'],
         'script_maxtime': 7200,
     }),
 ]
@@ -423,6 +446,7 @@ METRO = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'mochitest-metro-chrome'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
 ]
@@ -490,6 +514,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/linux_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/linux_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/prod_config.py"],
                 },
@@ -539,6 +566,9 @@ PLATFORM_UNITTEST_VARS = {
                     'config_files': ["unittests/linux_unittest.py"],
                 },
                 'xpcshell': {
+                    'config_files': ["unittests/linux_unittest.py"],
+                },
+                'cppunit': {
                     'config_files': ["unittests/linux_unittest.py"],
                 },
                 'marionette': {
@@ -601,6 +631,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/linux_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/linux_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/prod_config.py"],
                 },
@@ -650,6 +683,9 @@ PLATFORM_UNITTEST_VARS = {
                     'config_files': ["unittests/linux_unittest.py"],
                 },
                 'xpcshell': {
+                    'config_files': ["unittests/linux_unittest.py"],
+                },
+                'cppunit': {
                     'config_files': ["unittests/linux_unittest.py"],
                 },
                 'marionette': {
@@ -714,6 +750,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/win_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/windows_config.py"],
                 },
@@ -763,6 +802,9 @@ PLATFORM_UNITTEST_VARS = {
                     'config_files': ["unittests/win_unittest.py"],
                 },
                 'xpcshell': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'cppunit': {
                     'config_files': ["unittests/win_unittest.py"],
                 },
                 'marionette': {
@@ -816,6 +858,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/win_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/windows_config.py"],
                 },
@@ -865,6 +910,9 @@ PLATFORM_UNITTEST_VARS = {
                     'config_files': ["unittests/win_unittest.py"],
                 },
                 'xpcshell': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'cppunit': {
                     'config_files': ["unittests/win_unittest.py"],
                 },
                 'marionette': {
@@ -919,6 +967,9 @@ PLATFORM_UNITTEST_VARS = {
                     'config_files': ["unittests/win_unittest.py"],
                 },
                 'xpcshell': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
+                'cppunit': {
                     'config_files': ["unittests/win_unittest.py"],
                 },
                 'marionette': {
@@ -986,6 +1037,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/win_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/win_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/windows_config.py"],
                 },
@@ -1045,6 +1099,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/mac_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/prod_config.py"],
                 },
@@ -1096,6 +1153,9 @@ PLATFORM_UNITTEST_VARS = {
                 'xpcshell': {
                     'config_files': ["unittests/mac_unittest.py"],
                 },
+                'cppunit': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
                 'marionette': {
                     'config_files': ["marionette/prod_config.py"],
                 },
@@ -1145,6 +1205,9 @@ PLATFORM_UNITTEST_VARS = {
                     'config_files': ["unittests/mac_unittest.py"],
                 },
                 'xpcshell': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'cppunit': {
                     'config_files': ["unittests/mac_unittest.py"],
                 },
                 'marionette': {
@@ -1221,7 +1284,7 @@ for branch in BRANCHES.keys():
 ### PROJECTS ###
 PROJECTS = {
     'jetpack': {
-        'branches': ['mozilla-central'],
+        'branches': ['fx-team'],
         'platforms': {
             'ubuntu64_vm': {'ext': 'linux-x86_64.tar.bz2', 'debug': True},
             'ubuntu32_vm': {'ext': 'linux-i686.tar.bz2', 'debug': True},
@@ -1294,9 +1357,12 @@ BRANCHES['mozilla-release']['repo_path'] = "releases/mozilla-release"
 BRANCHES['mozilla-release']['pgo_strategy'] = 'per-checkin'
 
 # MERGE DAY remove the below when Firefox 25 merges in
-BRANCHES['mozilla-release']['mozharness_talos'] = False
 BRANCHES['mozilla-release']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 # END MERGE DAY remove the below when Firefox 25 merges in
+
+# MERGE DAY remove the below when Firefox 24 merges in
+BRANCHES['mozilla-release']['mozharness_talos'] = False
+# END MERGE DAY remove the below when Firefox 24 merges in
 
 ######### mozilla-beta
 BRANCHES['mozilla-beta']['release_tests'] = 1
@@ -1304,9 +1370,12 @@ BRANCHES['mozilla-beta']['repo_path'] = "releases/mozilla-beta"
 BRANCHES['mozilla-beta']['pgo_strategy'] = 'per-checkin'
 
 # MERGE DAY remove the below when Firefox 25 merges in
-BRANCHES['mozilla-beta']['mozharness_talos'] = False
 BRANCHES['mozilla-beta']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 # END MERGE DAY remove the below when Firefox 25 merges in
+
+# MERGE DAY remove the below when Firefox 24 merges in
+BRANCHES['mozilla-beta']['mozharness_talos'] = False
+# END MERGE DAY remove the below when Firefox 24 merges in
 
 ######### mozilla-aurora
 BRANCHES['mozilla-aurora']['repo_path'] = "releases/mozilla-aurora"
@@ -1457,6 +1526,18 @@ for projectBranch in ACTIVE_PROJECT_BRANCHES:
     branchConfig = PROJECT_BRANCHES[projectBranch]
     loadDefaultValues(BRANCHES, projectBranch, branchConfig)
     loadCustomTalosSuites(BRANCHES, SUITES, projectBranch, branchConfig)
+
+# Enable cppunittest jobs for now
+for platform in PLATFORMS.keys():
+    if platform not in BRANCHES['cedar']['platforms']:
+        continue
+    for slave_platform in PLATFORMS[platform]['slave_platforms']:
+        if slave_platform not in BRANCHES['cedar']['platforms'][platform]:
+            continue
+        if BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites']:
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += CPPUNIT[:]
+        else:
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] = CPPUNIT[:]
 
 # Enable metro jobs for now
 # MERGE DAY: This may need to follow the trains: see bug 847442

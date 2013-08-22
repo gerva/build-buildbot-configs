@@ -505,6 +505,15 @@ ANDROID_MOZHARNESS_PLAIN_REFTEST = [
              'script_maxtime': 14400,
              },
         ),
+        ('plain-reftest-5',
+            {'suite': 'reftestsmall',
+             'use_mozharness': True,
+             'script_path': 'scripts/android_panda.py',
+             'extra_args': ['--cfg', 'android/android_panda_releng.py', '--reftest-suite', 'reftest-5'],
+             'timeout': 2400,
+             'script_maxtime': 14400,
+             },
+        ),
     ]
 
 
@@ -523,6 +532,15 @@ ANDROID_MOZHARNESS_PLAIN_ROBOCOP = [
              'use_mozharness': True,
              'script_path': 'scripts/android_panda.py',
              'extra_args': ['--cfg', 'android/android_panda_releng.py', '--robocop-suite', 'robocop-2'],
+             'timeout': 2400,
+             'script_maxtime': 14400,
+             },
+        ),
+        ('robocop-3',
+            {'suite': 'mochitest-robocop',
+             'use_mozharness': True,
+             'script_path': 'scripts/android_panda.py',
+             'extra_args': ['--cfg', 'android/android_panda_releng.py', '--robocop-suite', 'robocop-3'],
              'timeout': 2400,
              'script_maxtime': 14400,
              },
@@ -840,7 +858,7 @@ for projectBranch in ACTIVE_PROJECT_BRANCHES:
 for branch in BRANCHES:
     if branch not in ('mozilla-central', 'mozilla-inbound', 'mozilla-b2g18',
                       'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd', 'try',
-                      'b2g-inbound', 'birch', 'date',
+                      'b2g-inbound', 'date',
                       ):
         if 'android-noion' in BRANCHES[branch]['platforms']:
             del BRANCHES[branch]['platforms']['android-noion']

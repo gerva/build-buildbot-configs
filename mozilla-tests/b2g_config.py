@@ -16,7 +16,6 @@ GLOBAL_VARS.update(b2g_localconfig.GLOBAL_VARS.copy())
 
 BRANCHES = {
     'ash': {},
-    'birch': {},
     'cedar': {},
     'cypress': {},
     'fx-team': {},
@@ -221,10 +220,20 @@ REFTEST_SANITY = [
 
 
 JSREFTEST = [
-    ('jsreftest', {'suite': 'reftest',
-                   'use_mozharness': True,
-                   'script_path': 'scripts/b2g_emulator_unittest.py',
-                   },
+    ('jsreftest-1', {'suite': 'jsreftest',
+                     'use_mozharness': True,
+                     'script_path': 'scripts/b2g_emulator_unittest.py',
+                     },
+     ),
+    ('jsreftest-2', {'suite': 'jsreftest',
+                     'use_mozharness': True,
+                     'script_path': 'scripts/b2g_emulator_unittest.py',
+                     },
+     ),
+    ('jsreftest-3', {'suite': 'jsreftest',
+                     'use_mozharness': True,
+                     'script_path': 'scripts/b2g_emulator_unittest.py',
+                     },
      ),
 ]
 
@@ -792,7 +801,7 @@ PLATFORM_UNITTEST_VARS = {
         'enable_opt_unittests': True,
         'enable_debug_unittests': False,
         'ubuntu64_vm-b2gdt': {
-            'opt_unittest_suites': GAIA_UNITTESTS[:],
+            'opt_unittest_suites': GAIA_UNITTESTS[:] + GAIA_UI[:],
             'debug_unittest_suites': [],
             'suite_config': {
                 'gaia-unit': {
@@ -1010,10 +1019,27 @@ PLATFORM_UNITTEST_VARS = {
                         '--no-update',
                     ],
                 },
-                'jsreftest': {
+                'jsreftest-1': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'jsreftest',
+                        '--this-chunk', '1', '--total-chunks', '3',
+                        '--no-update',
+                    ],
+                },
+                'jsreftest-2': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--this-chunk', '2', '--total-chunks', '3',
+                        '--no-update',
+                    ],
+                },
+                'jsreftest-3': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--this-chunk', '3', '--total-chunks', '3',
                         '--no-update',
                     ],
                 },
@@ -1227,10 +1253,27 @@ PLATFORM_UNITTEST_VARS = {
                         '--no-update',
                     ],
                 },
-                'jsreftest': {
+                'jsreftest-1': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'jsreftest',
+                        '--this-chunk', '1', '--total-chunks', '3',
+                        '--no-update',
+                    ],
+                },
+                'jsreftest-2': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--this-chunk', '2', '--total-chunks', '3',
+                        '--no-update',
+                    ],
+                },
+                'jsreftest-3': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--this-chunk', '3', '--total-chunks', '3',
                         '--no-update',
                     ],
                 },
@@ -1352,10 +1395,27 @@ PLATFORM_UNITTEST_VARS = {
                         '--no-update',
                     ],
                 },
-                'jsreftest': {
+                'jsreftest-1': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'jsreftest',
+                        '--this-chunk', '1', '--total-chunks', '3',
+                        '--no-update',
+                    ],
+                },
+                'jsreftest-2': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--this-chunk', '2', '--total-chunks', '3',
+                        '--no-update',
+                    ],
+                },
+                'jsreftest-3': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'jsreftest',
+                        '--this-chunk', '3', '--total-chunks', '3',
                         '--no-update',
                     ],
                 },
@@ -1447,8 +1507,6 @@ BRANCHES['ash']['mozharness_repo'] = "http://hg.mozilla.org/users/asasaki_mozill
 BRANCHES['ash']['mozharness_tag'] = "default"
 BRANCHES['ash']['platforms']['ics_armv7a_gecko']['fedora-b2g']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['ash']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
-BRANCHES['birch']['branch_name'] = "Birch"
-BRANCHES['birch']['repo_path'] = "projects/birch"
 BRANCHES['cedar']['branch_name'] = "Cedar"
 BRANCHES['cedar']['repo_path'] = "projects/cedar"
 BRANCHES['cedar']['mozharness_tag'] = "default"
@@ -1461,7 +1519,6 @@ BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unit
 BRANCHES['cedar']['platforms']['emulator']['fedora-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['debug_unittest_suites'] = ALL_UNITTESTS[:]
 BRANCHES['cedar']['platforms']['emulator']['enable_debug_unittests'] = True
-BRANCHES['cedar']['platforms']['linux64_gecko']['ubuntu64_vm-b2gdt']['opt_unittest_suites'] = GAIA_UNITTESTS[:] + GAIA_UI[:]
 BRANCHES['cypress']['branch_name'] = "Cypress"
 BRANCHES['cypress']['repo_path'] = "projects/cypress"
 BRANCHES['fx-team']['repo_path'] = "integration/fx-team"
@@ -1480,6 +1537,7 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['repo_path'] = "releases/mozilla-b2g18_v1_1_
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['fedora-b2g']['opt_unittest_suites'] = [x for x in ALL_UNITTESTS if x not in REFTEST] + REFTEST_SANITY
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['fedora-b2g']['debug_unittest_suites'] = MOCHITEST + XPCSHELL
 BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['ics_armv7a_gecko']['enable_debug_unittests'] = True
+BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['emulator']['fedora-b2g-emulator']['opt_unittest_suites'] = [x for x in ALL_UNITTESTS if x not in REFTEST] + REFTEST_SANITY
 BRANCHES['mozilla-central']['branch_name'] = "Firefox"
 BRANCHES['mozilla-inbound']['repo_path'] = "integration/mozilla-inbound"
 BRANCHES['b2g-inbound']['branch_name'] = "B2g-Inbound"
@@ -1527,6 +1585,14 @@ for branch in set(BRANCHES.keys()) - set(['cedar']):
         if 'ubuntu64_hw-b2g' in BRANCHES[branch]['platforms'][platform]:
             del BRANCHES[branch]['platforms'][platform]['ubuntu64_hw-b2g']
 
+# Disable ubuntu64_vm-b2gdt (ie gaia-ui-test) on older branches
+for branch in BRANCHES.keys():
+    if branch in ('mozilla-esr17', 'mozilla-b2g18_v1_0_0',
+                  'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd'):
+        if 'linux64_gecko' in BRANCHES[branch]['platforms']:
+            if 'ubuntu64_vm-b2gdt' in BRANCHES[branch]['platforms']['linux64_gecko']:
+                del BRANCHES[branch]['platforms']['linux64_gecko']['ubuntu64_vm-b2gdt']
+
 # Disable linux32_gecko on all branches but cedar
 for branch in set(BRANCHES.keys()) - set(['cedar']):
     for platform in ('linux32_gecko',):
@@ -1539,7 +1605,7 @@ for branch in set(BRANCHES.keys()) - set(['cedar']):
 for branch in BRANCHES.keys():
     if branch in ('mozilla-aurora', 'mozilla-beta', 'mozilla-release',
                   'mozilla-esr17', 'mozilla-b2g18_v1_0_0',
-                  'mozilla-b2g18_v1_0_1', 'mozilla-b2g18_v1_1_0_hd'):
+                  'mozilla-b2g18_v1_0_1'):
         if 'emulator' in BRANCHES[branch]['platforms']:
             del BRANCHES[branch]['platforms']['emulator']
     elif branch not in ('mozilla-b2g18', ):
