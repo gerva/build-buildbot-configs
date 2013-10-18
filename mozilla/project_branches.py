@@ -248,6 +248,7 @@ PROJECT_BRANCHES = {
                 'create_snippet': False,
                 'create_mobile_snippet': False,
             },
+        },
         'enable_opt_unittests': True,
         'enable_l10n': True,
         'enable_l10n_onchange': True,
