@@ -584,6 +584,7 @@ PLATFORM_VARS = {
     },
     'unagi': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -599,6 +600,7 @@ PLATFORM_VARS = {
     },
     'unagi_eng': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -615,6 +617,7 @@ PLATFORM_VARS = {
     },
     'inari': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -630,6 +633,7 @@ PLATFORM_VARS = {
     },
     'inari_eng': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -645,6 +649,7 @@ PLATFORM_VARS = {
     },
     'leo': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -660,6 +665,7 @@ PLATFORM_VARS = {
     },
     'leo_eng': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -675,6 +681,7 @@ PLATFORM_VARS = {
     },
     'hamachi': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -690,6 +697,7 @@ PLATFORM_VARS = {
     },
     'hamachi_eng': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -724,6 +732,7 @@ PLATFORM_VARS = {
     },
     'helix': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -739,6 +748,7 @@ PLATFORM_VARS = {
     },
     'emulator': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -755,6 +765,7 @@ PLATFORM_VARS = {
     },
     'emulator-debug': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -771,6 +782,7 @@ PLATFORM_VARS = {
     },
     'emulator-jb': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below
@@ -787,6 +799,7 @@ PLATFORM_VARS = {
     },
     'emulator-jb-debug': {
         'mozharness_config': {
+            'enable_misc_py_short_circuit_hack': True,
             'script_name': 'scripts/b2g_build.py',
             # b2g_build.py will checkout gecko from hg and look up a tooltool manifest given by the
             # --target name below

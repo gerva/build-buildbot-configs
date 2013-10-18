@@ -12,6 +12,10 @@ import master_common
 reload(master_common)
 from master_common import setMainFirefoxVersions, items_before
 
+MOZHARNESS_REBOOT_CMD = ['scripts/external_tools/count_and_reboot.py',
+                         '-f', '../reboot_count.txt',
+                         '-n', '1', '-z']
+
 GLOBAL_VARS = {
     # It's a little unfortunate to have both of these but some things (HgPoller)
     # require an URL while other things (BuildSteps) require only the host.
@@ -214,6 +218,12 @@ PLATFORM_VARS = {
                 ('/builds/gapi.data', '/builds/gapi.data'),
                 ('/tools/tooltool.py', '/builds/tooltool.py'),
             ],
+            'l10n_use_mozharness': False,
+            'mozharness_config': {
+                'script_name': 'scripts/desktop_l10n.py',
+                'l10n_chunks': 5,
+                'reboot_command': ['/tools/python/bin/python2.7'] + MOZHARNESS_REBOOT_CMD,
+            },
         },
         'linux64': {
             'product_name': 'firefox',
@@ -290,6 +300,12 @@ PLATFORM_VARS = {
                 ('/builds/gapi.data', '/builds/gapi.data'),
                 ('/tools/tooltool.py', '/builds/tooltool.py'),
             ],
+            'l10n_use_mozharness': False,
+            'mozharness_config': {
+                'script_name': 'scripts/desktop_l10n.py',
+                'l10n_chunks': 5,
+                'reboot_command': ['/tools/python/bin/python2.7'] + MOZHARNESS_REBOOT_CMD,
+            },
         },
         'linux64-asan': {
             'product_name': 'firefox',
@@ -528,6 +544,7 @@ PLATFORM_VARS = {
         },
         'linux64-sh-haz': {
             'mozharness_config': {
+                'enable_misc_py_short_circuit_hack': True,
                 'script_name': 'scripts/spidermonkey_build.py',
                 'extra_args': [
                     '--config-file', 'hazards/build_shell.py',
@@ -612,6 +629,12 @@ PLATFORM_VARS = {
             'dep_signing_servers': 'mac-dep-signing',
             'tooltool_manifest_src': 'browser/config/tooltool-manifests/macosx64/releng.manifest',
             'enable_ccache': True,
+            'l10n_use_mozharness': False,
+            'mozharness_config': {
+                'script_name': 'scripts/desktop_l10n.py',
+                'l10n_chunks': 5,
+                'reboot_command': ['/tools/python/bin/python2.7'] + MOZHARNESS_REBOOT_CMD,
+            },
         },
         'win32': {
             'product_name': 'firefox',
@@ -664,6 +687,12 @@ PLATFORM_VARS = {
             # must be overridden explicitly.
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
+            'l10n_use_mozharness': False,
+            'mozharness_config': {
+                'script_name': 'scripts/desktop_l10n.py',
+                'l10n_chunks': 5,
+                'reboot_command': ['c:/mozilla-build/python27/python'] + MOZHARNESS_REBOOT_CMD,
+            },
         },
         'win64': {
             'product_name': 'firefox',
@@ -712,6 +741,12 @@ PLATFORM_VARS = {
             # The status of this build doesn't affect the last good revision
             # algorithm for nightlies
             'consider_for_nightly': False,
+            'l10n_use_mozharness': False,
+            'mozharness_config': {
+                'script_name': 'scripts/desktop_l10n.py',
+                'l10n_chunks': 5,
+                'reboot_command': ['c:/mozilla-build/python27/python'] + MOZHARNESS_REBOOT_CMD,
+            },
         },
         'linux-debug': {
             'enable_nightly': False,
@@ -1033,8 +1068,12 @@ PLATFORM_VARS = {
             'stage_platform': "android",
             'stage_product': 'mobile',
             'post_upload_include_platform': True,
-            'is_mobile_l10n': True,
-            'l10n_chunks': 5,
+            'l10n_use_mozharness': True,
+            'mozharness_config': {
+                'script_name': 'scripts/mobile_l10n.py',
+                'l10n_chunks': 5,
+                'reboot_command': ['/tools/python/bin/python2.7'] + MOZHARNESS_REBOOT_CMD,
+            },
             'multi_locale': True,
             'multi_locale_script': 'scripts/multil10n.py',
             'tooltool_manifest_src': 'mobile/android/config/tooltool-manifests/android/releng.manifest',
@@ -1099,7 +1138,6 @@ PLATFORM_VARS = {
             'stage_platform': "android-armv6",
             'stage_product': 'mobile',
             'post_upload_include_platform': True,
-            'is_mobile_l10n': False,
             'multi_locale': True,
             'multi_locale_script': 'scripts/multil10n.py',
             'tooltool_manifest_src': 'mobile/android/config/tooltool-manifests/android-armv6/releng.manifest',
@@ -1162,7 +1200,6 @@ PLATFORM_VARS = {
             'stage_platform': "android-x86",
             'stage_product': 'mobile',
             'post_upload_include_platform': True,
-            'is_mobile_l10n': False,
             'multi_locale': True,
             'multi_locale_script': 'scripts/multil10n.py',
             'tooltool_manifest_src': 'mobile/android/config/tooltool-manifests/android-x86/releng.manifest',
@@ -1232,7 +1269,6 @@ PLATFORM_VARS = {
             'stage_platform': "android-noion",
             'stage_product': 'mobile',
             'post_upload_include_platform': True,
-            'is_mobile_l10n': False,
             'multi_locale': False,
             'tooltool_manifest_src': 'mobile/android/config/tooltool-manifests/android/releng.manifest',
         },
@@ -1645,7 +1681,7 @@ BRANCHES['mozilla-central']['enable_l10n'] = True
 BRANCHES['mozilla-central']['enable_l10n_onchange'] = True
 BRANCHES['mozilla-central']['l10nNightlyUpdate'] = True
 BRANCHES['mozilla-central']['l10n_platforms'] = ['linux', 'linux64', 'win32',
-                                                 'macosx64']
+                                                 'macosx64', 'android']
 BRANCHES['mozilla-central']['l10nDatedDirs'] = True
 BRANCHES['mozilla-central']['l10n_tree'] = 'fxcentral'
 #make sure it has an ending slash
@@ -1699,7 +1735,7 @@ BRANCHES['mozilla-release']['enable_l10n'] = False
 BRANCHES['mozilla-release']['enable_l10n_onchange'] = True
 BRANCHES['mozilla-release']['l10nNightlyUpdate'] = False
 BRANCHES['mozilla-release']['l10n_platforms'] = ['linux', 'linux64', 'win32',
-                                                 'macosx64']
+                                                 'macosx64', 'android']
 BRANCHES['mozilla-release']['l10nDatedDirs'] = True
 BRANCHES['mozilla-release']['l10n_tree'] = 'fxrel'
 BRANCHES['mozilla-release']['enUS_binaryURL'] = \
@@ -1736,7 +1772,7 @@ BRANCHES['mozilla-beta']['enable_l10n'] = False
 BRANCHES['mozilla-beta']['enable_l10n_onchange'] = True
 BRANCHES['mozilla-beta']['l10nNightlyUpdate'] = False
 BRANCHES['mozilla-beta']['l10n_platforms'] = ['linux', 'linux64', 'win32',
-                                              'macosx64']
+                                              'macosx64', 'android']
 BRANCHES['mozilla-beta']['l10nDatedDirs'] = True
 BRANCHES['mozilla-beta']['l10n_tree'] = 'fxbeta'
 #make sure it has an ending slash
@@ -1781,7 +1817,7 @@ BRANCHES['mozilla-aurora']['enable_l10n'] = True
 BRANCHES['mozilla-aurora']['enable_l10n_onchange'] = True
 BRANCHES['mozilla-aurora']['l10nNightlyUpdate'] = True
 BRANCHES['mozilla-aurora']['l10n_platforms'] = ['linux', 'linux64', 'win32',
-                                                 'macosx64']
+                                                 'macosx64', 'android']
 BRANCHES['mozilla-aurora']['l10nDatedDirs'] = True
 BRANCHES['mozilla-aurora']['l10n_tree'] = 'fxaurora'
 #make sure it has an ending slash

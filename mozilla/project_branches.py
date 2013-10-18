@@ -198,6 +198,56 @@ PROJECT_BRANCHES = {
         'enable_nightly': True,
         'create_snippet': True,
         'create_mobile_snippet': True,
+        'platforms': {
+            'linux': {
+                'l10n_use_mozharness': True,
+            },
+            'linux64': {
+                'l10n_use_mozharness': True,
+            },
+            'linux64-asan': {
+                'enable_nightly': False,
+                'create_snippet': False,
+            },
+            'linux64-asan-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+            },
+            'win32': {
+                'l10n_use_mozharness': True,
+            },
+            'macosx64': {
+                'l10n_use_mozharness': True,
+            },
+            'linux-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+            },
+            'linux64-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+            },
+            'macosx64-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+            },
+            'win32-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+            },
+        },
+        'mobile_platforms': {
+            'android': {
+                'enable_nightly': True,
+                'create_snippet': True,
+                'create_mobile_snippet': True,
+                'l10n_use_mozharness': True,
+            },
+            'android-debug': {
+                'enable_nightly': False,
+                'create_snippet': False,
+                'create_mobile_snippet': False,
+            },
         'enable_opt_unittests': True,
         'enable_l10n': True,
         'enable_l10n_onchange': True,
@@ -210,6 +260,15 @@ PROJECT_BRANCHES = {
                 'enable_opt_unittests': True,
             },
         },
+        'enable_l10n': True,
+        'enable_l10n_onchange': True,
+        'l10nNightlyUpdate': True,
+        'l10n_platforms': ['linux', 'linux64', 'macosx64', 'win32'],
+        'l10n_tree': 'cedar',
+        'l10n_repo_path': 'l10n-central',
+        'enable_nightly': True,
+        'create_snippet': True,
+        'create_partial': True,
     },
     'date': {
         'lock_platforms': True,
