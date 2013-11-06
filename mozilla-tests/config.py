@@ -100,8 +100,8 @@ BRANCHES = {
         'lock_platforms': True,
     },
     'try': {
-      'coallesce_jobs': False,
-      'blob_upload' : True,
+        'coallesce_jobs': False,
+        'blob_upload': True,
     },
 }
 
@@ -261,7 +261,7 @@ SUITES = {
         'suites': GRAPH_CONFIG + ['--activeTests', 'tresize', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, ALL_TALOS_PLATFORMS),
     },
-     # now let's add the metro talos suites
+    # now let's add the metro talos suites
     'tp5o-metro': {
         'enable_by_default': False,
         'suites': [],  # suite + args are governed by talos.json
@@ -426,6 +426,17 @@ MOCHITEST = [
 ]
 
 MOCHITEST_BC = [
+    ('mochitest-browser-chrome', {
+        'use_mozharness': True,
+        'script_path': 'scripts/desktop_unittest.py',
+        'extra_args': ['--mochitest-suite', 'browser-chrome'],
+        'blob_upload': True,
+        'script_maxtime': 9000,
+    }),
+
+]
+
+MOCHITEST_BC_3 = [
     ('mochitest-browser-chrome-1', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
@@ -1805,6 +1816,22 @@ for platform in PLATFORMS.keys():
         else:
             BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] = JITTEST[:]
 
+# Enable 3 chunks mochitest-bc on cedar https://bugzilla.mozilla.org/show_bug.cgi?id=819963
+for platform in PLATFORMS.keys():
+    if platform not in BRANCHES['cedar']['platforms']:
+        continue
+    for slave_platform in PLATFORMS[platform]['slave_platforms']:
+        if slave_platform not in BRANCHES['cedar']['platforms'][platform]:
+            continue
+        if BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites']:
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += MOCHITEST_BC_3[:]
+        else:
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] = MOCHITEST_BC_3[:]
+        if BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites']:
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += MOCHITEST_BC_3[:]
+        else:
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] = MOCHITEST_BC_3[:]
+
 # Enable metro debug jobs for now
 # This may need to follow the trains: see bug 847442 (comment 73)
 BRANCHES['cedar']['platforms']['win32']['win8']['debug_unittest_suites'] += METRO[:]
@@ -1853,9 +1880,9 @@ for branch in BRANCHES:
     for p, ubuntu, fedora in [('linux', 'ubuntu32_vm', 'fedora'),
                               ('linux64', 'ubuntu64_vm', 'fedora64')]:
         for suite_type, ubuntu_tests in [('opt_unittest_suites',
-                                         get_ubuntu_unittests(branch, 'opt_unittest_suites')),
+                                          get_ubuntu_unittests(branch, 'opt_unittest_suites')),
                                          ('debug_unittest_suites',
-                                         get_ubuntu_unittests(branch, 'debug_unittest_suites'))]:
+                                          get_ubuntu_unittests(branch, 'debug_unittest_suites'))]:
             if nested_haskey(BRANCHES[branch]['platforms'], p, ubuntu,
                              suite_type):
                 # Explicitly remove tests listed in ubuntu_tests even though
