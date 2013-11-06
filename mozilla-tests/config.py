@@ -304,8 +304,7 @@ BUILDBOT_UNITTEST_SUITES = {
     'opt': [
         # Turn on chunks for mochitest
         ('mochitest', dict(suite='mochitest-plain', chunkByDir=4, totalChunks=5)),
-        ('mochitest-browser-chrome', ['mochitest-browser-chrome']),
-        ('mochitest-browser-chrome-chunks', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
+        ('mochitest-browser-chrome', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
         ('mochitest-other', ['mochitest-chrome', 'mochitest-a11y', 'mochitest-ipcplugins']),
         ('reftest', ['reftest']),
         ('crashtest', ['crashtest']),
@@ -317,8 +316,7 @@ BUILDBOT_UNITTEST_SUITES = {
     'opt_with_ipc': [
         # Turn on chunks for mochitest
         ('mochitest', dict(suite='mochitest-plain', chunkByDir=4, totalChunks=5)),
-        ('mochitest-browser-chrome', ['mochitest-browser-chrome']),
-        ('mochitest-browser-chrome-chunks', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
+        ('mochitest-browser-chrome', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
         ('mochitest-other', ['mochitest-chrome', 'mochitest-a11y', 'mochitest-ipcplugins']),
         ('reftest', ['reftest']),
         ('crashtest', ['crashtest']),
@@ -333,8 +331,7 @@ BUILDBOT_UNITTEST_SUITES = {
     'opt_with_no-d2d-d3d': [
         # Turn on chunks for mochitest
         ('mochitest', dict(suite='mochitest-plain', chunkByDir=4, totalChunks=5)),
-        ('mochitest-browser-chrome', ['mochitest-browser-chrome']),
-        ('mochitest-browser-chrome-chunks', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
+        ('mochitest-browser-chrome', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
         ('mochitest-other', ['mochitest-chrome', 'mochitest-a11y', 'mochitest-ipcplugins']),
         ('reftest', ['reftest']),
         ('crashtest', ['crashtest']),
@@ -347,8 +344,7 @@ BUILDBOT_UNITTEST_SUITES = {
     'opt_no_a11y': [
         # Turn on chunks for mochitest
         ('mochitest', dict(suite='mochitest-plain', chunkByDir=4, totalChunks=5)),
-        ('mochitest-browser-chrome', ['mochitest-browser-chrome']),
-        ('mochitest-browser-chrome-chunks', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
+        ('mochitest-browser-chrome', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
         ('mochitest-other', ['mochitest-chrome', 'mochitest-ipcplugins']),
         ('reftest', ['reftest']),
         ('crashtest', ['crashtest']),
@@ -360,8 +356,7 @@ BUILDBOT_UNITTEST_SUITES = {
     'debug': [
         # Turn on chunks for mochitest
         ('mochitest', dict(suite='mochitest-plain', chunkByDir=4, totalChunks=5)),
-        ('mochitest-browser-chrome', ['mochitest-browser-chrome']),
-        ('mochitest-browser-chrome-chunks', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
+        ('mochitest-browser-chrome', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
         ('mochitest-other', ['mochitest-chrome', 'mochitest-a11y', 'mochitest-ipcplugins']),
         ('reftest', ['reftest']),
         ('crashtest', ['crashtest']),
@@ -373,8 +368,7 @@ BUILDBOT_UNITTEST_SUITES = {
     'debug_no_a11y': [
         # Turn on chunks for mochitest
         ('mochitest', dict(suite='mochitest-plain', chunkByDir=4, totalChunks=5)),
-        ('mochitest-browser-chrome', ['mochitest-browser-chrome']),
-        ('mochitest-browser-chrome-chunks', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
+        ('mochitest-browser-chrome', dict(suite='mochitest-browser-chrome-suite', totalChunks=3)),
         ('mochitest-other', ['mochitest-chrome', 'mochitest-ipcplugins']),
         ('reftest', ['reftest']),
         ('crashtest', ['crashtest']),
@@ -432,7 +426,7 @@ MOCHITEST = [
 ]
 
 MOCHITEST_BC = [
-    ('mochitest-chrome', {
+    ('mochitest-browser-chrome', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--mochitest-suite', 'browser-chrome'],
