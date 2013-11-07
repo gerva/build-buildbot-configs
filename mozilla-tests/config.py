@@ -1889,9 +1889,7 @@ def get_ubuntu_unittests(branch, test_type):
                      "reftest-ipc", "xpcshell", "reftest", "reftest-no-accel",
                      "mochitest-1", "mochitest-2", "mochitest-3",
                      "mochitest-4", "mochitest-5", "mochitest",
-                     #"mochitest-browser-chrome-1", "mochitest-browser-chrome-2",
-                     #"mochitest-browser-chrome-3", "mochitest-browser-chrome",
-                     "mochitest-other"],
+                     "mochitest-browser-chrome", "mochitest-other"],
                     "debug_unittest_suites":
                     ["crashtest", "jsreftest", "jetpack", "marionette",
                      "xpcshell", "reftest", "reftest-no-accel", "mochitest-1",
