@@ -416,16 +416,6 @@ MOCHITEST = [
         'blob_upload': True,
         'script_maxtime': 7200,
     }),
-    ('mochitest-other', {
-        'use_mozharness': True,
-        'script_path': 'scripts/desktop_unittest.py',
-        'extra_args': ['--mochitest-suite', 'chrome,a11y,plugins'],
-        'blob_upload': True,
-        'script_maxtime': 7200,
-    }),
-]
-
-MOCHITEST_BC = [
     ('mochitest-browser-chrome', {
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
@@ -433,7 +423,13 @@ MOCHITEST_BC = [
         'blob_upload': True,
         'script_maxtime': 9000,
     }),
-
+    ('mochitest-other', {
+        'use_mozharness': True,
+        'script_path': 'scripts/desktop_unittest.py',
+        'extra_args': ['--mochitest-suite', 'chrome,a11y,plugins'],
+        'blob_upload': True,
+        'script_maxtime': 7200,
+    }),
 ]
 
 MOCHITEST_BC_3 = [
@@ -554,8 +550,8 @@ JITTEST = [
 
 
 UNITTEST_SUITES = {
-    'opt_unittest_suites': MOCHITEST + MOCHITEST_BC + REFTEST_NO_IPC + XPCSHELL,
-    'debug_unittest_suites': MOCHITEST + MOCHITEST_BC + REFTEST_NO_IPC + XPCSHELL + MARIONETTE,
+    'opt_unittest_suites': MOCHITEST + REFTEST_NO_IPC + XPCSHELL,
+    'debug_unittest_suites': MOCHITEST + REFTEST_NO_IPC + XPCSHELL + MARIONETTE,
 }
 
 
@@ -1893,8 +1889,8 @@ def get_ubuntu_unittests(branch, test_type):
                      "reftest-ipc", "xpcshell", "reftest", "reftest-no-accel",
                      "mochitest-1", "mochitest-2", "mochitest-3",
                      "mochitest-4", "mochitest-5", "mochitest",
-                     "mochitest-browser-chrome-1", "mochitest-browser-chrome-2",
-                     "mochitest-browser-chrome-3", "mochitest-browser-chrome",
+                     #"mochitest-browser-chrome-1", "mochitest-browser-chrome-2",
+                     #"mochitest-browser-chrome-3", "mochitest-browser-chrome",
                      "mochitest-other"],
                     "debug_unittest_suites":
                     ["crashtest", "jsreftest", "jetpack", "marionette",
