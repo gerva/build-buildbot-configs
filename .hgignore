@@ -14,3 +14,8 @@ test-output
 ^thunderbird.*/comm-central-.*
 ^thunderbird.*/trunk-.*
 ^thunderbird.*/logs
+
+# local changes remove from final patch
+*.swp
+.gitignore
+.rope*
