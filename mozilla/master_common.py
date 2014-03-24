@@ -71,11 +71,14 @@ BUILDER_PRIORITIES = [
 def builderPriority(builder, request):
     """
     Our builder sorting function
-    Returns (branch_priority, request_priority, builder_priority, submitted_at)
+    Returns (release, branch_priority, request_priority, builder_priority, submitted_at)
 
     NB: lower values returned by this function correspond to a "higher" or
     "better" priority
     """
+    # priority:
+    # release > branch > request > builder_priority > submitted_at
+
     # larger request priorities correspond to more important jobs
     # see buildbot's DBConnector.get_unclaimed_buildrequests which sorts the
     # buildrequests by request.priority DESC
@@ -83,14 +86,20 @@ def builderPriority(builder, request):
     req_priority = -request[1]
     submitted_at = request[2]
 
-    branch_priority = DEFAULT_BRANCH_PRIORITY
+    # is this a release?
+    release = 0
+
+    # branch priority
+    my_branch = None
+    try:
+        my_branch = builder.properties['branch']
+    except TypeError:
+        # builder has no properties or 'branch': ignore
+        pass
+    branch_priority = BRANCH_PRIORITIES.get(my_branch, DEFAULT_BRANCH_PRIORITY)
+
     if builder.builder_status.category.startswith('release'):
-        branch_priority = 0
-    elif builder.properties and 'branch' in builder.properties:
-        for branch, p in BRANCH_PRIORITIES.iteritems():
-            if branch in builder.properties['branch']:
-                branch_priority = p
-                break
+        release = -1
 
     # Default builder priority is 100
     builder_priority = 100
@@ -98,8 +107,7 @@ def builderPriority(builder, request):
         if exp.search(builder.name):
             builder_priority = p
             break
-
-    return branch_priority, req_priority, builder_priority, submitted_at
+    return release, branch_priority,  req_priority, builder_priority, submitted_at
 
 cached_twlog = None
 def getTwlog():
