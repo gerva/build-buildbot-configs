@@ -88,18 +88,19 @@ def builderPriority(builder, request):
 
     # is this a release?
     release = 0
+    if builder.builder_status.category.startswith('release'):
+        # this is a release, set it to a negative value
+        # lower value means higher priority
+        release = -1
 
-    # branch priority
-    my_branch = None
     try:
         my_branch = builder.properties['branch']
-    except TypeError:
-        # builder has no properties or 'branch': ignore
-        pass
+    except AttributeError, KeyError:
+        # AttributeError => builder has no properties
+        #       KeyError => builder has no 'branch'
+        my_branch = None
     branch_priority = BRANCH_PRIORITIES.get(my_branch, DEFAULT_BRANCH_PRIORITY)
 
-    if builder.builder_status.category.startswith('release'):
-        release = -1
 
     # Default builder priority is 100
     builder_priority = 100
