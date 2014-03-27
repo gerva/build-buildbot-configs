@@ -125,14 +125,15 @@ class builderProrityTest(unittest.TestCase):
         self.assertTrue(p0 < p1)
 
     def test_branch_priority(self):
+        """same request priority, different branches"""
+        mozilla_beta = self.mozilla_beta
         oak_builder = self.oak_builder
-        l10n_builder = self.l10n_builder
 
         # request
         request = self.low_priority_request
 
-        p0 = oak_builder.get_priority_request(request)
-        p1 = l10n_builder.get_priority_request(request)
+        p0 = mozilla_beta.get_priority_request(request)
+        p1 = oak_builder.get_priority_request(request)
         self.assertTrue(p0 < p1)
 
     def test_timestamp_priority(self):
@@ -163,6 +164,8 @@ class builderProrityTest(unittest.TestCase):
         self.assertTrue(p0 < p1)
 
     def test_release_priority(self):
+        """release builder vs generic builder, release wins regardless other
+           builder gets higher priority request"""
         mr_release = self.mr_release
         oak_builder = self.oak_builder
 
@@ -246,8 +249,6 @@ class builderProrityTest(unittest.TestCase):
         """In this scenario, we have the same builder and  we compare a random
            priority (rp) with a list of priorities. Results are stable and unique"""
 
-        # This generates a set of priority elements which are dividend in two
-        # disjointed stets: a set with priority
         import random
         oak_builder = self.oak_builder
         submitted_at = 0
