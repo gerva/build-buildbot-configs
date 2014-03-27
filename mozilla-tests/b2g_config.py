@@ -45,6 +45,10 @@ BRANCHES = {
         'gecko_version': 28,
         'b2g_version': (1, 3, 0),
     },
+    'mozilla-b2g28_v1_3t': {
+        'gecko_version': 28,
+        'b2g_version': (1, 3, 0),
+    },
     'mozilla-aurora': {
         'gecko_version': 30,
         'b2g_version': (1, 4, 0),
@@ -373,6 +377,40 @@ REFTEST = [
                    },
      ),
     ('reftest-10', {'suite': 'reftest',
+                    'use_mozharness': True,
+                    'script_path': 'scripts/b2g_emulator_unittest.py',
+                    'blob_upload': True,
+                    },
+     ),
+]
+
+REFTEST_15=REFTEST[:]
+REFTEST_15+=[ \
+    ('reftest-11', {'suite': 'reftest',
+                    'use_mozharness': True,
+                    'script_path': 'scripts/b2g_emulator_unittest.py',
+                    'blob_upload': True,
+                    },
+     ),
+    ('reftest-12', {'suite': 'reftest',
+                    'use_mozharness': True,
+                    'script_path': 'scripts/b2g_emulator_unittest.py',
+                    'blob_upload': True,
+                    },
+     ),
+    ('reftest-13', {'suite': 'reftest',
+                    'use_mozharness': True,
+                    'script_path': 'scripts/b2g_emulator_unittest.py',
+                    'blob_upload': True,
+                    },
+     ),
+    ('reftest-14', {'suite': 'reftest',
+                    'use_mozharness': True,
+                    'script_path': 'scripts/b2g_emulator_unittest.py',
+                    'blob_upload': True,
+                    },
+     ),
+    ('reftest-15', {'suite': 'reftest',
                     'use_mozharness': True,
                     'script_path': 'scripts/b2g_emulator_unittest.py',
                     'blob_upload': True,
@@ -1329,70 +1367,105 @@ PLATFORM_UNITTEST_VARS = {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '1', '--total-chunks', '10',
+                        '--this-chunk', '1', '--total-chunks', '15',
                     ],
                 },
                 'reftest-2': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '2', '--total-chunks', '10',
+                        '--this-chunk', '2', '--total-chunks', '15',
                     ],
                 },
                 'reftest-3': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '3', '--total-chunks', '10',
+                        '--this-chunk', '3', '--total-chunks', '15',
                     ],
                 },
                 'reftest-4': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '4', '--total-chunks', '10',
+                        '--this-chunk', '4', '--total-chunks', '15',
                     ],
                 },
                 'reftest-5': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '5', '--total-chunks', '10',
+                        '--this-chunk', '5', '--total-chunks', '15',
                     ],
                 },
                 'reftest-6': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '6', '--total-chunks', '10',
+                        '--this-chunk', '6', '--total-chunks', '15',
                     ],
                 },
                 'reftest-7': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '7', '--total-chunks', '10',
+                        '--this-chunk', '7', '--total-chunks', '15',
                     ],
                 },
                 'reftest-8': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '8', '--total-chunks', '10',
+                        '--this-chunk', '8', '--total-chunks', '15',
                     ],
                 },
                 'reftest-9': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '9', '--total-chunks', '10',
+                        '--this-chunk', '9', '--total-chunks', '15',
                     ],
                 },
                 'reftest-10': {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'reftest',
-                        '--this-chunk', '10', '--total-chunks', '10',
+                        '--this-chunk', '10', '--total-chunks', '15',
+                    ],
+                },
+                'reftest-11': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'reftest',
+                        '--this-chunk', '11', '--total-chunks', '15',
+                    ],
+                },
+                'reftest-12': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'reftest',
+                        '--this-chunk', '12', '--total-chunks', '15',
+                    ],
+                },
+                'reftest-13': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'reftest',
+                        '--this-chunk', '13', '--total-chunks', '15',
+                    ],
+                },
+                'reftest-14': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'reftest',
+                        '--this-chunk', '14', '--total-chunks', '15',
+                    ],
+                },
+                'reftest-15': {
+                    'extra_args': [
+                        '--cfg', 'b2g/emulator_automation_config.py',
+                        '--test-suite', 'reftest',
+                        '--this-chunk', '15', '--total-chunks', '15',
                     ],
                 },
                 'jsreftest-1': {
@@ -1674,6 +1747,7 @@ BRANCHES['mozilla-b2g18_v1_1_0_hd']['platforms']['emulator']['enable_debug_unitt
 BRANCHES['mozilla-b2g26_v1_2']['repo_path'] = "releases/mozilla-b2g26_v1_2"
 BRANCHES['mozilla-b2g26_v1_2']['platforms']['emulator']['enable_debug_unittests'] = False
 BRANCHES['mozilla-b2g28_v1_3']['repo_path'] = "releases/mozilla-b2g28_v1_3"
+BRANCHES['mozilla-b2g28_v1_3t']['repo_path'] = "releases/mozilla-b2g28_v1_3t"
 BRANCHES['mozilla-aurora']['branch_name'] = "Mozilla-Aurora"
 BRANCHES['mozilla-aurora']['repo_path'] = "releases/mozilla-aurora"
 BRANCHES['mozilla-central']['branch_name'] = "Firefox"
@@ -1752,13 +1826,14 @@ for b in BRANCHES.keys():
 # Once we uplift the patches to esr24 and the b2g branches
 # we can get enable the REFTESTS for every branch
 for name, branch in items_at_least(BRANCHES, 'gecko_version', 30):
-    branch['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unittest_suites'] += REFTEST[:]
+    branch['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unittest_suites'] += REFTEST_15[:]
 
 # Disable macosx64_gecko gaia-ui tests on older branches
 for branch in BRANCHES.keys():
     if branch in ('mozilla-b2g18_v1_0_0', 'mozilla-b2g18_v1_0_1',
                   'mozilla-b2g18_v1_1_0_hd', 'mozilla-b2g18',
-                  'mozilla-b2g26_v1_2', 'mozilla-b2g28_v1_3'):
+                  'mozilla-b2g26_v1_2', 'mozilla-b2g28_v1_3',
+                  'mozilla-b2g28_v1_3t'):
         for platform in ('macosx64_gecko',):
             if platform in BRANCHES[branch]['platforms']:
                 for slave_platform in ('mountainlion-b2gdt',):
