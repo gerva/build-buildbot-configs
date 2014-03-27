@@ -1,3 +1,4 @@
+"""test for master.common builderPriority"""
 import unittest
 import time
 import master_common
@@ -8,17 +9,20 @@ BRANCH_PRIORITIES = master_common.BRANCH_PRIORITIES
 
 
 class builderStatusStub(object):
+    """builder status stub"""
     def __init__(self, category):
         self.category = category
 
 
 def builderPriorityStub(branch):
+    """builder priority stub"""
     status = {}
     status['branch'] = branch
     return status
 
 
 class builderStub(object):
+    """builder stub"""
     def __init__(self, name, branch, category):
         self.properties = builderPriorityStub(branch)
         self.name = name
@@ -26,11 +30,8 @@ class builderStub(object):
         self.builder_status = builderStatusStub(category)
 
     def get_priority_request(self, request):
+        """returns the calculated priority of a builder/request"""
         return master_common.builderPriority(self, request)
-
-    def get_branch_priority(self):
-        return BRANCH_PRIORITIES.get(self.properties['branch'],
-                                     DEFAULT_BRANCH_PRIORITY)
 
     def __repr__(self):
         msg = "name: {0}\n".format(self.name)
@@ -39,16 +40,8 @@ class builderStub(object):
         return msg
 
 
-class Request(object):
-    def __init__(self, priority, submitted_at):
-        self.priority = priority
-        self.submitted_at = submitted_at
-
-    def get_request(self):
-        return (None, self.priority, self.submitted_at)
-
-
 def requestStub(priority, submitted_at):
+    """request stub"""
     return (None, priority, submitted_at)
 
 
@@ -108,9 +101,9 @@ class builderProrityTest(unittest.TestCase):
         """same input, same output"""
         mozilla_beta = self.oak_builder
         request = self.high_priority_request
-        p0 = mozilla_beta.get_priority_request(request)
-        p1 = mozilla_beta.get_priority_request(request)
-        self.assertTrue(p0 == p1)
+        priority_0 = mozilla_beta.get_priority_request(request)
+        priority_1 = mozilla_beta.get_priority_request(request)
+        self.assertTrue(priority_0 == priority_1)
 
     def test_release(self):
         """Release gets the precedence"""
@@ -120,9 +113,9 @@ class builderProrityTest(unittest.TestCase):
         request = self.high_priority_request
 
         # same request, different builders
-        p0 = mozilla_beta.get_priority_request(request)
-        p1 = oak_builder.get_priority_request(request)
-        self.assertTrue(p0 < p1)
+        priority_0 = mozilla_beta.get_priority_request(request)
+        priority_1 = oak_builder.get_priority_request(request)
+        self.assertTrue(priority_0 < priority_1)
 
     def test_branch_priority(self):
         """same request priority, different branches"""
@@ -132,9 +125,9 @@ class builderProrityTest(unittest.TestCase):
         # request
         request = self.low_priority_request
 
-        p0 = mozilla_beta.get_priority_request(request)
-        p1 = oak_builder.get_priority_request(request)
-        self.assertTrue(p0 < p1)
+        priority_0 = mozilla_beta.get_priority_request(request)
+        priority_1 = oak_builder.get_priority_request(request)
+        self.assertTrue(priority_0 < priority_1)
 
     def test_timestamp_priority(self):
         """same builder, same priority different submitted_at"""
@@ -142,15 +135,15 @@ class builderProrityTest(unittest.TestCase):
         request_1 = self.one_hour_old_lp_request
         request_2 = self.low_priority_request
 
-        p0 = oak_builder.get_priority_request(request_1)
-        p1 = oak_builder.get_priority_request(request_2)
-        self.assertTrue(p0 < p1)
+        priority_0 = oak_builder.get_priority_request(request_1)
+        priority_1 = oak_builder.get_priority_request(request_2)
+        self.assertTrue(priority_0 < priority_1)
 
         request_1 = self.one_week_old_hp_request
         request_2 = self.high_priority_request
-        p0 = oak_builder.get_priority_request(request_1)
-        p1 = oak_builder.get_priority_request(request_2)
-        self.assertTrue(p0 < p1)
+        priority_0 = oak_builder.get_priority_request(request_1)
+        priority_1 = oak_builder.get_priority_request(request_2)
+        self.assertTrue(priority_0 < priority_1)
 
     def test_request_priority(self):
         """same builder, different priority requests"""
@@ -159,9 +152,9 @@ class builderProrityTest(unittest.TestCase):
         low_priority_request = self.low_priority_request
         high_priority_request = self.high_priority_request
 
-        p0 = oak_builder.get_priority_request(high_priority_request)
-        p1 = oak_builder.get_priority_request(low_priority_request)
-        self.assertTrue(p0 < p1)
+        priority_0 = oak_builder.get_priority_request(high_priority_request)
+        priority_1 = oak_builder.get_priority_request(low_priority_request)
+        self.assertTrue(priority_0 < priority_1)
 
     def test_release_priority(self):
         """release builder vs generic builder, release wins regardless other
@@ -170,47 +163,47 @@ class builderProrityTest(unittest.TestCase):
         oak_builder = self.oak_builder
 
         low_priority_request = self.low_priority_request
-        p0 = mr_release.get_priority_request(low_priority_request)
-        p1 = oak_builder.get_priority_request(low_priority_request)
-        self.assertTrue(p0 < p1)
+        priority_0 = mr_release.get_priority_request(low_priority_request)
+        priority_1 = oak_builder.get_priority_request(low_priority_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # now increase oak_builder priority
         high_priority_request = self.high_priority_request
-        p1 = oak_builder.get_priority_request(high_priority_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = oak_builder.get_priority_request(high_priority_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # now move back in time oak_builder
         # 1 hour
         one_hour_old_hp_request = self.one_hour_old_hp_request
-        p1 = oak_builder.get_priority_request(one_hour_old_hp_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = oak_builder.get_priority_request(one_hour_old_hp_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # 1 day
         one_day_old_hp_request = self.one_day_old_hp_request
-        p1 = oak_builder.get_priority_request(one_day_old_hp_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = oak_builder.get_priority_request(one_day_old_hp_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # 1 week
         one_week_old_hp_request = self.one_week_old_hp_request
-        p1 = oak_builder.get_priority_request(one_week_old_hp_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = oak_builder.get_priority_request(one_week_old_hp_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # well this is a lot of time
         epoch_old_hp_request = self.epoch_old_hp_request
-        p1 = oak_builder.get_priority_request(epoch_old_hp_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = oak_builder.get_priority_request(epoch_old_hp_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # if you are here, time is not affecting the ordering,
         # update builder type (was mozilla-release vs mozilla-release)
         # now it's mozilla-release vs mozilla-beta
         mozilla_beta = self.mozilla_beta
-        p1 = mozilla_beta.get_priority_request(epoch_old_hp_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = mozilla_beta.get_priority_request(epoch_old_hp_request)
+        self.assertTrue(priority_0 < priority_1)
 
         # mr_release always wins
         mr_builder = self.mr_builder
-        p1 = mr_builder.get_priority_request(epoch_old_hp_request)
-        self.assertTrue(p0 < p1)
+        priority_1 = mr_builder.get_priority_request(epoch_old_hp_request)
+        self.assertTrue(priority_0 < priority_1)
 
     def test_l10n_always_last(self):
         """l10n builders get lowest priority"""
@@ -222,10 +215,10 @@ class builderProrityTest(unittest.TestCase):
         low_priority_request = self.low_priority_request
 
         # different builders same priorities
-        p0 = mr_builder.get_priority_request(high_priority_request)
-        p1 = oak_builder.get_priority_request(high_priority_request)
-        p2 = l10n_builder.get_priority_request(high_priority_request)
-        expected = [p0, p1, p2]
+        priority_0 = mr_builder.get_priority_request(high_priority_request)
+        priority_1 = oak_builder.get_priority_request(high_priority_request)
+        priority_2 = l10n_builder.get_priority_request(high_priority_request)
+        expected = [priority_0, priority_1, priority_2]
         import random
         # shuffle elements
         result = sorted(expected, key=lambda *args: random.random())
@@ -235,10 +228,10 @@ class builderProrityTest(unittest.TestCase):
 
         # different builders, l10n has the highest priority
         # but it must get the lowest overall prioritization
-        p0 = mr_builder.get_priority_request(low_priority_request)
-        p1 = oak_builder.get_priority_request(low_priority_request)
-        p2 = l10n_builder.get_priority_request(high_priority_request)
-        expected = [p0, p1, p2]
+        priority_0 = mr_builder.get_priority_request(low_priority_request)
+        priority_1 = oak_builder.get_priority_request(low_priority_request)
+        priority_2 = l10n_builder.get_priority_request(high_priority_request)
+        expected = [priority_0, priority_1, priority_2]
         # shuffle elements
         result = sorted(expected, key=lambda *args: random.random())
         # and now sort them
@@ -246,8 +239,8 @@ class builderProrityTest(unittest.TestCase):
         self.assertTrue(result == expected)
 
     def test_slaveapi_priority_increase(self):
-        """In this scenario, we have the same builder and  we compare a random
-           priority (rp) with a list of priorities. Results are stable and unique"""
+        """Same builder and we compare a random priority (rp) with a list
+           of priorities. Results are stable and unique"""
 
         import random
         oak_builder = self.oak_builder
@@ -258,22 +251,22 @@ class builderProrityTest(unittest.TestCase):
         random_priority = priorities_range.pop(0)
         request = requestStub(random_priority, submitted_at)
 
-        p0 = oak_builder.get_priority_request(request)
+        priority_0 = oak_builder.get_priority_request(request)
 
         lesser = []
         greater = []
         for priority in priorities_range:
-            p1 = oak_builder.get_priority_request(
+            priority_1 = oak_builder.get_priority_request(
                 requestStub(priority, submitted_at))
-            if p1 < p0:
+            if priority_1 < priority_0:
                 # req has an higher priority request than request
                 greater.append(priority)
-            elif p1 > p0:
+            elif priority_1 > priority_0:
                 lesser.append(priority)
             else:
                 # this means that we have two different values that generate
                 # the same tuple, make this test fail
-                self.AssertTrue(p0 > p1)
+                self.assertTrue(priority_0 > priority_1)
         # no repetitions
         self.assertTrue(len(greater) == len(set(greater)))
         self.assertTrue(len(lesser) == len(set(lesser)))
@@ -285,15 +278,6 @@ class builderProrityTest(unittest.TestCase):
         #
         self.assertTrue(min(greater) > max(lesser))
 
-    def test_BuilderStub(self):
-        # my_branch = builder.properties['branch']
-        oak_builder = self.oak_builder
-        self.assertRaises(KeyError, lambda: oak_builder.properties['blah'])
-        self.assertRaises(AttributeError, lambda: oak_builder.blah)
-
-
-def main():
-    unittest.main()
 
 if __name__ == '__main__':
-    main()
+    unittest.main()
