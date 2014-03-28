@@ -12,8 +12,9 @@ exit=0
 #           handled on OSX. The directories must be owned by the id
 #           running the tests.
 #
-# now it can run trial tests without needing to execute the full test suite
-# to do so, call this script with: run-test
+# if you want to run trial tests without needing to execute the full test suite
+# call this script with: run-test
+
 shm=(/dev/shm)
 good_shm=true
 for needed_dir in ${shm[@]}; do
