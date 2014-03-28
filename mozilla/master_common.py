@@ -70,12 +70,15 @@ BUILDER_PRIORITIES = [
 
 def builderPriority(builder, request):
     """
-    Our builder sorting function
+    Builder sorting function
     Returns (release, magic_number, submitted_at)
     where magic_number = 5 * branch_priority + req_priority + builder_priority
 
-    NB: lower values returned by this function correspond to a "higher" or
-    "better" priority
+    req_priority is the negative value of the request priority in the
+    database: increasing the request priority increases the builderPriority()
+
+    builder_priority, branch_priority, submitted_at: as they increase their
+    values, the final priority gets less important
     """
     # larger request priorities correspond to more important jobs
     # see buildbot's DBConnector.get_unclaimed_buildrequests which sorts the
@@ -99,15 +102,16 @@ def builderPriority(builder, request):
         #       KeyError => builder has no 'branch'
         branch_priority = DEFAULT_BRANCH_PRIORITY
 
-    # Default builder priority is 100
-    builder_priority = 1
-    for exp, p in BUILDER_PRIORITIES:
+    # Default builder priority is 0
+    builder_priority = 0
+    for exp, priority in BUILDER_PRIORITIES:
         if exp.search(builder.name):
-            builder_priority = p
+            builder_priority = priority
             break
     return (release,
             branch_priority * 5 + req_priority + builder_priority,
             submitted_at)
+
 
 cached_twlog = None
 def getTwlog():
