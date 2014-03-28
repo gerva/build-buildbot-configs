@@ -4,10 +4,6 @@ import time
 import master_common
 
 
-DEFAULT_BRANCH_PRIORITY = master_common.DEFAULT_BRANCH_PRIORITY
-BRANCH_PRIORITIES = master_common.BRANCH_PRIORITIES
-
-
 class builderStatusStub(object):
     """builder status stub"""
     def __init__(self, category):
@@ -46,7 +42,7 @@ def requestStub(priority, submitted_at):
 
 
 class builderProrityTest(unittest.TestCase):
-
+    """tests for builderPriority"""
     def setUp(self):
         """Prepares a bunch of builders/priorities"""
         # low priority branches:
@@ -220,10 +216,9 @@ class builderProrityTest(unittest.TestCase):
         priority_2 = l10n_builder.get_priority_request(high_priority_request)
         expected = [priority_0, priority_1, priority_2]
         import random
-        # shuffle elements
-        result = sorted(expected, key=lambda *args: random.random())
-        # and now sort them
-        result = sorted(result)
+        # reverse expected results and the sort it,
+        # result must be identical to expected results
+        result = sorted(reversed(expected))
         self.assertTrue(result == expected)
 
         # different builders, l10n has the highest priority
