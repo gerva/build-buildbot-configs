@@ -4,24 +4,20 @@ PROJECT_BRANCHES = {
     'build-system': {},
     'fx-team': {
         'repo_path': 'integration/fx-team',
+        'periodic_start_hours': range(2, 24, 3),
         'enable_perproduct_builds': True,
         'enable_nightly': False,
     },
     'graphics': {},
-    'ionmonkey': {
-        'enable_nightly': True
-    },
     # Please sync any customizations made to mozilla-inbound to cypress.
     'mozilla-inbound': {
         'repo_path': 'integration/mozilla-inbound',
-        'enable_perproduct_builds': True,
-    },
-    # Customized to be the same as inbound. bug 866314
-    'cypress': {
+        'periodic_start_hours': range(1, 24, 3),
         'enable_perproduct_builds': True,
     },
     'b2g-inbound': {
         'repo_path': 'integration/b2g-inbound',
+        'periodic_start_hours': range(2, 24, 3),
         'enable_perproduct_builds': True,
         'platforms': {
             'macosx64_gecko': {
@@ -32,8 +28,6 @@ PROJECT_BRANCHES = {
             },
         },
     },
-    # B2G builds not required on the profiling branch
-    #'profiling': {},
     'services-central': {
         'repo_path': 'services/services-central'
     },
@@ -45,24 +39,33 @@ PROJECT_BRANCHES = {
     #    'enable_nightly': True,
     #},
     #####  TWIGS aka RENTABLE BRANCHES
-    'alder': {},
+    # Booked for Thunderbird
+    #'alder': {},
     'ash': {
         'mozharness_repo_path': 'users/asasaki_mozilla.com/ash-mozharness',
+        'mozharness_repo': 'https://hg.mozilla.org/users/asasaki_mozilla.com/ash-mozharness',
+        'mozharness_tag': 'default',
     },
-    'birch': {},
+    # Not needed on Birch at the moment, bug 977420.
+    #'birch': {},
     'cedar': {
+        'mozharness_tag': 'default',
+    },
+    'cypress': {
         'mozharness_tag': 'default',
     },
     # B2G builds not required on date
     # 'date': {},
-    # Customizations for windows update service changes (bug 481815)
-    #'elm': {},
-    'fig': {
+    'elm': {
         'lock_platforms': True,
-        'platforms': {},
+        'platforms': {
+            'emulator': {},
+        }
     },
+    'fig': {},
     'gum': {},
-    'holly': {},
+    # disabled for bug 985718
+    #'holly': {},
     'jamun': {},
     'larch': {},
     'maple': {},
@@ -70,7 +73,7 @@ PROJECT_BRANCHES = {
     'oak': {
         'enable_nightly': True
     },
-    'pine': {},
+    'pine': {}
 }
 
 # All is the default

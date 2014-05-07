@@ -1,6 +1,11 @@
 from copy import deepcopy
+from os import uname
 
 from config import GLOBAL_VARS, PLATFORM_VARS
+
+import thunderbird_project_branches
+reload(thunderbird_project_branches)
+from thunderbird_project_branches import PROJECT_BRANCHES, ACTIVE_PROJECT_BRANCHES
 
 # Note that thunderbird_localconfig.py is symlinked to one of: {production,staging,preproduction}_thunderbird_config.py
 import thunderbird_localconfig
@@ -8,6 +13,10 @@ reload(thunderbird_localconfig)
 
 # Can't reload this one because it gets reloaded in another file
 from localconfig import SLAVES, TRY_SLAVES
+
+import master_common
+reload(master_common)
+from master_common import setMainCommVersions, items_before
 
 GLOBAL_VARS = deepcopy(GLOBAL_VARS)
 PLATFORM_VARS = deepcopy(PLATFORM_VARS)
@@ -48,7 +57,7 @@ GLOBAL_VARS.update({
     },
     'pgo_platforms': list(),
     'pgo_strategy': None,
-    'periodic_pgo_interval': 6, # in hours
+    'periodic_start_hours': range(0, 24, 6),
     'product_name': 'thunderbird', # Not valid for mobile builds
     'app_name': 'mail',     # Not valid for mobile builds
     'brand_name': 'Daily', # Not valid for mobile builds
@@ -77,6 +86,7 @@ GLOBAL_VARS.update({
             'toolkit',
             'security/manager',
         ],
+    'default_l10n_space': 4,
     'scratchbox_path': '/builds/scratchbox/moz_scratchbox',
     'scratchbox_home': '/scratchbox/users/cltbld/home/cltbld',
     'use_old_updater': False,
@@ -137,7 +147,7 @@ PLATFORM_VARS = {
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'mail/config/tooltool-manifests/linux32/releng.manifest',
-            'tooltool_script': '/builds/tooltool.py',
+            'tooltool_script': ['/builds/tooltool.py'],
             'use_mock': True,
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': \
@@ -181,6 +191,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/home/cltbld/.boto', '/builds/.boto'),
                 ('/tools/tooltool.py', '/builds/tooltool.py'),
             ],
         },
@@ -232,7 +243,7 @@ PLATFORM_VARS = {
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
             'tooltool_manifest_src': 'mail/config/tooltool-manifests/linux64/releng.manifest',
-            'tooltool_script': '/builds/tooltool.py',
+            'tooltool_script': ['/builds/tooltool.py'],
             'use_mock': True,
             'mock_target': 'mozilla-centos6-x86_64',
             'mock_packages': \
@@ -256,6 +267,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/home/cltbld/.boto', '/builds/.boto'),
                 ('/tools/tooltool.py', '/builds/tooltool.py'),
             ],
         },
@@ -322,8 +334,8 @@ PLATFORM_VARS = {
             'download_symbols': True,
             'enable_installer': True,
             'packageTests': True,
-            'slaves': SLAVES['win64'],
-            'l10n_slaves': SLAVES['win64'],
+            'slaves': SLAVES['win64-rev2'],
+            'l10n_slaves': SLAVES['win64-rev2'],
             'platform_objdir': OBJDIR,
             'stage_product': 'thunderbird',
             'stage_platform': 'win32',
@@ -340,8 +352,8 @@ PLATFORM_VARS = {
                 'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/tbirdbld_dsa",
                 'TINDERBOX_OUTPUT': '1',
                 'MOZ_CRASHREPORTER_NO_REPORT': '1',
-                'PDBSTR_PATH': '/c/Program Files/Debugging Tools for Windows (x64)/srcsrv/pdbstr.exe',
-                'HG_SHARE_BASE_DIR': 'e:/builds/hg-shared',
+                'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
+                'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
                 'PATH': "${MOZILLABUILD}nsis-2.46u;${MOZILLABUILD}python27;${MOZILLABUILD}buildbotve\\scripts;${PATH}",
             },
             'enable_opt_unittests': False,
@@ -351,6 +363,8 @@ PLATFORM_VARS = {
             'l10n_check_test': False,
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
+            'tooltool_manifest_src': 'mail/config/tooltool-manifests/win32/releng.manifest',
+            'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
         },
         'win64': {
             'product_name': 'thunderbird',
@@ -368,7 +382,7 @@ PLATFORM_VARS = {
             'enable_installer': True,
             'packageTests': True,
             'try_by_default': False,
-            'slaves': SLAVES['win64'],
+            'slaves': SLAVES['win64-rev2'],
             'platform_objdir': OBJDIR,
             'stage_product': 'thunderbird',
             'stage_platform': 'win64',
@@ -386,8 +400,8 @@ PLATFORM_VARS = {
                 'MOZ_SYMBOLS_EXTRA_BUILDID': 'win64',
                 'TINDERBOX_OUTPUT': '1',
                 'MOZ_CRASHREPORTER_NO_REPORT': '1',
-                'PDBSTR_PATH': '/c/Program Files/Debugging Tools for Windows (x64)/srcsrv/pdbstr.exe',
-                'HG_SHARE_BASE_DIR': 'e:/builds/hg-shared',
+                'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
+                'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
                 'PATH': "${MOZILLABUILD}nsis-2.46u;${MOZILLABUILD}python27;${MOZILLABUILD}buildbotve\\scripts;${PATH}",
             },
             'enable_opt_unittests': False,
@@ -395,6 +409,8 @@ PLATFORM_VARS = {
             'talos_masters': None,
             'test_pretty_names': True,
             'l10n_check_test': False,
+            'tooltool_manifest_src': 'mail/config/tooltool-manifests/win64/releng.manifest',
+            'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
         },
         'linux-debug': {
             'enable_nightly': False,
@@ -474,6 +490,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/home/cltbld/.boto', '/builds/.boto'),
             ],
         },
         'linux64-debug': {
@@ -533,6 +550,7 @@ PLATFORM_VARS = {
             'mock_copyin_files': [
                 ('/home/cltbld/.ssh', '/home/mock_mozilla/.ssh'),
                 ('/home/cltbld/.hgrc', '/builds/.hgrc'),
+                ('/home/cltbld/.boto', '/builds/.boto'),
             ],
         },
         'macosx64-debug': {
@@ -584,7 +602,7 @@ PLATFORM_VARS = {
             'enable_installer': True,
             'packageTests': True,
             'build_space': 10,
-            'slaves': SLAVES['win64'],
+            'slaves': SLAVES['win64-rev2'],
             'platform_objdir': OBJDIR,
             'stage_product': 'thunderbird',
             'stage_platform': 'win32-debug',
@@ -593,7 +611,7 @@ PLATFORM_VARS = {
                 'MOZ_OBJDIR': OBJDIR,
                 'XPCOM_DEBUG_BREAK': 'stack-and-abort',
                 'MOZ_CRASHREPORTER_NO_REPORT': '1',
-                'HG_SHARE_BASE_DIR': 'e:/builds/hg-shared',
+                'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
                 'PATH': "${MOZILLABUILD}nsis-2.46u;${MOZILLABUILD}python27;${MOZILLABUILD}buildbotve\\scripts;${PATH}",
             },
             'enable_unittests': False,
@@ -601,6 +619,8 @@ PLATFORM_VARS = {
             'talos_masters': None,
             'nightly_signing_servers': 'dep-signing',
             'dep_signing_servers': 'dep-signing',
+            'tooltool_manifest_src': 'mail/config/tooltool-manifests/win32/releng.manifest',
+            'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
         },
 }
 
@@ -614,35 +634,18 @@ BRANCHES = {
     },
     'comm-beta': {
     },
-    'comm-release': {
-        'lock_platforms': True,
-        'platforms': {
-            'linux': {},
-            'linux64': {},
-            'win32': {},
-            'macosx64': {},
-            'linux-debug': {},
-            'linux64-debug': {},
-            'macosx64-debug': {},
-            'win32-debug': {},
-        },
-    },
-    'comm-esr17': {
-        'lock_platforms': True,
-        'platforms': {
-            'linux': {},
-            'linux64': {},
-            'win32': {},
-            'macosx64': {},
-            'linux-debug': {},
-            'linux64-debug': {},
-            'macosx64-debug': {},
-            'win32-debug': {},
-        },
+    'comm-esr24': {
+        'gecko_version': 24,
     },
     'try-comm-central': {
     },
 }
+
+# Copy project branches into BRANCHES keys
+for branch in ACTIVE_PROJECT_BRANCHES:
+    BRANCHES[branch] = deepcopy(PROJECT_BRANCHES[branch])
+
+setMainCommVersions(BRANCHES)
 
 # Copy global vars in first, then platform vars
 for branch in BRANCHES.keys():
@@ -661,14 +664,29 @@ for branch in BRANCHES.keys():
     for platform, platform_config in PLATFORM_VARS.items():
         if platform in BRANCHES[branch]['platforms']:
             for key, value in platform_config.items():
-                # put default platform set in all branches
-                value = deepcopy(value)
+                # put default platform set in all branches, but grab any
+                # project_branches.py overrides/additional keys
+                if branch in ACTIVE_PROJECT_BRANCHES and 'platforms' in PROJECT_BRANCHES[branch]:
+                    if platform in PROJECT_BRANCHES[branch]['platforms'].keys():
+                        if key in PROJECT_BRANCHES[branch]['platforms'][platform].keys():
+                            value = deepcopy(PROJECT_BRANCHES[branch]['platforms'][platform][key])
+                else:
+                    value = deepcopy(value)
                 if isinstance(value, str):
                     value = value % locals()
                 else:
                     value = deepcopy(value)
                 BRANCHES[branch]['platforms'][platform][key] = value
 
+            if branch in ACTIVE_PROJECT_BRANCHES and 'platforms' in PROJECT_BRANCHES[branch] and \
+                    platform in PROJECT_BRANCHES[branch]['platforms']:
+                for key, value in PROJECT_BRANCHES[branch]['platforms'][platform].items():
+                    if key == 'env':
+                        value = deepcopy(PLATFORM_VARS[platform]['env'])
+                        value.update(PROJECT_BRANCHES[branch]['platforms'][platform][key])
+                    else:
+                        value = deepcopy(value)
+                    BRANCHES[branch]['platforms'][platform][key] = value
     # Copy in local config
     if branch in thunderbird_localconfig.BRANCHES:
         for key, value in thunderbird_localconfig.BRANCHES[branch].items():
@@ -693,6 +711,14 @@ for branch in BRANCHES.keys():
                 if isinstance(value, str):
                     value = value % locals()
                 BRANCHES[branch]['platforms'][platform][key] = value
+
+    # Check for project branch removing a platform from default platforms
+    if branch in ACTIVE_PROJECT_BRANCHES:
+        for key, value in PROJECT_BRANCHES[branch].items():
+            if key == 'platforms':
+                for platform, platform_config in value.items():
+                    if platform_config.get('dont_build'):
+                        del BRANCHES[branch]['platforms'][platform]
 
     if BRANCHES[branch]['platforms'].has_key('win64') and branch not in ('try', 'comm-central'):
         del BRANCHES[branch]['platforms']['win64']
@@ -747,119 +773,42 @@ BRANCHES['comm-central']['platforms']['linux64']['nightly_signing_servers'] = 'n
 BRANCHES['comm-central']['platforms']['win32']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['comm-central']['platforms']['macosx64']['nightly_signing_servers'] = 'mac-nightly-signing'
 
-######## comm-release
-BRANCHES['comm-release']['repo_path'] = 'releases/comm-esr17'
-BRANCHES['comm-release']['moz_repo_path'] = 'releases/mozilla-esr17'
-BRANCHES['comm-release']['update_channel'] = 'release'
-BRANCHES['comm-release']['mozilla_dir'] = 'mozilla'
-BRANCHES['comm-release']['skip_blank_repos'] = True
-BRANCHES['comm-release']['call_client_py'] = True
-BRANCHES['comm-release']['l10n_repo_path'] = 'releases/l10n/mozilla-esr17'
-BRANCHES['comm-release']['enable_weekly_bundle'] = True
-BRANCHES['comm-release']['start_hour'] = [3]
-BRANCHES['comm-release']['start_minute'] = [2]
-BRANCHES['comm-release']['enable_xulrunner'] = False
+######## comm-esr24
+BRANCHES['comm-esr24']['repo_path'] = 'releases/comm-esr24'
+BRANCHES['comm-esr24']['moz_repo_path'] = 'releases/mozilla-esr24'
+BRANCHES['comm-esr24']['mozilla_dir'] = 'mozilla'
+BRANCHES['comm-esr24']['update_channel'] = 'nightly-esr24'
+BRANCHES['comm-esr24']['skip_blank_repos'] = True
+BRANCHES['comm-esr24']['call_client_py'] = True
+BRANCHES['comm-esr24']['l10n_repo_path'] = 'releases/l10n/mozilla-esr24'
+BRANCHES['comm-esr24']['enable_weekly_bundle'] = True
+BRANCHES['comm-esr24']['start_hour'] = [3]
+BRANCHES['comm-esr24']['start_minute'] = [2]
+BRANCHES['comm-esr24']['enable_xulrunner'] = False
 # Enable unit tests
-BRANCHES['comm-release']['enable_mac_a11y'] = True
+BRANCHES['comm-esr24']['enable_mac_a11y'] = True
+BRANCHES['comm-esr24']['unittest_build_space'] = 6
 # L10n configuration
-BRANCHES['comm-release']['enable_l10n'] = False
-BRANCHES['comm-release']['enable_l10n_onchange'] = False
-BRANCHES['comm-release']['l10nNightlyUpdate'] = False
-BRANCHES['comm-release']['l10n_platforms'] = ['linux', 'linux64', 'win32',
-                                              'macosx64']
-BRANCHES['comm-release']['l10nDatedDirs'] = True
-BRANCHES['comm-release']['l10n_tree'] = 'tbrel'
-BRANCHES['comm-release']['enUS_binaryURL'] = \
-    GLOBAL_VARS['download_base_url'] + '/nightly/latest-comm-release'
-BRANCHES['comm-release']['allLocalesFile'] = 'mail/locales/all-locales'
-BRANCHES['comm-release']['localesURL'] = \
-    '%s/build/buildbot-configs/raw-file/production/mozilla/l10n/all-locales.comm-release' % (GLOBAL_VARS['hgurl'])
-# temp disable nightlies (which includes turning off enable_l10n and l10nNightlyUpdate)
-BRANCHES['comm-release']['enable_nightly'] = False
-BRANCHES['comm-release']['enable_blocklist_update'] = False
-BRANCHES['comm-release']['blocklist_update_on_closed_tree'] = False
-BRANCHES['comm-release']['enable_valgrind'] = False
-# mock disabled block start
-# linux platforms
-BRANCHES['comm-release']['platforms']['linux']['use_mock'] = False
-BRANCHES['comm-release']['platforms']['linux64']['use_mock'] = False
-BRANCHES['comm-release']['platforms']['linux-debug']['use_mock'] = False
-BRANCHES['comm-release']['platforms']['linux64-debug']['use_mock'] = False
-BRANCHES['comm-release']['platforms']['linux']['slaves'] = SLAVES['linux']
-BRANCHES['comm-release']['platforms']['linux64']['slaves'] = SLAVES['linux64']
-BRANCHES['comm-release']['platforms']['linux-debug']['slaves'] = SLAVES['linux']
-BRANCHES['comm-release']['platforms']['linux64-debug']['slaves'] = SLAVES['linux64']
-BRANCHES['comm-release']['platforms']['linux']['env']['PYTHON26'] = '/tools/python-2.6.5/bin/python'
-BRANCHES['comm-release']['platforms']['linux64']['env']['PYTHON26'] = '/tools/python-2.6.5/bin/python'
-BRANCHES['comm-release']['platforms']['linux']['env']['SYMBOL_SERVER_SSH_KEY'] = '/home/cltbld/.ssh/tbirdbld_dsa'
-BRANCHES['comm-release']['platforms']['linux64']['env']['SYMBOL_SERVER_SSH_KEY'] = '/home/cltbld/.ssh/tbirdbld_dsa'
-del BRANCHES['comm-release']['platforms']['linux']['env']['PATH']
-del BRANCHES['comm-release']['platforms']['linux64']['env']['PATH']
-del BRANCHES['comm-release']['platforms']['linux-debug']['env']['PATH']
-del BRANCHES['comm-release']['platforms']['linux64-debug']['env']['PATH']
-# mock disabled block stop
-BRANCHES['comm-release']['platforms']['win32']['l10n_slaves'] = SLAVES['win32']
-
-######## comm-esr17
-BRANCHES['comm-esr17']['moz_repo_path'] = 'releases/mozilla-esr17'
-BRANCHES['comm-esr17']['repo_path'] = 'releases/comm-esr17'
-BRANCHES['comm-esr17']['l10n_repo_path'] = 'releases/l10n/mozilla-release'
-BRANCHES['comm-esr17']['update_channel'] = 'nightly-esr17'
-BRANCHES['comm-esr17']['mozilla_dir'] = 'mozilla'
-BRANCHES['comm-esr17']['skip_blank_repos'] = True
-BRANCHES['comm-esr17']['call_client_py'] = True
-BRANCHES['comm-esr17']['enable_weekly_bundle'] = True
-BRANCHES['comm-esr17']['start_hour'] = [3]
-BRANCHES['comm-esr17']['start_minute'] = [45]
-# Enable XULRunner / SDK builds
-BRANCHES['comm-esr17']['enable_xulrunner'] = False
-# Enable unit tests
-BRANCHES['comm-esr17']['enable_mac_a11y'] = True
-BRANCHES['comm-esr17']['unittest_build_space'] = 6
-# L10n configuration
-BRANCHES['comm-esr17']['enable_l10n'] = False
-BRANCHES['comm-esr17']['enable_l10n_onchange'] = False
-BRANCHES['comm-esr17']['l10nNightlyUpdate'] = False
-BRANCHES['comm-esr17']['l10n_platforms'] = ['linux', 'linux64', 'win32',
-                                           'macosx64']
-BRANCHES['comm-esr17']['l10nDatedDirs'] = True
-BRANCHES['comm-esr17']['l10n_tree'] = 'tbesr17'
-#make sure it has an ending slash
-BRANCHES['comm-esr17']['enUS_binaryURL'] = \
-    GLOBAL_VARS['download_base_url'] + '/nightly/latest-comm-esr17'
-BRANCHES['comm-esr17']['allLocalesFile'] = 'mail/locales/all-locales'
-BRANCHES['comm-esr17']['enable_nightly'] = True
-BRANCHES['comm-esr17']['create_snippet'] = True
-BRANCHES['comm-esr17']['create_partial'] = True
-BRANCHES['comm-esr17']['aus2_base_upload_dir'] = '/opt/aus2/incoming/2/Thunderbird/comm-esr17'
-BRANCHES['comm-esr17']['aus2_base_upload_dir_l10n'] = '/opt/aus2/incoming/2/Thunderbird/comm-esr17'
-BRANCHES['comm-esr17']['enable_blocklist_update'] = False
-BRANCHES['comm-esr17']['blocklist_update_on_closed_tree'] = False
-BRANCHES['comm-esr17']['enable_valgrind'] = False
-BRANCHES['comm-esr17']['platforms']['linux']['use_mock'] = False
-BRANCHES['comm-esr17']['platforms']['linux']['slaves'] = SLAVES['linux']
-BRANCHES['comm-esr17']['platforms']['linux64']['use_mock'] = False
-BRANCHES['comm-esr17']['platforms']['linux64']['slaves'] = SLAVES['linux64']
-# mock disabled block start
-# linux platforms
-BRANCHES['comm-esr17']['platforms']['linux']['use_mock'] = False
-BRANCHES['comm-esr17']['platforms']['linux64']['use_mock'] = False
-BRANCHES['comm-esr17']['platforms']['linux-debug']['use_mock'] = False
-BRANCHES['comm-esr17']['platforms']['linux64-debug']['use_mock'] = False
-BRANCHES['comm-esr17']['platforms']['linux']['slaves'] = SLAVES['linux']
-BRANCHES['comm-esr17']['platforms']['linux64']['slaves'] = SLAVES['linux64']
-BRANCHES['comm-esr17']['platforms']['linux-debug']['slaves'] = SLAVES['linux']
-BRANCHES['comm-esr17']['platforms']['linux64-debug']['slaves'] = SLAVES['linux64']
-BRANCHES['comm-esr17']['platforms']['linux']['env']['PYTHON26'] = '/tools/python-2.6.5/bin/python'
-BRANCHES['comm-esr17']['platforms']['linux64']['env']['PYTHON26'] = '/tools/python-2.6.5/bin/python'
-BRANCHES['comm-esr17']['platforms']['linux']['env']['SYMBOL_SERVER_SSH_KEY'] = "/home/cltbld/.ssh/tbirdbld_dsa"
-BRANCHES['comm-esr17']['platforms']['linux64']['env']['SYMBOL_SERVER_SSH_KEY'] = "/home/cltbld/.ssh/tbirdbld_dsa"
-del BRANCHES['comm-esr17']['platforms']['linux']['env']['PATH']
-del BRANCHES['comm-esr17']['platforms']['linux64']['env']['PATH']
-del BRANCHES['comm-esr17']['platforms']['linux-debug']['env']['PATH']
-del BRANCHES['comm-esr17']['platforms']['linux64-debug']['env']['PATH']
-# mock disabled block stop
-BRANCHES['comm-esr17']['platforms']['win32']['l10n_slaves'] = SLAVES['win32']
+BRANCHES['comm-esr24']['enable_l10n'] = False
+BRANCHES['comm-esr24']['enable_l10n_onchange'] = False
+BRANCHES['comm-esr24']['l10nNightlyUpdate'] = False
+BRANCHES['comm-esr24']['l10n_platforms'] = ['linux', 'linux64', 'win32',
+                                            'macosx64']
+BRANCHES['comm-esr24']['l10nDatedDirs'] = True
+BRANCHES['comm-esr24']['l10n_tree'] = 'tbrel'
+BRANCHES['comm-esr24']['enUS_binaryURL'] = \
+    GLOBAL_VARS['download_base_url'] + '/nightly/latest-comm-esr24'
+BRANCHES['comm-esr24']['allLocalesFile'] = 'mail/locales/all-locales'
+BRANCHES['comm-esr24']['localesURL'] = \
+    '%s/build/buildbot-configs/raw-file/production/mozilla/l10n/all-locales.comm-esr24' % (GLOBAL_VARS['hgurl'])
+BRANCHES['comm-esr24']['enable_nightly'] = True
+BRANCHES['comm-esr24']['create_snippet'] = True
+BRANCHES['comm-esr24']['create_partial'] = True
+BRANCHES['comm-esr24']['aus2_base_upload_dir'] = '/opt/aus2/incoming/2/Thunderbird/comm-esr24'
+BRANCHES['comm-esr24']['aus2_base_upload_dir_l10n'] = '/opt/aus2/incoming/2/Thunderbird/comm-esr24'
+BRANCHES['comm-esr24']['enable_blocklist_update'] = False
+BRANCHES['comm-esr24']['blocklist_update_on_closed_tree'] = False
+BRANCHES['comm-esr24']['enable_valgrind'] = False
 
 ######## comm-beta
 BRANCHES['comm-beta']['moz_repo_path'] = 'releases/mozilla-beta'
@@ -893,7 +842,6 @@ BRANCHES['comm-beta']['enUS_binaryURL'] = \
 BRANCHES['comm-beta']['allLocalesFile'] = 'mail/locales/all-locales'
 BRANCHES['comm-beta']['localesURL'] = \
     '%s/build/buildbot-configs/raw-file/production/mozilla/l10n/all-locales.comm-beta' % (GLOBAL_VARS['hgurl'])
-BRANCHES['comm-beta']['enable_multi_locale'] = True
 # temp disable nightlies (which includes turning off enable_l10n and l10nNightlyUpdate)
 BRANCHES['comm-beta']['enable_nightly'] = False
 # If True, a complete update snippet for this branch will be generated and
@@ -981,11 +929,11 @@ BRANCHES['try-comm-central']['create_snippet'] = False
 BRANCHES['try-comm-central']['aus2_base_upload_dir'] = 'fake'
 BRANCHES['try-comm-central']['platforms']['linux']['slaves'] = TRY_SLAVES['mock']
 BRANCHES['try-comm-central']['platforms']['linux64']['slaves'] = TRY_SLAVES['mock']
-BRANCHES['try-comm-central']['platforms']['win32']['slaves'] = TRY_SLAVES['win64']
+BRANCHES['try-comm-central']['platforms']['win32']['slaves'] = TRY_SLAVES['win64-rev2']
 BRANCHES['try-comm-central']['platforms']['macosx64']['slaves'] = TRY_SLAVES['macosx64-lion']
 BRANCHES['try-comm-central']['platforms']['linux-debug']['slaves'] = TRY_SLAVES['mock']
 BRANCHES['try-comm-central']['platforms']['linux64-debug']['slaves'] = TRY_SLAVES['mock']
-BRANCHES['try-comm-central']['platforms']['win32-debug']['slaves'] = TRY_SLAVES['win64']
+BRANCHES['try-comm-central']['platforms']['win32-debug']['slaves'] = TRY_SLAVES['win64-rev2']
 BRANCHES['try-comm-central']['platforms']['macosx64-debug']['slaves'] = TRY_SLAVES['macosx64-lion']
 BRANCHES['try-comm-central']['platforms']['linux']['upload_symbols'] = False
 BRANCHES['try-comm-central']['platforms']['linux64']['upload_symbols'] = False
@@ -996,8 +944,71 @@ BRANCHES['try-comm-central']['platforms']['win32']['env']['SYMBOL_SERVER_USER'] 
 BRANCHES['try-comm-central']['platforms']['win32']['env']['SYMBOL_SERVER_PATH'] = '/symbols/windows'
 BRANCHES['try-comm-central']['platforms']['win32']['env']['SYMBOL_SERVER_SSH_KEY'] = '/c/Documents and Settings/cltbld/.ssh/trybld_dsa'
 
+######## generic branch configs
+for branch in ACTIVE_PROJECT_BRANCHES:
+    branchConfig = PROJECT_BRANCHES[branch]
+    BRANCHES[branch]['brand_name'] = branchConfig.get('brand_name', GLOBAL_VARS['brand_name'])
+    BRANCHES[branch]['repo_path'] = branchConfig.get('repo_path', 'projects/' + branch)
+    BRANCHES[branch]['mozilla_dir'] = branchConfig.get('mozilla_dir', 'mozilla')
+    BRANCHES[branch]['enabled_products'] = branchConfig.get('enabled_products',
+                                                            GLOBAL_VARS['enabled_products'])
+    BRANCHES[branch]['enable_nightly'] = branchConfig.get('enable_nightly', False)
+    BRANCHES[branch]['enable_mobile'] = branchConfig.get('enable_mobile', True)
+    BRANCHES[branch]['pgo_strategy'] = branchConfig.get('pgo_strategy', None)
+    BRANCHES[branch]['periodic_start_hours'] = branchConfig.get('periodic_start_hours', range(0, 24, 6))
+    BRANCHES[branch]['start_hour'] = branchConfig.get('start_hour', [4])
+    BRANCHES[branch]['start_minute'] = branchConfig.get('start_minute', [2])
+    # Disable XULRunner / SDK builds
+    BRANCHES[branch]['enable_xulrunner'] = branchConfig.get('enable_xulrunner', False)
+    # Enable unit tests
+    BRANCHES[branch]['enable_mac_a11y'] = branchConfig.get('enable_mac_a11y', True)
+    BRANCHES[branch]['unittest_build_space'] = branchConfig.get('unittest_build_space', 6)
+    # L10n configuration is not set up for project_branches
+    BRANCHES[branch]['enable_l10n'] = branchConfig.get('enable_l10n', False)
+    BRANCHES[branch]['l10nNightlyUpdate'] = branchConfig.get('l10nNightlyUpdate', False)
+    BRANCHES[branch]['l10nDatedDirs'] = branchConfig.get('l10nDatedDirs', False)
+    # nightly updates
+    BRANCHES[branch]['create_snippet'] = branchConfig.get('create_snippet', False)
+    BRANCHES[branch]['update_channel'] = branchConfig.get('update_channel', 'nightly-%s' % branch)
+    BRANCHES[branch]['create_partial'] = branchConfig.get('create_partial', False)
+    BRANCHES[branch]['create_partial_l10n'] = branchConfig.get('create_partial_l10n', False)
+    BRANCHES[branch]['create_mobile_snippet'] = branchConfig.get('create_mobile_snippet', False)
+    BRANCHES[branch]['aus2_user'] = branchConfig.get('aus2_user', GLOBAL_VARS['aus2_user'])
+    BRANCHES[branch]['aus2_ssh_key'] = branchConfig.get('aus2_ssh_key', GLOBAL_VARS['aus2_ssh_key'])
+    BRANCHES[branch]['aus2_base_upload_dir'] = branchConfig.get('aus2_base_upload_dir', '/opt/aus2/incoming/2/Thunderbird/' + branch)
+    BRANCHES[branch]['aus2_base_upload_dir_l10n'] = branchConfig.get('aus2_base_upload_dir_l10n', '/opt/aus2/incoming/2/Thunderbird/' + branch)    #make sure it has an ending slash
+    BRANCHES[branch]['l10nUploadPath'] = \
+        '/home/ftp/pub/mozilla.org/thunderbird/nightly/latest-' + branch + '-l10n/'
+    BRANCHES[branch]['enUS_binaryURL'] = GLOBAL_VARS['download_base_url'] + branchConfig.get('enUS_binaryURL', '')
+    if 'linux' in BRANCHES[branch]['platforms']:
+        BRANCHES[branch]['platforms']['linux']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = branch
+    if 'linux64' in BRANCHES[branch]['platforms']:
+        BRANCHES[branch]['platforms']['linux64']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = 'linux64-' + branch
+    if 'win32' in BRANCHES[branch]['platforms']:
+        BRANCHES[branch]['platforms']['win32']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = branch
+    if 'macosx64' in BRANCHES[branch]['platforms']:
+        BRANCHES[branch]['platforms']['macosx64']['env']['MOZ_SYMBOLS_EXTRA_BUILDID'] = 'macosx64-' + branch
+    # Platform-specific defaults/interpretation
+    for platform in BRANCHES[branch]['platforms']:
+        # point to the mozconfigs, default is generic
+        if platform.endswith('debug'):
+            BRANCHES[branch]['platforms'][platform]['mozconfig'] = platform.split('-')[0] + '/' + branchConfig.get('mozconfig_dir', 'generic') + '/debug'
+        else:
+            BRANCHES[branch]['platforms'][platform]['mozconfig'] = platform + '/' + branchConfig.get('mozconfig_dir', 'generic') + '/nightly'
+        # Project branches should be allowed to override the signing servers.
+        # If a branch does not set dep_signing_servers, it should be set to the global default.
+        BRANCHES[branch]['platforms'][platform]['dep_signing_servers'] = branchConfig.get('platforms', {}).get(platform, {}).get('dep_signing_servers',
+                                                                         PLATFORM_VARS[platform].get('dep_signing_servers'))
+        # If a branch does not set nightly_signing_servers, it should be set to its dep signing server,
+        # which may have already been set to the global default.
+        BRANCHES[branch]['platforms'][platform]['nightly_signing_servers'] = branchConfig.get('platforms', {}).get(platform, {}).get('nightly_signing_servers',
+                                                                             BRANCHES[branch]['platforms'][platform]['dep_signing_servers'])
+    BRANCHES[branch]['enable_valgrind'] = False
+
+
 # Bug 578880, remove the following block after gcc-4.5 switch
 branches = BRANCHES.keys()
+branches.extend(ACTIVE_PROJECT_BRANCHES)
 for branch in branches:
     if BRANCHES[branch]['platforms'].has_key('linux'):
         BRANCHES[branch]['platforms']['linux']['env']['LD_LIBRARY_PATH'] = '/tools/gcc-4.3.3/installed/lib'
@@ -1025,30 +1036,12 @@ for branch in branches:
             'LD_LIBRARY_PATH': '/tools/gcc-4.3.3/installed/lib64',
         }
 
-# MERGE DAY
-# When Thunderbird 18 merges into these branches, they can be removed from the list
-for b in ('comm-esr17', 'comm-release'):
-    # Disable pymake
-    for p in ('win32', 'win32-debug', 'win64'):
-        if p not in BRANCHES[b]['platforms']:
-            continue
-        BRANCHES[b]['platforms'][p]['enable_pymake'] = False
-
-# MERGE DAY - pulseaudio-libs-devel package rides the trains (bug 662417)
-# MERGE DAY - when FF21 reaches them remove them from this list
-for b in ['comm-release', 'comm-esr17']:
-    for p, pc in BRANCHES[b]['platforms'].items():
-        if 'mock_packages' in pc:
-            BRANCHES[b]['platforms'][p]['mock_packages'] = \
-                [x for x in BRANCHES[b]['platforms'][p]['mock_packages'] if x != 'pulseaudio-libs-devel']
-
-# MERGE DAY building 32-bit linux in a x86_64 env rides the trains
-# MERGE DAY remove branches from this list when gecko 24 merges into them.
-for branch in ("comm-release", "comm-esr17"):
+# building 32-bit linux in a x86_64 env rides the trains
+for name, branch in items_before(BRANCHES, 'gecko_version', 24):
     for platform in ['linux', 'linux-debug']:
-        BRANCHES[branch]['platforms'][platform]['mock_target'] = \
+        branch['platforms'][platform]['mock_target'] = \
             'mozilla-centos6-i386'
-        BRANCHES[branch]['platforms'][platform]['mock_packages'] = \
+        branch['platforms'][platform]['mock_packages'] = \
             ['autoconf213', 'python', 'zip', 'mozilla-python27-mercurial',
              'git', 'ccache', 'glibc-static', 'libstdc++-static',
              'perl-Test-Simple', 'perl-Config-General',
@@ -1066,19 +1059,19 @@ for branch in ("comm-release", "comm-esr17"):
              'freetype-devel-2.3.11-6.el6_2.9',
             ]
         if not platform.endswith("-debug"):
-            BRANCHES[branch]["platforms"][platform]["mock_packages"] += \
+            branch["platforms"][platform]["mock_packages"] += \
                 ["valgrind"]
 
-# MERGE DAY - gstreamer-devel packages ride the trains (bug 881589)
-# MERGE DAY - remove branches from this list when gecko 24 merges into them.
-for b in ("comm-release", "comm-esr17"):
-    for p, pc in BRANCHES[b]['platforms'].items():
+# gstreamer-devel packages ride the trains (bug 881589)
+for name, branch in items_before(BRANCHES, 'gecko_version', 24):
+    for p, pc in branch['platforms'].items():
         if 'mock_packages' in pc:
-            BRANCHES[b]['platforms'][p]['mock_packages'] = \
-                [x for x in BRANCHES[b]['platforms'][p]['mock_packages'] if x not in (
+            branch['platforms'][p]['mock_packages'] = \
+                [x for x in branch['platforms'][p]['mock_packages'] if x not in (
                     'gstreamer-devel', 'gstreamer-plugins-base-devel',
                     'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
                 )]
+
 
 if __name__ == "__main__":
     import sys

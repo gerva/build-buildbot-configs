@@ -37,7 +37,6 @@ GLOBAL_VARS = {
     'tinderbox_tree': 'MozillaTest',
     'mobile_tinderbox_tree': 'MobileTest',
     'hg_username': 'stage-ffxbld',
-    'base_mirror_urls': ['http://hg-internal.dmz.scl3.mozilla.com'],
     'base_bundle_urls': ['http://preproduction-master.srv.releng.scl3.mozilla.com/pub/mozilla.org/firefox/bundles'],
     'tooltool_url_list': ['http://runtime-binaries.pvt.build.mozilla.org/tooltool'],
 }
@@ -63,7 +62,7 @@ BRANCHES = {
         'enable_blocklist_update': False,
         'blocklist_update_on_closed_tree': False,
     },
-    'mozilla-esr17': {
+    'mozilla-esr24': {
         'enable_blocklist_update': False,
         'blocklist_update_on_closed_tree': False,
     },
@@ -71,11 +70,15 @@ BRANCHES = {
         'enable_blocklist_update': False,
         'blocklist_update_on_closed_tree': False,
     },
-    'mozilla-b2g18_v1_0_1': {
+    'mozilla-b2g18_v1_1_0_hd': {
         'enable_blocklist_update': False,
         'blocklist_update_on_closed_tree': False,
     },
-    'mozilla-b2g18_v1_1_0_hd': {
+    'mozilla-b2g26_v1_2': {
+        'enable_blocklist_update': False,
+        'blocklist_update_on_closed_tree': False,
+    },
+    'mozilla-b2g28_v1_3': {
         'enable_blocklist_update': False,
         'blocklist_update_on_closed_tree': False,
     },
@@ -94,8 +97,8 @@ BRANCHES = {
                     'TINDERBOX_OUTPUT': '1',
                     'MOZ_CRASHREPORTER_NO_REPORT': '1',
                     # Source server support, bug 506702
-                    'PDBSTR_PATH': '/c/Program Files/Debugging Tools for Windows (x64)/srcsrv/pdbstr.exe',
-                    'HG_SHARE_BASE_DIR': 'e:/builds/hg-shared',
+                    'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
+                    'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
                     'PATH': "${MOZILLABUILD}python27;${MOZILLABUILD}buildbotve\\scripts;${PATH}",
                 },
             },
@@ -109,7 +112,7 @@ PLATFORM_VARS = {
 PROJECTS = {
     'fuzzing': {
         'disable_tinderbox_mail': True,
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'fuzzing_bundle': 'http://pvtbuilds.pvt.build.mozilla.org/bundles/fuzzing.hg',
         'fuzzing_repo': 'ssh://stage-ffxbld@hg.mozilla.org/private/fuzzing',
         'fuzzing_remote_host': 'ffxbld@preproduction-stage.srv.releng.scl3.mozilla.com',
@@ -117,33 +120,21 @@ PROJECTS = {
         'fuzzing_base_dir': '/pub/mozilla.org/firefox/tinderbox-builds/fuzzing/',
         'idle_slaves': 0,
     },
-    'nanojit': {
-        'disable_tinderbox_mail': True,
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'idle_slaves': 0,
-        'tinderbox_tree': 'MozillaTest',
-    },
-    'dxr_mozilla-central': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'upload_host': GLOBAL_VARS['stage_server'],
-        'upload_user': 'ffxbld',
-        'upload_sshkey': '/home/cltbld/.ssh/ffxbld_dsa',
-    },
 }
 
 BRANCH_PROJECTS = {
     'spidermonkey_tier_1': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
         'disable_tinderbox_mail': False,
     },
     'spidermonkey_try': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
         'disable_tinderbox_mail': False,
     },
     'spidermonkey_info': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
         'disable_tinderbox_mail': False,
     },
