@@ -209,7 +209,6 @@ MAC_ONLY = get_talos_slave_platforms(PLATFORMS, platforms=('macosx64',))
 WIN7_ONLY = ['win7-ix']
 WIN8_ONLY = ['win8']
 LINUX64_ONLY = ['ubuntu64_hw']
-NO_LINUX64 = get_talos_slave_platforms(PLATFORMS, platforms=('linux', 'win32', 'macosx64'))
 
 SUITES = {
     'xperf': {
@@ -232,16 +231,6 @@ SUITES = {
         'enable_by_default': True,
         'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, ALL_TALOS_PLATFORMS),
-    },
-    'other_nolinux64': {
-        'enable_by_default': False,
-        'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
-        'options': ({}, NO_LINUX64),
-    },
-    'other_linux64': {
-        'enable_by_default': False,
-        'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
-        'options': ({}, LINUX64_ONLY),
     },
     'svgr': {
         'enable_by_default': True,
@@ -1515,9 +1504,6 @@ BRANCHES['mozilla-b2g30_v1_4']['platforms']['macosx64']['talos_slave_platforms']
 BRANCHES['try']['repo_path'] = "try"
 BRANCHES['try']['xperf_tests'] = (1, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 BRANCHES['try']['tp5o_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
-BRANCHES['try']['other_tests'] = (0, False, {}, ALL_TALOS_PLATFORMS)
-BRANCHES['try']['other_nolinux64_tests'] = (1, False, {}, NO_LINUX64)
-BRANCHES['try']['other_linux64_tests'] = (1, False, {}, LINUX64_ONLY)
 BRANCHES['try']['pgo_strategy'] = 'try'
 BRANCHES['try']['enable_try'] = True
 
@@ -1525,12 +1511,12 @@ BRANCHES['try']['enable_try'] = True
 BRANCHES['cedar']['platforms']['linux64-asan']['ubuntu64-asan_vm']['opt_unittest_suites'] += MARIONETTE[:]
 BRANCHES['cedar']['platforms']['macosx64']['mavericks']['opt_unittest_suites'] = UNITTEST_SUITES['opt_unittest_suites'][:]
 BRANCHES['cedar']['platforms']['macosx64']['mavericks']['debug_unittest_suites'] = UNITTEST_SUITES['debug_unittest_suites'][:]
-BRANCHES['cedar']['platforms']['win32']['xp-ix']['opt_unittest_suites'] += REFTEST_OMTC[:] + MARIONETTE[:]
-BRANCHES['cedar']['platforms']['win32']['win7-ix']['opt_unittest_suites'] += REFTEST_OMTC[:] + MARIONETTE[:]
-BRANCHES['cedar']['platforms']['win32']['win8']['opt_unittest_suites'] += REFTEST_OMTC[:] + MARIONETTE[:]
-BRANCHES['cedar']['platforms']['win32']['xp-ix']['debug_unittest_suites'] += REFTEST_OMTC[:] + MARIONETTE[:]
-BRANCHES['cedar']['platforms']['win32']['win7-ix']['debug_unittest_suites'] += REFTEST_OMTC[:] + MARIONETTE[:]
-BRANCHES['cedar']['platforms']['win32']['win8']['debug_unittest_suites'] += REFTEST_OMTC[:] + MARIONETTE[:]
+BRANCHES['cedar']['platforms']['win32']['xp-ix']['opt_unittest_suites'] += REFTEST_OMTC[:]
+BRANCHES['cedar']['platforms']['win32']['win7-ix']['opt_unittest_suites'] += REFTEST_OMTC[:]
+BRANCHES['cedar']['platforms']['win32']['win8']['opt_unittest_suites'] += REFTEST_OMTC[:]
+BRANCHES['cedar']['platforms']['win32']['xp-ix']['debug_unittest_suites'] += REFTEST_OMTC[:]
+BRANCHES['cedar']['platforms']['win32']['win7-ix']['debug_unittest_suites'] += REFTEST_OMTC[:]
+BRANCHES['cedar']['platforms']['win32']['win8']['debug_unittest_suites'] += REFTEST_OMTC[:]
 
 # Filter the tests that are enabled on holly for bug 985718.
 for platform in BRANCHES['holly']['platforms'].keys():
@@ -1544,11 +1530,6 @@ for platform in BRANCHES['holly']['platforms'].keys():
 
 # Enable mavericks testing on select branches only
 delete_slave_platform(BRANCHES, PLATFORMS, {'macosx64': 'mavericks'}, branch_exclusions=['cedar'])
-
-for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
-    branch['other_tests'] = (0, False, {}, ALL_TALOS_PLATFORMS)
-    branch['other_nolinux64_tests'] = (1, False, {}, NO_LINUX64)
-    branch['other_linux64_tests'] = (1, False, {}, LINUX64_ONLY)
 
 # Load jetpack for (all) branches
 for name, branch in items_at_least(BRANCHES, 'gecko_version', 21):
@@ -1599,6 +1580,17 @@ for platform in PLATFORMS.keys():
                     except ValueError:
                         # wasn't in the list anyways
                         pass
+
+# Enable Mn on opt/debug win for gecko >= 33
+for platform in PLATFORMS.keys():
+    if platform != 'win32':
+        continue
+    for name, branch in items_at_least(BRANCHES, 'gecko_version', 33):
+        for slave_platform in PLATFORMS[platform]['slave_platforms']:
+            if platform in BRANCHES[name]['platforms']:
+                if slave_platform in BRANCHES[name]['platforms'][platform]:
+                    BRANCHES[name]['platforms'][platform][slave_platform]['opt_unittest_suites'] += MARIONETTE[:]
+                    BRANCHES[name]['platforms'][platform][slave_platform]['debug_unittest_suites'] += MARIONETTE[:]
 
 # Enable Mn on opt linux/linux64 for gecko >= 32
 for platform in PLATFORMS.keys():

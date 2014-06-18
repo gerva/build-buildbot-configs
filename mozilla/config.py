@@ -659,9 +659,10 @@ PLATFORM_VARS = {
             'enable_opt_unittests': True,
             'try_by_default': False,
             'upload_symbols': False,
+            'packageTests': True,
 
             'product_name': 'firefox',
-            'unittest_platform': 'linux64-mulet',
+            'unittest_platform': 'linux64-mulet-opt',
             'base_name': 'Linux Mulet x86-64 %(branch)s',
             'slaves': SLAVES['mock'],
             'mozconfig': 'in_tree',
@@ -1450,6 +1451,12 @@ PROJECTS = {
     },
 }
 
+# For bug 978211, we are using MOZ_AUTOMATION to trigger the automation build
+# steps from mach. However, these build variants already use mach, and so they
+# would inadvertently trigger the automation steps. We can remove the
+# MOZ_AUTOMATION environment variable for them, since it's not used anyway.
+del PLATFORM_VARS["linux64-sh-haz"]["env"]["MOZ_AUTOMATION"]
+del PLATFORM_VARS["linux64-br-haz"]["env"]["MOZ_AUTOMATION"]
 
 # Override config settings with local settings
 def apply_localconfig(config, local):
@@ -2112,6 +2119,7 @@ for branch in ACTIVE_PROJECT_BRANCHES:
     BRANCHES[branch]['enabled_products'] = branchConfig.get('enabled_products',
                                                             GLOBAL_VARS['enabled_products'])
     BRANCHES[branch]['enable_nightly'] = branchConfig.get('enable_nightly', False)
+    BRANCHES[branch]['enable_nightly_everytime'] = branchConfig.get('enable_nightly_everytime', False)
     BRANCHES[branch]['enable_mobile'] = branchConfig.get('enable_mobile', True)
     BRANCHES[branch]['pgo_strategy'] = branchConfig.get('pgo_strategy', None)
     BRANCHES[branch]['periodic_start_hours'] = branchConfig.get('periodic_start_hours', range(0, 24, 6))

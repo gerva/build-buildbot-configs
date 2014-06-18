@@ -81,11 +81,12 @@ PLATFORMS['android']['mozharness_config'] = {
     'talos_script_maxtime': 10800,
 }
 
-PLATFORMS['android-armv6']['slave_platforms'] = ['tegra_android-armv6', 'ubuntu64_hw_armv6_mobile']
+PLATFORMS['android-armv6']['slave_platforms'] = ['tegra_android-armv6', 'ubuntu64_hw_armv6_mobile', 'ubuntu64_vm_armv6_mobile']
 PLATFORMS['android-armv6']['env_name'] = 'android-perf'
 PLATFORMS['android-armv6']['is_mobile'] = True
 PLATFORMS['android-armv6']['tegra_android-armv6'] = {'name': "Android 2.2 Armv6 Tegra"}
-PLATFORMS['android-armv6']['ubuntu64_hw_armv6_mobile'] = {'name': "Android 2.2 Armv6 on 2.3 Emulator on ix"}
+PLATFORMS['android-armv6']['ubuntu64_hw_armv6_mobile'] = {'name': "Android 2.3 Emulator Armv6"}
+PLATFORMS['android-armv6']['ubuntu64_vm_armv6_mobile'] = {'name': "Android 2.3 Emulator Armv6"}
 PLATFORMS['android-armv6']['stage_product'] = 'mobile'
 PLATFORMS['android-armv6']['mozharness_config'] = {
     'mozharness_python': '/tools/buildbot/bin/python',
@@ -668,7 +669,12 @@ TEGRA_RELEASE_PLAIN_UNITTEST_DICT = {
     'debug_unittest_suites': [],
 }
 
-ARMV6_ANDROID_2_3_UNITTEST_DICT = {
+ANDROID_2_3_ARMV6_AWS_DICT = {
+    'opt_unittest_suites': [],
+    'debug_unittest_suites': [],
+}
+
+ANDROID_2_3_ARMV6_IX_DICT = {
     'opt_unittest_suites': [],
     'debug_unittest_suites': [],
 }
@@ -1256,6 +1262,54 @@ ANDROID_2_3_MOZHARNESS_DICT = [
         'script_maxtime': 14400,
     },
     ),
+    ('plain-reftest-13', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'reftest-13',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('plain-reftest-14', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'reftest-14',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('plain-reftest-15', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'reftest-15',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('plain-reftest-16', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'reftest-16',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
     ('crashtest-1', {
         'use_mozharness': True,
         'script_path': 'scripts/android_emulator_unittest.py',
@@ -1312,7 +1366,10 @@ PLATFORM_UNITTEST_VARS = {
             'opt_unittest_suites': [],
             'debug_unittest_suites': [],
         },
-
+        'ubuntu64_vm_armv6_mobile': {
+            'opt_unittest_suites': [],
+            'debug_unittest_suites': [],
+        },
     },
     'android-x86': {
         'product_name': 'fennec',
@@ -1490,20 +1547,18 @@ for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
 for suite in ANDROID_2_3_MOZHARNESS_DICT:
     if suite[0].startswith('mochitest-gl'):
         continue
-    ARMV6_ANDROID_2_3_UNITTEST_DICT['opt_unittest_suites'].append(suite)
+    elif suite[0].startswith('plain-reftest'):
+        ANDROID_2_3_ARMV6_IX_DICT['opt_unittest_suites'].append(suite)
+    elif suite[0].startswith('crashtest'):
+        ANDROID_2_3_ARMV6_IX_DICT['opt_unittest_suites'].append(suite)
+    elif suite[0].startswith('jsreftest'):
+        ANDROID_2_3_ARMV6_IX_DICT['opt_unittest_suites'].append(suite)
+    else:
+        ANDROID_2_3_ARMV6_AWS_DICT['opt_unittest_suites'].append(suite)
 
-# bug 1020970 Schedule all Android 2.3 armv6 tests, except mochitest-gl, 
-# on all trunk trees and make them ride the trains 
-for name, branch in items_at_least(BRANCHES, 'gecko_version', 33):
-    # Loop removes it from any branch that gets beyond here
-    for platform in branch['platforms']:
-        if not platform in PLATFORMS:
-            continue
-        if not platform == ('android-armv6'):
-            continue
-        BRANCHES[name]['platforms']['android-armv6']['ubuntu64_hw_armv6_mobile'] = {
-            'opt_unittest_suites': deepcopy(ARMV6_ANDROID_2_3_UNITTEST_DICT['opt_unittest_suites']),
-        }
+# bug 1006082 Run Android 2.3 tests against armv6 builds, on Ash only
+BRANCHES['ash']['platforms']['android-armv6']['ubuntu64_hw_armv6_mobile'] = deepcopy(ANDROID_2_3_ARMV6_IX_DICT)
+BRANCHES['ash']['platforms']['android-armv6']['ubuntu64_vm_armv6_mobile'] = deepcopy(ANDROID_2_3_ARMV6_AWS_DICT)
 
 # otherwise spurious builders are created on ash
 # part of bug 1006082 Run Android 2.3 tests against armv6 builds, on Ash only
