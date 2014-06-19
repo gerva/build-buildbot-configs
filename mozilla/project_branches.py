@@ -140,6 +140,8 @@ PROJECT_BRANCHES = {
         # mozharness_config in its build config will use mozharness instead
         # of MozharnessBuildFactory
         'desktop_mozharness_builds_enabled': True,
+        # enable l10 desktop repacks with mozharness
+        'desktop_mozharness_l10n_repacks_enabled': True,
     },
     'cypress': {
         'mozharness_tag': 'default',

@@ -129,6 +129,14 @@ GLOBAL_VARS = {
         'nightly': ['--enable-pgo', '--enable-nightly'],
         'pgo': ['--enable-pgo'],
     }
+    # list platforms with mozharness l10n repacks enabled.
+    # mozharness repacks will be enabled per branch
+    'mozharness_desktop_l10n_platforms': [
+        'linux', 'linux64', 'win32', 'win64', 'macosx'
+    ],
+    'mozharness_desktop_l10n_extra_options': {
+        'l10n_chunks': 10,
+    }
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
@@ -154,9 +162,19 @@ PLATFORM_VARS = {
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
+
+            # keep 'mozilla-central' for now...
+            'mozharness_desktop_l10n' : {
+                'script_name': 'scripts/desktop_l10n.py',
+                'extra_args': [
+                    '--config', 'configs/single_locale/linux.py'
+                ],
+                # do we need it?
+                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+            },
             'dep_signing_servers': 'dep-signing',
             'base_name': 'Linux %(branch)s',
-
             'product_name': 'firefox',
             'unittest_platform': 'linux-opt',
             'app_name': 'browser',
@@ -266,6 +284,17 @@ PLATFORM_VARS = {
                 '--config', 'builds/releng_base_linux_64_builds.py',
                 '--custom-build-variant-cfg', 'non-unified',
             ],
+
+            # keep 'mozilla-central' for now...
+            'mozharness_desktop_l10n' : {
+                'script_name': 'scripts/desktop_l10n.py',
+                'extra_args': [
+                    '--config', 'configs/single_locale/mozilla-central_linux64.py'
+                ],
+                # do we need it?
+                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+            },
 
             'product_name': 'firefox',
             'unittest_platform': 'linux64-opt',
@@ -714,6 +743,18 @@ PLATFORM_VARS = {
             ],
         },
         'macosx64': {
+
+            # keep 'mozilla-central' for now...
+            'mozharness_desktop_l10n' : {
+                'script_name': 'scripts/desktop_l10n.py',
+                'extra_args': [
+                    '--config', 'configs/single_locale/mozilla-central_macosx64.py'
+                ],
+                # do we need it?
+                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+            },
+
             'product_name': 'firefox',
             'unittest_platform': 'macosx64-opt',
             'app_name': 'browser',
@@ -769,6 +810,17 @@ PLATFORM_VARS = {
             'enable_ccache': True,
         },
         'win32': {
+            # keep 'mozilla-central' for now...
+            'mozharness_desktop_l10n' : {
+                'script_name': 'scripts/desktop_l10n.py',
+                'extra_args': [
+                    '--config', 'configs/single_locale/mozilla-central_win32.py'
+                ],
+                # do we need it?
+                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+            },
+
             'product_name': 'firefox',
             'unittest_platform': 'win32-opt',
             'app_name': 'browser',
@@ -822,6 +874,17 @@ PLATFORM_VARS = {
             'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
         },
         'win64': {
+            # keep 'mozilla-central' for now...
+            'mozharness_desktop_l10n' : {
+                'script_name': 'scripts/desktop_l10n.py',
+                'extra_args': [
+                    '--config', 'configs/single_locale/mozilla-central_win64.py'
+                ],
+                # do we need it?
+                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+            },
+
             'product_name': 'firefox',
             'unittest_platform': 'win64-opt',
             'app_name': 'browser',
