@@ -136,12 +136,6 @@ PROJECT_BRANCHES = {
                 'enable_opt_unittests': True,
             },
         },
-        'platforms': {
-            'linux': {},
-            'linux64': {},
-            'win32': {},
-            'win64': {},
-        },
         # once ready, we can flip this switch and any platform with
         # mozharness_config in its build config will use mozharness instead
         # of MozharnessBuildFactory
