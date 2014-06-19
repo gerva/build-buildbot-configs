@@ -128,7 +128,7 @@ GLOBAL_VARS = {
     'mozharness_desktop_extra_options': {
         'nightly': ['--enable-pgo', '--enable-nightly'],
         'pgo': ['--enable-pgo'],
-    }
+    },
     # list platforms with mozharness l10n repacks enabled.
     # mozharness repacks will be enabled per branch
     'mozharness_desktop_l10n_platforms': [
@@ -136,7 +136,7 @@ GLOBAL_VARS = {
     ],
     'mozharness_desktop_l10n_extra_options': {
         'l10n_chunks': 10,
-    }
+    },
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
