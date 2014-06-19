@@ -132,7 +132,7 @@ GLOBAL_VARS = {
     # list platforms with mozharness l10n repacks enabled.
     # mozharness repacks will be enabled per branch
     'mozharness_desktop_l10n_platforms': [
-        'linux', 'linux64', 'win32', 'win64', 'macosx'
+        'linux', 'linux64', 'win32', 'win64', 'macosx64'
     ],
     'mozharness_desktop_l10n_extra_options': {
         'l10n_chunks': 10,
