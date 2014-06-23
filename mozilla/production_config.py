@@ -1,11 +1,11 @@
 MAC_LION_MINIS = ['bld-lion-r5-%03d' % x for x in range(1,16) + range(41,69) + range(70,87) + [88] + range(93,95)]
-LINUX_IXS      = ['b-linux64-hp-0020',]
+LINUX_IXS      = []
 LINUX64_IXS    = []
 WIN32_IXS      = []
 WIN64_IXS      = []
 WIN64_REV2     = ['b-2008-ix-%04i' % x for x in range(1,18) + range(65,89) + range(90,159) + range(161,173) + [184]] + \
                  ['b-2008-sm-%04d' % x for x in range(33, 65)]
-MOCK_DL120G7   = ['b-linux64-hp-%04d' % x for x in range(25,36)]
+MOCK_DL120G7   = ['b-linux64-hp-%04d' % x for x in range(25,36) + [20]]
 LINUX64_EC2    = ['bld-linux64-ec2-%03d' % x for x in range(1, 50) + range(301, 350)] + \
                  ['bld-linux64-spot-%03d' % x for x in range(1, 300) + range(300, 600)] + \
                  ['bld-linux64-spot-%d' % x for x in range(1000, 1100)]
