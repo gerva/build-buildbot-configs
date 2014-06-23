@@ -129,6 +129,14 @@ GLOBAL_VARS = {
         'nightly': ['--enable-pgo', '--enable-nightly'],
         'pgo': ['--enable-pgo'],
     },
+    # list platforms with mozharness l10n repacks enabled.
+    # mozharness repacks will be enabled per branch
+    'mozharness_desktop_l10n_platforms': [
+        'linux', 'linux64', 'win32', 'win64', 'macosx64'
+    ],
+    'mozharness_desktop_l10n_extra_options': {
+        'l10n_chunks': 10,
+    },
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
@@ -2342,12 +2350,29 @@ for b in ('b2g-inbound',):
 # END B2G's INBOUND
 
 
+# mozharness desktop repacks on cedar
+mozharness_desktop_repacks_branches = ('cedar', )
 for name, branch in BRANCHES.items():
-    for platform in branch['platforms']:
-        if name not in ('cedar',):
+    for token in ('mozharness_desktop_l10n_extra_options',
+                  'mozharness_desktop_l10n_platforms',):
+        try:
+            del branch[token]
+        except KeyError:
+            pass
+
+    if name in mozharness_desktop_repacks_branches:
+        for platform in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:
+            try:
+                pf = branch['platforms'][platform]
+                pf['desktop_mozharness_repacks_enabled'] = True
+                pf['mozharness_desktop_l10n_extra_options'] = GLOBAL_VARS['mozharness_desktop_l10n_extra_options']
+            except KeyError:
+                pass
+    else:
+        # mozharness repacks are not enabled here...
+        for platform in branch['platforms']:
             try:
                 del branch['platforms'][platform]['mozharness_desktop_l10n']
-                print 'removed from {0}, branch {1}'.format(platform, name)
             except KeyError:
                 pass
 
