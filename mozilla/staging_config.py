@@ -7,6 +7,7 @@ WIN64_IXS      = []
 WIN64_REV2     = ['ix-mn-w0864-%03d' % x for x in range(1,3)] + \
                  ['b-2008-ix-%04d' % x for x in [182, 183]]
 MOCK_DL120G7   = ['b-linux64-hp-%04d' % x for x in range(20,25)]
+MOCK_DL120G7   = ['b-linux64-hp-%04d' % x for x in range(21,25)]
 LINUX64_EC2    = ['dev-linux64-ec2-%03d' % x for x in range(1, 50)]
 
 STAGING_SLAVES = {

@@ -1,5 +1,5 @@
 MAC_LION_MINIS = ['bld-lion-r5-%03d' % x for x in range(1,16) + range(41,69) + range(70,87) + [88] + range(93,95)]
-LINUX_IXS      = []
+LINUX_IXS      = ['b-linux64-hp-0020',]
 LINUX64_IXS    = []
 WIN32_IXS      = []
 WIN64_IXS      = []
