@@ -129,14 +129,6 @@ GLOBAL_VARS = {
         'nightly': ['--enable-pgo', '--enable-nightly'],
         'pgo': ['--enable-pgo'],
     },
-    # list platforms with mozharness l10n repacks enabled.
-    # mozharness repacks will be enabled per branch
-    'mozharness_desktop_l10n_platforms': [
-        'linux', 'linux64', 'win32', 'win64', 'macosx64'
-    ],
-    'mozharness_desktop_l10n_extra_options': {
-        'l10n_chunks': 10,
-    },
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
@@ -2348,6 +2340,16 @@ for b in ('b2g-inbound',):
         if 'linux' not in p:
             BRANCHES[b]['platforms'][p]['enable_checktests'] = False
 # END B2G's INBOUND
+
+
+for name, branch in BRANCHES.items():
+    for platform in branch['platforms']:
+        if name not in ('cedar',):
+            try:
+                del branch['platforms'][platform]['mozharness_desktop_l10n']
+                print 'removed from {0}, branch {1}'.format(platform, name)
+            except KeyError:
+                pass
 
 # Bug 950206 - Enable 32-bit Windows builds on Date, test those builds on tst-w64-ec2-XXXX
 BRANCHES['date']['platforms']['win32']['unittest_platform'] = 'win64-opt'
