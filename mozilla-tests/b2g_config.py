@@ -17,6 +17,14 @@ import config_common
 reload(config_common)
 from config_common import nested_haskey
 
+# Import WithProperties for gaia-try.  Allow for a bogus WithProperties for
+# tools that don't want to have the full buildbot stack.
+try:
+    from buildbot.steps.shell import WithProperties
+except ImportError:
+    def WithProperties(s):
+        return s
+
 GLOBAL_VARS = deepcopy(GLOBAL_VARS)
 
 GLOBAL_VARS['stage_username'] = 'ffxbld'
@@ -1627,6 +1635,9 @@ BRANCHES['b2g-inbound']['repo_path'] = "integration/b2g-inbound"
 BRANCHES['try']['pgo_strategy'] = "try"
 BRANCHES['try']['enable_try'] = True
 BRANCHES['gaia-try']['repo_path'] = "integration/gaia-try"
+# Temporary redirect for debugging: bug 1008351
+BRANCHES['gaia-try']['mozharness_repo'] = "https://hg.mozilla.org/users/jford_mozilla.com/mozharness"
+BRANCHES['gaia-try']['mozharness_tag'] = "default"
 
 # new linux64_gecko tests as of gecko 32
 for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
@@ -1782,36 +1793,22 @@ for pf, pf_config in BRANCHES['gaia-try']['platforms'].items():
             ])
             if 'linux32' in pf:
                 suite_config['opt_extra_args'] = [
-                    '--installer-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s/latest/en-US/b2g-%d.0a1.en-US.linux-i686.tar.bz2' % (pf, mc_gecko_version),
-                    '--test-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s/latest/en-US/b2g-%d.0a1.en-US.linux-i686.tests.zip' % (pf, mc_gecko_version),
+                    '-c',
+                    WithProperties('http://hg.mozilla.org/integration/gaia-try/raw-file/%(revision)s/linux32.json'),
                 ]
             elif 'linux64' in pf:
                 suite_config['opt_extra_args'] = [
-                    '--installer-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s/latest/en-US/b2g-%d.0a1.en-US.linux-x86_64.tar.bz2' % (pf, mc_gecko_version),
-                    '--test-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s/latest/en-US/b2g-%d.0a1.en-US.linux-x86_64.tests.zip' % (pf, mc_gecko_version),
+                    '-c',
+                    WithProperties('http://hg.mozilla.org/integration/gaia-try/raw-file/%(revision)s/linux64.json'),
                 ]
                 suite_config['debug_extra_args'] = [
-                    '--installer-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s-debug/latest/en-US/b2g-%d.0a1.en-US.linux-x86_64.tar.bz2' % (pf, mc_gecko_version),
-                    '--test-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s-debug/latest/en-US/b2g-%d.0a1.en-US.linux-x86_64.tests.zip' % (pf, mc_gecko_version),
+                    '-c',
+                    WithProperties('http://hg.mozilla.org/integration/gaia-try/raw-file/%(revision)s/linux64-debug.json'),
                 ]
             elif 'macosx64' in pf:
                 suite_config['opt_extra_args'] = [
-                    '--installer-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s/latest/en-US/b2g-%d.0a1.en-US.mac64.dmg' % (pf, mc_gecko_version),
-                    '--test-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s/latest/en-US/b2g-%d.0a1.en-US.mac64.tests.zip' % (pf, mc_gecko_version),
-                ]
-                suite_config['debug_extra_args'] = [
-                    '--installer-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s-debug/latest/en-US/b2g-%d.0a1.en-US.mac64.dmg' % (pf, mc_gecko_version),
-                    '--test-url',
-                    'https://ftp.mozilla.org/pub/mozilla.org/b2g/tinderbox-builds/mozilla-central-%s-debug/latest/en-US/b2g-%d.0a1.en-US.mac64.tests.zip' % (pf, mc_gecko_version),
+                    '-c',
+                    WithProperties('http://hg.mozilla.org/integration/gaia-try/raw-file/%(revision)s/macosx64.json'),
                 ]
 
 
