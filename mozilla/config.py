@@ -285,11 +285,10 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
 
-            # keep 'mozilla-central' for now...
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
-                    '--config', 'configs/single_locale/mozilla-central_linux64.py'
+                    '--config', 'configs/single_locale/linux64.py'
                 ],
                 # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
@@ -744,11 +743,10 @@ PLATFORM_VARS = {
         },
         'macosx64': {
 
-            # keep 'mozilla-central' for now...
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
-                    '--config', 'configs/single_locale/mozilla-central_macosx64.py'
+                    '--config', 'configs/single_locale/macosx64.py'
                 ],
                 # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
@@ -814,7 +812,7 @@ PLATFORM_VARS = {
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
-                    '--config', 'configs/single_locale/mozilla-central_win32.py'
+                    '--config', 'configs/single_locale/win32.py'
                 ],
                 # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
@@ -878,7 +876,7 @@ PLATFORM_VARS = {
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
-                    '--config', 'configs/single_locale/mozilla-central_win64.py'
+                    '--config', 'configs/single_locale/win64.py'
                 ],
                 # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
