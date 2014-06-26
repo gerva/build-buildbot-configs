@@ -166,12 +166,12 @@ PLATFORM_VARS = {
             'mozharness_python': '/tools/buildbot/bin/python',
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
-                'extra_args': [
-                    '--config', 'configs/single_locale/linux.py'
-                ],
-                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
-                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+                'l10n_chunks': 10,
+                'use_credentials_file': True,
+                'config': 'configs/single_locale/linux.py',
             },
+            'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                               '-f', '../reboot_count.txt', '-n', '1', '-z'],
             'dep_signing_servers': 'dep-signing',
             'base_name': 'Linux %(branch)s',
             'product_name': 'firefox',
@@ -287,12 +287,12 @@ PLATFORM_VARS = {
             'mozharness_python': '/tools/buildbot/bin/python',
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
-                'extra_args': [
-                    '--config', 'configs/single_locale/linux64.py'
-                ],
-                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
-                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+                'l10n_chunks': 10,
+                'use_credentials_file': True,
+                'config': 'configs/single_locale/linux64.py',
             },
+            'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                               '-f', '../reboot_count.txt', '-n', '1', '-z'],
 
             'product_name': 'firefox',
             'unittest_platform': 'linux64-opt',
@@ -745,12 +745,12 @@ PLATFORM_VARS = {
             'mozharness_python': '/tools/buildbot/bin/python',
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
-                'extra_args': [
-                    '--config', 'configs/single_locale/macosx64.py'
-                ],
-                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
-                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+                'l10n_chunks': 10,
+                'use_credentials_file': True,
+                'config': 'configs/single_locale/macosx64.py',
             },
+            'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                               '-f', '../reboot_count.txt', '-n', '1', '-z'],
 
             'product_name': 'firefox',
             'unittest_platform': 'macosx64-opt',
@@ -811,12 +811,12 @@ PLATFORM_VARS = {
             'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
-                'extra_args': [
-                    '--config', 'configs/single_locale/win32.py'
-                ],
-                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
-                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+                'l10n_chunks': 10,
+                'use_credentials_file': True,
+                'config': 'configs/single_locale/win32.py',
             },
+            'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                               '-f', '../reboot_count.txt', '-n', '1', '-z'],
 
             'product_name': 'firefox',
             'unittest_platform': 'win32-opt',
@@ -875,12 +875,12 @@ PLATFORM_VARS = {
             'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
-                'extra_args': [
-                    '--config', 'configs/single_locale/win64.py'
-                ],
-                'reboot_command': ['scripts/external_tools/count_and_reboot.py',
-                                  '-f', '../reboot_count.txt', '-n', '1', '-z'],
+                'l10n_chunks': 10,
+                'use_credentials_file': True,
+                'config': 'configs/single_locale/win64.py',
             },
+            'reboot_command': ['scripts/external_tools/count_and_reboot.py',
+                               '-f', '../reboot_count.txt', '-n', '1', '-z'],
 
             'product_name': 'firefox',
             'unittest_platform': 'win64-opt',
