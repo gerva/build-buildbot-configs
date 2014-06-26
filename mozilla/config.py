@@ -163,13 +163,12 @@ PLATFORM_VARS = {
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
 
-            # keep 'mozilla-central' for now...
+            'mozharness_python': '/tools/buildbot/bin/python',
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
                     '--config', 'configs/single_locale/linux.py'
                 ],
-                # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
@@ -285,13 +284,12 @@ PLATFORM_VARS = {
                 '--config', 'builds/releng_base_linux_64_builds.py',
                 '--custom-build-variant-cfg', 'non-unified',
             ],
-
+            'mozharness_python': '/tools/buildbot/bin/python',
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
                     '--config', 'configs/single_locale/linux64.py'
                 ],
-                # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
@@ -744,13 +742,12 @@ PLATFORM_VARS = {
             ],
         },
         'macosx64': {
-
+            'mozharness_python': '/tools/buildbot/bin/python',
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
                     '--config', 'configs/single_locale/macosx64.py'
                 ],
-                # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
@@ -811,13 +808,12 @@ PLATFORM_VARS = {
             'enable_ccache': True,
         },
         'win32': {
-            # keep 'mozilla-central' for now...
+            'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
                     '--config', 'configs/single_locale/win32.py'
                 ],
-                # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
@@ -876,15 +872,14 @@ PLATFORM_VARS = {
             'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
         },
         'win64': {
-            # keep 'mozilla-central' for now...
+            'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n' : {
                 'script_name': 'scripts/desktop_l10n.py',
                 'extra_args': [
                     '--config', 'configs/single_locale/win64.py'
                 ],
-                # do we need it?
                 'reboot_command': ['scripts/external_tools/count_and_reboot.py',
-                                   '-f', '../reboot_count.txt', '-n', '1', '-z'],
+                                  '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
 
             'product_name': 'firefox',
