@@ -2348,28 +2348,17 @@ for b in ('b2g-inbound',):
 # mozharness desktop repacks on cedar
 mozharness_desktop_repacks_branches = ('cedar', )
 for name, branch in BRANCHES.items():
-    for token in ('mozharness_desktop_l10n_extra_options',
-                  'mozharness_desktop_l10n_platforms',):
-        try:
-            del branch[token]
-        except KeyError:
-            pass
-
     if name in mozharness_desktop_repacks_branches:
-        for platform in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:
-            try:
-                pf = branch['platforms'][platform]
+        # do not delete anything set at platform level
+        for platform_name in branch['platforms']:
+            if platform_name in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:
+                pf = branch['platforms'][platform_name]
                 pf['desktop_mozharness_repacks_enabled'] = True
-                pf['mozharness_desktop_l10n_extra_options'] = GLOBAL_VARS['mozharness_desktop_l10n_extra_options']
-            except KeyError:
-                pass
-    else:
-        # mozharness repacks are not enabled here...
-        for platform in branch['platforms']:
-            try:
-                del branch['platforms'][platform]['mozharness_desktop_l10n']
-            except KeyError:
-                pass
+        continue
+    # for all other branches delete the keys you want
+    for p in branch["platforms"]:
+        if "mozharness_desktop_l10n" in p:
+            del p["mozharness_desktop_l10n"]
 
 # Bug 950206 - Enable 32-bit Windows builds on Date, test those builds on tst-w64-ec2-XXXX
 BRANCHES['date']['platforms']['win32']['unittest_platform'] = 'win64-opt'
