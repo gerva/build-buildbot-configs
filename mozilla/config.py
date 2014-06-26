@@ -134,9 +134,6 @@ GLOBAL_VARS = {
     'mozharness_desktop_l10n_platforms': [
         'linux', 'linux64', 'win32', 'win64', 'macosx64'
     ],
-    'mozharness_desktop_l10n_extra_options': {
-        'l10n_chunks': 10,
-    },
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
@@ -168,7 +165,7 @@ PLATFORM_VARS = {
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
-                'config': 'configs/single_locale/linux.py',
+                'config': 'single_locale/linux.py',
             },
             'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                '-f', '../reboot_count.txt', '-n', '1', '-z'],
@@ -289,7 +286,7 @@ PLATFORM_VARS = {
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
-                'config': 'configs/single_locale/linux64.py',
+                'config': 'single_locale/linux64.py',
             },
             'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                '-f', '../reboot_count.txt', '-n', '1', '-z'],
@@ -747,7 +744,7 @@ PLATFORM_VARS = {
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
-                'config': 'configs/single_locale/macosx64.py',
+                'config': 'single_locale/macosx64.py',
             },
             'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                '-f', '../reboot_count.txt', '-n', '1', '-z'],
@@ -813,7 +810,7 @@ PLATFORM_VARS = {
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
-                'config': 'configs/single_locale/win32.py',
+                'config': 'single_locale/win32.py',
             },
             'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                '-f', '../reboot_count.txt', '-n', '1', '-z'],
@@ -877,7 +874,7 @@ PLATFORM_VARS = {
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
-                'config': 'configs/single_locale/win64.py',
+                'config': 'single_locale/win64.py',
             },
             'reboot_command': ['scripts/external_tools/count_and_reboot.py',
                                '-f', '../reboot_count.txt', '-n', '1', '-z'],
