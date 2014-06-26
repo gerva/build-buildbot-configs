@@ -134,6 +134,7 @@ GLOBAL_VARS = {
     'mozharness_desktop_l10n_platforms': [
         'linux', 'linux64', 'win32', 'win64', 'macosx64'
     ],
+    # bug 1027890 win32/win64 will fail for now
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
