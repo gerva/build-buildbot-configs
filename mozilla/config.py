@@ -739,7 +739,7 @@ PLATFORM_VARS = {
         },
         'macosx64': {
             'mozharness_desktop_l10n': {
-                'script_name': 'scripts/desktop_l10n.py',
+                'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
                 'config': 'single_locale/macosx64.py',
@@ -805,7 +805,7 @@ PLATFORM_VARS = {
         'win32': {
             'mozharness_desktop_l10n': {
                 'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
-                'script_name': 'scripts/desktop_l10n.py',
+                'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
                 'config': 'single_locale/win32.py',
@@ -869,7 +869,7 @@ PLATFORM_VARS = {
         'win64': {
             'mozharness_desktop_l10n' : {
                 'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
-                'script_name': 'scripts/desktop_l10n.py',
+                'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
                 'config': 'single_locale/win64.py',
