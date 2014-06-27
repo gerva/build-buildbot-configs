@@ -2346,9 +2346,10 @@ for b in ('b2g-inbound',):
 
 
 # mozharness desktop repacks on cedar
-mozharness_desktop_repacks_branches = ('cedar', )
+# mozharness_desktop_repacks_branches = ('cedar', )
 for name, branch in BRANCHES.items():
-    if name in mozharness_desktop_repacks_branches:
+    # if name in mozharness_desktop_repacks_branches:
+    if branch.get('desktop_mozharness_repacks_enabled'):
         # do not delete anything set at platform level
         for platform_name in branch['platforms']:
             if platform_name in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:

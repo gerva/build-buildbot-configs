@@ -125,6 +125,8 @@ PROJECT_BRANCHES = {
     },
     #'birch': {},  # Bug 1010674
     'cedar': {
+        'enable_nightly': True,
+        'desktop_mozharness_repacks_enabled': True,
         'mozharness_tag': 'default',
         'enable_talos': True,
         'talos_suites': {
