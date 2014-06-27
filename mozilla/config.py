@@ -161,9 +161,8 @@ PLATFORM_VARS = {
                                    '-f', '../reboot_count.txt', '-n', '1', '-z'],
             },
 
-            'mozharness_python': '/tools/buildbot/bin/python',
-            'mozharness_desktop_l10n' : {
-                'script_name': 'scripts/desktop_l10n.py',
+            'mozharness_desktop_l10n': {
+                'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
                 'config': 'single_locale/linux.py',
@@ -282,9 +281,8 @@ PLATFORM_VARS = {
                 '--config', 'builds/releng_base_linux_64_builds.py',
                 '--custom-build-variant-cfg', 'non-unified',
             ],
-            'mozharness_python': '/tools/buildbot/bin/python',
-            'mozharness_desktop_l10n' : {
-                'script_name': 'scripts/desktop_l10n.py',
+            'mozharness_desktop_l10n': {
+                'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
                 'config': 'single_locale/linux64.py',
@@ -740,8 +738,7 @@ PLATFORM_VARS = {
             ],
         },
         'macosx64': {
-            'mozharness_python': '/tools/buildbot/bin/python',
-            'mozharness_desktop_l10n' : {
+            'mozharness_desktop_l10n': {
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -806,8 +803,8 @@ PLATFORM_VARS = {
             'enable_ccache': True,
         },
         'win32': {
-            'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
-            'mozharness_desktop_l10n' : {
+            'mozharness_desktop_l10n': {
+                'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -870,8 +867,8 @@ PLATFORM_VARS = {
             'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
         },
         'win64': {
-            'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n' : {
+                'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
                 'script_name': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
