@@ -70,7 +70,7 @@ for i in range(1,100) + range(301,400):
 for i in range(1,1000):
     SLAVES['ubuntu64_vm']['tst-linux64-spot-%03i' % i] = {}
 
-for i in range(1000, 1100):
+for i in range(1000, 1300):
     SLAVES['ubuntu64_vm']['tst-linux64-spot-%i' % i] = {}
 
 for i in range(1,56):
@@ -131,6 +131,10 @@ BRANCHES = {
     'mozilla-esr24': {
         'tinderbox_tree': 'Mozilla-Esr24',
         'mobile_tinderbox_tree': 'Mozilla-Esr24',
+    },
+    'mozilla-esr31': {
+        'tinderbox_tree': 'Mozilla-Esr31',
+        'mobile_tinderbox_tree': 'Mozilla-Esr31',
     },
     'mozilla-b2g28_v1_3': {
         'tinderbox_tree': 'Mozilla-B2g28-v1.3',
