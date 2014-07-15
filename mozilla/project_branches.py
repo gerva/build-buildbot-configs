@@ -112,7 +112,7 @@ PROJECT_BRANCHES = {
         },
         'mobile_platforms': {
             'android': {
-                'slave_platforms': ['panda_android', 'ubuntu64_hw_mobile'],
+                'slave_platforms': ['panda_android', 'ubuntu64_vm_large'],
             },
             'android-x86': {
                 'enable_opt_unittests': True,
@@ -181,6 +181,7 @@ PROJECT_BRANCHES = {
         'lock_platforms': True,
         'platforms': {
             'linux64-mulet': {},
+            'macosx64-mulet': {},
         }
     },
     'gum': {},
@@ -202,7 +203,15 @@ PROJECT_BRANCHES = {
         'enable_talos': False,
     },
     'jamun': {},
-    'larch': {},
+    'larch': {
+        'lock_platforms': True,
+        'platforms': {
+            'android': {},
+            'android-armv6': {},
+            'android-x86': {},
+            'android-debug': {},
+        },
+    },
     'maple': {},
     # customizations for integration work for bugs 481815 and 307181
     'oak': {
