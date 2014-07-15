@@ -40,6 +40,16 @@ BRANCHES = {
         },
         'lock_platforms': True,
     },
+    'mozilla-esr31': {
+        'gecko_version': 31,
+        'platforms': {
+            'macosx64': {},
+            'win32': {},
+            'linux': {},
+            'linux64': {},
+        },
+        'lock_platforms': True,
+    },
     'mozilla-b2g28_v1_3': {
         'datazilla_url': None,
         'gecko_version': 28,
@@ -83,6 +93,7 @@ setMainFirefoxVersions(BRANCHES)
 # Talos
 PLATFORMS = {
     'macosx64': {},
+    'macosx64-mulet': {},
     'win32': {},
     'linux': {},
     'linux64': {},
@@ -98,6 +109,22 @@ PLATFORMS['macosx64']['mountainlion'] = {'name': "Rev5 MacOSX Mountain Lion 10.8
 PLATFORMS['macosx64']['mavericks'] = {'name': "Rev5 MacOSX Mavericks 10.9"}
 PLATFORMS['macosx64']['stage_product'] = 'firefox'
 PLATFORMS['macosx64']['mozharness_config'] = {
+    'mozharness_python': '/tools/buildbot/bin/python',
+    'hg_bin': 'hg',
+    'reboot_command': ['/tools/buildbot/bin/python'] + MOZHARNESS_REBOOT_CMD,
+    'system_bits': '64',
+    'config_file': 'talos/mac_config.py',
+}
+
+PLATFORMS['macosx64-mulet']['slave_platforms'] = ['snowleopard']
+PLATFORMS['macosx64-mulet']['env_name'] = 'mac-perf'
+PLATFORMS['macosx64-mulet']['snowleopard'] = {
+    'name': 'Rev4 MacOSX Mulet Snow Leopard 10.6',
+    'build_dir_prefix': 'snowleopard_mulet',
+    'scheduler_slave_platform_identifier': 'snowleopard_mulet'
+}
+PLATFORMS['macosx64-mulet']['stage_product'] = 'firefox'
+PLATFORMS['macosx64-mulet']['mozharness_config'] = {
     'mozharness_python': '/tools/buildbot/bin/python',
     'hg_bin': 'hg',
     'reboot_command': ['/tools/buildbot/bin/python'] + MOZHARNESS_REBOOT_CMD,
@@ -176,7 +203,7 @@ PLATFORMS['linux64-asan']['mozharness_config'] = {
 
 PLATFORMS['linux64-mulet']['slave_platforms'] = ['ubuntu64_vm']
 PLATFORMS['linux64-mulet']['ubuntu64_vm'] = {
-    'name': 'Ubuntu Mulet VM 12.04 x64',
+    'name': 'Ubuntu VM 12.04 x64 Mulet',
     'build_dir_prefix': 'ubuntu64_vm_mulet',
     'scheduler_slave_platform_identifier': 'ubuntu64_vm_mulet'
 }
@@ -208,7 +235,8 @@ NO_MAC = get_talos_slave_platforms(PLATFORMS, platforms=('linux', 'linux64', 'wi
 MAC_ONLY = get_talos_slave_platforms(PLATFORMS, platforms=('macosx64',))
 WIN7_ONLY = ['win7-ix']
 WIN8_ONLY = ['win8']
-LINUX64_ONLY = ['ubuntu64_hw']
+LINUX64_ONLY = get_talos_slave_platforms(PLATFORMS, platforms=('linux64',))
+NO_LINUX64 = get_talos_slave_platforms(PLATFORMS, platforms=('linux', 'win32', 'macosx64'))
 
 SUITES = {
     'xperf': {
@@ -227,10 +255,25 @@ SUITES = {
         'suites': GRAPH_CONFIG + ['--activeTests', 'tp5o', '--mozAfterPaint', '--responsiveness', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': (TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS),
     },
+    'g1': {
+        'enable_by_default': False,
+        'suites': GRAPH_CONFIG + ['--activeTests', 'tp5o_scroll', '--filter', 'ignore_first:1', '--filter', 'median'],
+        'options': (TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS),
+    },
     'other': {
         'enable_by_default': True,
         'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, ALL_TALOS_PLATFORMS),
+    },
+    'other_nol64': {
+        'enable_by_default': False,
+        'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
+        'options': ({}, NO_LINUX64),
+    },
+    'other_l64': {
+        'enable_by_default': False,
+        'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
+        'options': ({}, LINUX64_ONLY),
     },
     'svgr': {
         'enable_by_default': True,
@@ -285,6 +328,7 @@ BRANCH_UNITTEST_VARS = {
         'linux64-asan': {},
         'linux64-mulet': {},
         'macosx64': {},
+        'macosx64-mulet': {},
         'win32': {},
         'win64': {},
     },
@@ -450,6 +494,7 @@ CPPUNIT = [
         'use_mozharness': True,
         'script_path': 'scripts/desktop_unittest.py',
         'extra_args': ['--cppunittest-suite', 'cppunittest'],
+        'blob_upload': True,
         'script_maxtime': 7200,
     }),
 ]
@@ -1342,6 +1387,77 @@ PLATFORM_UNITTEST_VARS = {
             },
         },
     },
+    'macosx64-mulet': {
+        'product_name': 'firefox',
+        'app_name': 'browser',
+        'brand_name': 'Minefield',
+        'builds_before_reboot': 1,
+        'enable_opt_unittests': True,
+        'enable_debug_unittests': False,
+        'snowleopard': {
+            'opt_unittest_suites': UNITTEST_SUITES['opt_unittest_suites'][:],
+            'debug_unittest_suites': [],
+            'suite_config': {
+                'mochitest': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'mochitest-e10s': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'mochitest-browser-chrome': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'mochitest-other': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'mochitest-devtools-chrome': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'webapprt-chrome': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'reftest': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'jsreftest': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'crashtest': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'reftest-no-accel': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'reftest-ipc': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'crashtest-ipc': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'xpcshell': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'cppunit': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'marionette': {
+                    'config_files': ["marionette/prod_config.py"],
+                },
+                'jittest': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+                'web-platform-tests': {
+                    'config_files': ["web_platform_tests/prod_config.py"],
+                },
+                'web-platform-tests-reftests': {
+                    'config_files': ["web_platform_tests/prod_config.py"],
+                },
+                'mozbase': {
+                    'config_files': ["unittests/mac_unittest.py"],
+                },
+            },
+        },
+    },
 }
 
 # Copy project branches into BRANCHES keys
@@ -1484,6 +1600,11 @@ BRANCHES['mozilla-esr24']['repo_path'] = "releases/mozilla-esr24"
 BRANCHES['mozilla-esr24']['pgo_strategy'] = 'per-checkin'
 BRANCHES['mozilla-esr24']['xperf_tests'] = (0, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 
+######### mozilla-esr31
+BRANCHES['mozilla-esr31']['release_tests'] = 1
+BRANCHES['mozilla-esr31']['repo_path'] = "releases/mozilla-esr31"
+BRANCHES['mozilla-esr31']['pgo_strategy'] = 'per-checkin'
+
 ######### mozilla-b2g28_v1_3
 BRANCHES['mozilla-b2g28_v1_3']['repo_path'] = "releases/mozilla-b2g28_v1_3"
 BRANCHES['mozilla-b2g28_v1_3']['pgo_strategy'] = 'per-checkin'
@@ -1504,6 +1625,10 @@ BRANCHES['mozilla-b2g30_v1_4']['platforms']['macosx64']['talos_slave_platforms']
 BRANCHES['try']['repo_path'] = "try"
 BRANCHES['try']['xperf_tests'] = (1, False, TALOS_TP_NEW_OPTS, WIN7_ONLY)
 BRANCHES['try']['tp5o_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
+BRANCHES['try']['other_tests'] = (0, False, {}, ALL_TALOS_PLATFORMS)
+BRANCHES['try']['other_nol64_tests'] = (1, False, {}, NO_LINUX64)
+BRANCHES['try']['other_l64_tests'] = (1, False, {}, LINUX64_ONLY)
+BRANCHES['try']['g1_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
 BRANCHES['try']['pgo_strategy'] = 'try'
 BRANCHES['try']['enable_try'] = True
 
@@ -1531,13 +1656,21 @@ for platform in BRANCHES['holly']['platforms'].keys():
 # Enable mavericks testing on select branches only
 delete_slave_platform(BRANCHES, PLATFORMS, {'macosx64': 'mavericks'}, branch_exclusions=['cedar'])
 
+for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
+    if 'enable_talos' in branch and branch['enable_talos'] is False:
+        continue
+    branch['other_tests'] = (0, False, {}, ALL_TALOS_PLATFORMS)
+    branch['other_nol64_tests'] = (1, False, {}, NO_LINUX64)
+    branch['other_l64_tests'] = (1, False, {}, LINUX64_ONLY)
+    branch['g1_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
+
 # Load jetpack for (all) branches
 for name, branch in items_at_least(BRANCHES, 'gecko_version', 21):
     for pf in PLATFORMS:
         if pf not in branch['platforms']:
             continue
         # Skip these platforms
-        if pf in ('linux64-mulet', 'linux64-asan',):
+        if pf in ('linux64-mulet', 'linux64-asan', 'macosx64-mulet'):
             continue
         for slave_pf in branch['platforms'][pf].get(
                 'slave_platforms', PLATFORMS[pf]['slave_platforms']):
@@ -1653,24 +1786,14 @@ for platform in PLATFORMS.keys():
             BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += MOZBASE[:]
             BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += MOZBASE[:]
 
-# Enable e10s Linux mochitests on main branches
-for name, branch in items_at_least(BRANCHES, 'gecko_version', 31):
+# Enable e10s Linux mochitests on trunk branches
+# Fix this to a certain gecko version once e10s starts riding the trains
+mc_gecko_version = BRANCHES['mozilla-central']['gecko_version']
+for name, branch in items_at_least(BRANCHES, 'gecko_version', mc_gecko_version):
     if 'linux' in branch['platforms']:
         branch['platforms']['linux']['ubuntu32_vm']['opt_unittest_suites'] += MOCHITEST_E10S[:]
     if 'linux64' in branch['platforms']:
         branch['platforms']['linux64']['ubuntu64_vm']['opt_unittest_suites'] += MOCHITEST_E10S[:]
-
-# Filter the tests that are enabled on elm for bug 1006717.
-for platform in BRANCHES['elm']['platforms'].keys():
-    if platform not in PLATFORMS:
-        continue
-
-    for slave_platform in PLATFORMS[platform]['slave_platforms']:
-        if slave_platform not in BRANCHES['elm']['platforms'][platform]:
-            continue
-        slave_p = BRANCHES['elm']['platforms'][platform][slave_platform]
-        slave_p['opt_unittest_suites'] = MOCHITEST + XPCSHELL + MOCHITEST_DT
-        slave_p['debug_unittest_suites'] = MOCHITEST + XPCSHELL + MARIONETTE + MOCHITEST_DT_3
 
 # TALOS: If you set 'talos_slave_platforms' for a branch you will only get that subset of platforms
 for branch in BRANCHES.keys():
@@ -1762,8 +1885,9 @@ for name, branch in items_before(BRANCHES, 'gecko_version', 26):
 for name in BRANCHES.keys():
     if name in ('try', 'fig'):
         continue
-    if 'linux64-mulet' in BRANCHES[name]['platforms']:
-        del BRANCHES[name]['platforms']['linux64-mulet']
+    for platform in ('linux64-mulet', 'macosx64-mulet'):
+        if platform in BRANCHES[name]['platforms']:
+            del BRANCHES[name]['platforms'][platform]
 
 if __name__ == "__main__":
     import sys

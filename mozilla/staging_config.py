@@ -1,7 +1,7 @@
 from copy import deepcopy
 import production_config as pc
 
-MAC_LION_MINIS = ['bld-lion-r5-%03d' % x for x in range(89, 93)]
+MAC_LION_MINIS = ['bld-lion-r5-%03d' % x for x in [43,86,92]]
 WIN32_IXS      = []
 WIN64_IXS      = []
 WIN64_REV2     = ['ix-mn-w0864-%03d' % x for x in range(1,3)] + \
@@ -103,6 +103,12 @@ BRANCHES = {
         'file_update_on_closed_tree': False,
     },
     'mozilla-esr24': {
+        'enable_blocklist_update': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
+    },
+    'mozilla-esr31': {
         'enable_blocklist_update': False,
         'enable_hsts_update': False,
         'enable_hpkp_update': False,
