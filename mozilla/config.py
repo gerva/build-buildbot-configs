@@ -131,9 +131,9 @@ GLOBAL_VARS = {
     # list platforms with mozharness l10n repacks enabled.
     # mozharness repacks will be enabled per branch
     'mozharness_desktop_l10n_platforms': [
-        'linux', 'linux64', 'win32', 'win64', 'macosx64'
+        'linux', 'linux64', 'macosx64'
     ],
-    # bug 1027890 win32/win64 will fail for now
+    # bug 1027890: excluding win32/win64 for now
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
 
@@ -2453,8 +2453,6 @@ for b in ('b2g-inbound',):
 # END B2G's INBOUND
 
 
-# mozharness desktop repacks on cedar
-# mozharness_desktop_repacks_branches = ('cedar', )
 for name, branch in BRANCHES.items():
     # if name in mozharness_desktop_repacks_branches:
     if branch.get('desktop_mozharness_repacks_enabled'):
