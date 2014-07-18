@@ -92,8 +92,8 @@ PROJECT_BRANCHES = {
     #},
     'ash': {
         'desktop_mozharness_repacks_enabled': True,
-        'mozharness_repo_path': 'users/asasaki_mozilla.com/ash-mozharness',
-        'mozharness_repo': 'https://hg.mozilla.org/users/asasaki_mozilla.com/ash-mozharness',
+        'mozharness_repo_path': 'build/ash-mozharness',
+        'mozharness_repo': 'https://hg.mozilla.org/build/ash-mozharness',
         'mozharness_tag': 'default',
         'lock_platforms': True,
         'talos_suites': {
