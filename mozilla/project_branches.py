@@ -91,6 +91,7 @@ PROJECT_BRANCHES = {
     #'alder': {
     #},
     'ash': {
+        'desktop_mozharness_repacks_enabled': True,
         'mozharness_repo_path': 'users/asasaki_mozilla.com/ash-mozharness',
         'mozharness_repo': 'https://hg.mozilla.org/users/asasaki_mozilla.com/ash-mozharness',
         'mozharness_tag': 'default',
@@ -125,7 +126,6 @@ PROJECT_BRANCHES = {
     },
     #'birch': {},  # Bug 1010674
     'cedar': {
-        'desktop_mozharness_repacks_enabled': True,
         'mozharness_tag': 'default',
         'enable_talos': True,
         'talos_suites': {
