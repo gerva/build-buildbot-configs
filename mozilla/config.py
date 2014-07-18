@@ -2496,17 +2496,16 @@ for b in ('b2g-inbound',):
             BRANCHES[b]['platforms'][p]['enable_checktests'] = False
 # END B2G's INBOUND
 
-
+# desktop repacks with mozharness
 for name, branch in BRANCHES.items():
     # if name in mozharness_desktop_repacks_branches:
     if branch.get('desktop_mozharness_repacks_enabled'):
-        # do not delete anything set at platform level
         for platform_name in branch['platforms']:
             if platform_name in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:
                 pf = branch['platforms'][platform_name]
                 pf['desktop_mozharness_repacks_enabled'] = True
         continue
-    # for all other branches delete the keys you want
+    # for all other branches delete mozharness_desktop_l10n
     for p in branch["platforms"]:
         if "mozharness_desktop_l10n" in p:
             del p["mozharness_desktop_l10n"]
