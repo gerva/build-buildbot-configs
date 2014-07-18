@@ -38,7 +38,7 @@ GLOBAL_VARS = {
     'graph_selector': '/server/collect.cgi',
     'compare_locales_repo_path': 'build/compare-locales',
     'compare_locales_tag': 'RELEASE_AUTOMATION',
-    'mozharness_repo_path': 'users/mgervasini_mozilla.com/mozharness',
+    'mozharness_repo_path': 'build/mozharness',
     'mozharness_tag': 'default',
     'multi_locale_merge': True,
     'default_build_space': 5,
