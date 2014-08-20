@@ -36,6 +36,7 @@ BRANCH_PRIORITIES = {
     'mozilla-inbound': 4,
     'b2g-inbound': 4,
     'fx-team': 4,
+    'gaia-try': 4,
     'try': 5,
     'try-comm-central': 5,
     'alder': 5,
@@ -247,17 +248,17 @@ def setMainFirefoxVersions(BRANCHES):
     if 'mozilla-release' in BRANCHES:
         BRANCHES['mozilla-release']['gecko_version'] = 31
     if 'mozilla-beta' in BRANCHES:
-        BRANCHES['mozilla-beta']['gecko_version'] = 31
+        BRANCHES['mozilla-beta']['gecko_version'] = 32
     if 'mozilla-aurora' in BRANCHES:
-        BRANCHES['mozilla-aurora']['gecko_version'] = 32
+        BRANCHES['mozilla-aurora']['gecko_version'] = 33
     if 'mozilla-central' in BRANCHES:
-        BRANCHES['mozilla-central']['gecko_version'] = 33
+        BRANCHES['mozilla-central']['gecko_version'] = 34
 
 
 def setMainCommVersions(BRANCHES):
     # MERGE DAY
-    BRANCHES['comm-beta']['gecko_version'] = 31
-    BRANCHES['comm-aurora']['gecko_version'] = 32
+    BRANCHES['comm-beta']['gecko_version'] = 32
+    BRANCHES['comm-aurora']['gecko_version'] = 33
 
 
 # Typical usage pattern:

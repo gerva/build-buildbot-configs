@@ -420,6 +420,7 @@ MOCHITEST_BC_3 = [
     }),
 ]
 
+MOCHITEST_PLAIN = MOCHITEST_WO_BC[:]
 MOCHITEST = MOCHITEST_WO_BC[:] + MOCHITEST_BC_3 + MOCHITEST_OTHER
 MOCHITEST_WO_BC += MOCHITEST_OTHER
 
@@ -549,6 +550,24 @@ WEB_PLATFORM_TESTS = [
         'use_mozharness': True,
         'script_path': 'scripts/web_platform_tests.py',
         'extra_args': ["--test-type=testharness"],
+        'blob_upload': True,
+        'script_maxtime': 7200,
+    }),
+    ('web-platform-tests-reftests', {
+        'use_mozharness': True,
+        'script_path': 'scripts/web_platform_tests.py',
+        'extra_args': ["--test-type=reftest"],
+        'blob_upload': True,
+        'script_maxtime': 7200,
+    }),
+]
+
+WEB_PLATFORM_TESTS_CHUNKED = [
+    ('web-platform-tests', {
+        'use_mozharness': True,
+        'script_path': 'scripts/web_platform_tests.py',
+        'extra_args': ["--test-type=testharness"],
+        'totalChunks': 4,
         'blob_upload': True,
         'script_maxtime': 7200,
     }),
@@ -793,7 +812,7 @@ PLATFORM_UNITTEST_VARS = {
         'enable_opt_unittests': True,
         'enable_debug_unittests': False,
         'ubuntu64_vm': {
-            'opt_unittest_suites': UNITTEST_SUITES['opt_unittest_suites'][:],
+            'opt_unittest_suites': MOCHITEST_PLAIN[:],
             'debug_unittest_suites': [],
             'suite_config': {
                 'mochitest': {
@@ -1661,6 +1680,9 @@ BRANCHES['cedar']['platforms']['win32']['xp-ix']['debug_unittest_suites'] += REF
 BRANCHES['cedar']['platforms']['win32']['win7-ix']['debug_unittest_suites'] += REFTEST_OMTC[:]
 BRANCHES['cedar']['platforms']['win32']['win8']['debug_unittest_suites'] += REFTEST_OMTC[:]
 
+######## fig
+BRANCHES['fig']['platforms']['linux64-mulet']['ubuntu64_vm']['opt_unittest_suites'] = UNITTEST_SUITES['opt_unittest_suites'][:]
+
 # Filter the tests that are enabled on holly for bug 985718.
 for platform in BRANCHES['holly']['platforms'].keys():
     if platform not in PLATFORMS:
@@ -1682,8 +1704,9 @@ for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
     branch['other_l64_tests'] = (1, False, {}, LINUX64_ONLY)
     branch['g1_tests'] = (1, False, TALOS_TP_NEW_OPTS, ALL_TALOS_PLATFORMS)
 
-# Load jetpack for (all) branches
-for name, branch in items_at_least(BRANCHES, 'gecko_version', 21):
+# Run Jetpack tests everywhere except on versioned B2G branches.
+for name in [x for x in BRANCHES.keys() if not x.startswith('mozilla-b2g')]:
+    branch = BRANCHES[name]
     for pf in PLATFORMS:
         if pf not in branch['platforms']:
             continue
@@ -1768,6 +1791,10 @@ for platform in PLATFORMS.keys():
             if slave_platform == 'mountainlion':
                 continue
 
+            # Don't run jittests on Mulet builds
+            if platform in ('linux64-mulet', 'macosx64-mulet'):
+                continue
+
             if platform in BRANCHES[name]['platforms']:
                 if slave_platform in BRANCHES[name]['platforms'][platform]:
                     BRANCHES[name]['platforms'][platform][slave_platform]['opt_unittest_suites'] += jittests[:]
@@ -1778,6 +1805,8 @@ for platform in PLATFORMS.keys():
     for slave_platform in PLATFORMS[platform]['slave_platforms']:
         if slave_platform not in BRANCHES['cedar']['platforms'][platform]:
             continue
+        if platform in ('linux64-mulet', 'macosx64-mulet'):
+            continue
         BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEBAPPRT_CHROME[:]
         BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += WEBAPPRT_CHROME[:]
 
@@ -1786,18 +1815,23 @@ for platform in PLATFORMS.keys():
     if platform not in BRANCHES['cedar']['platforms']:
         continue
 
+    if platform in ('linux64-mulet', 'macosx64-mulet'):
+        continue
+
     for slave_platform in PLATFORMS[platform]['slave_platforms']:
         if slave_platform not in BRANCHES['cedar']['platforms'][platform]:
             continue
 
-        BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_TESTS
+        BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_TESTS_CHUNKED
 
-        BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += WEB_PLATFORM_TESTS
+        BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += WEB_PLATFORM_TESTS_CHUNKED
 
 # Enable mozbase unit tests on cedar
 # https://bugzilla.mozilla.org/show_bug.cgi?id=971687
 for platform in PLATFORMS.keys():
     if platform not in BRANCHES['cedar']['platforms']:
+        continue
+    if platform in ('linux64-mulet', 'macosx64-mulet'):
         continue
     for slave_platform in PLATFORMS[platform]['slave_platforms']:
         if slave_platform in BRANCHES['cedar']['platforms'][platform]:
@@ -1810,8 +1844,10 @@ mc_gecko_version = BRANCHES['mozilla-central']['gecko_version']
 for name, branch in items_at_least(BRANCHES, 'gecko_version', mc_gecko_version):
     if 'linux' in branch['platforms']:
         branch['platforms']['linux']['ubuntu32_vm']['opt_unittest_suites'] += MOCHITEST_E10S[:]
+        branch['platforms']['linux']['ubuntu32_vm']['debug_unittest_suites'] += MOCHITEST_E10S[:]
     if 'linux64' in branch['platforms']:
         branch['platforms']['linux64']['ubuntu64_vm']['opt_unittest_suites'] += MOCHITEST_E10S[:]
+        branch['platforms']['linux64']['ubuntu64_vm']['debug_unittest_suites'] += MOCHITEST_E10S[:]
 
 # TALOS: If you set 'talos_slave_platforms' for a branch you will only get that subset of platforms
 for branch in BRANCHES.keys():
@@ -1899,13 +1935,18 @@ for name, branch in items_before(BRANCHES, 'gecko_version', 26):
     if 'linux64-asan' in branch['platforms']:
         del branch['platforms']['linux64-asan']
 
-# Disable Mulet in every branch except fig and try
+# Disable OSX Mulet in every branch except fig
 for name in BRANCHES.keys():
-    if name in ('try', 'fig'):
+    if name in ('fig', ):
         continue
-    for platform in ('linux64-mulet', 'macosx64-mulet'):
+    for platform in ('macosx64-mulet', ):
         if platform in BRANCHES[name]['platforms']:
             del BRANCHES[name]['platforms'][platform]
+
+# Enable linux64-mulet only in gecko 34+
+for name, branch in items_before(BRANCHES, 'gecko_version', 34):
+    if 'linux64-mulet' in branch['platforms']:
+        del branch['platforms']['linux64-mulet']
 
 if __name__ == "__main__":
     import sys

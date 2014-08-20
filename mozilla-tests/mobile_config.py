@@ -669,16 +669,6 @@ TEGRA_RELEASE_PLAIN_UNITTEST_DICT = {
     'debug_unittest_suites': [],
 }
 
-ANDROID_2_3_ARMV6_AWS_DICT = {
-    'opt_unittest_suites': [],
-    'debug_unittest_suites': [],
-}
-
-ANDROID_2_3_ARMV6_C3_DICT = {
-    'opt_unittest_suites': [],
-    'debug_unittest_suites': [],
-}
-
 ANDROID_2_3_C3_DICT = {
     'opt_unittest_suites': [],
     'debug_unittest_suites': [],
@@ -747,9 +737,10 @@ for suite in ANDROID_UNITTEST_DICT['opt_unittest_suites']:
         continue
     ANDROID_PLAIN_UNITTEST_DICT['opt_unittest_suites'].append(suite)
 
+# bug 982799 limit the debug tests run on trunk branches
 ANDROID_MOZHARNESS_PANDA_UNITTEST_DICT = {
     'opt_unittest_suites': ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_PLAIN_ROBOCOP + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_MOCHITESTGL + ANDROID_MOZHARNESS_PLAIN_REFTEST + ANDROID_MOZHARNESS_XPCSHELL + ANDROID_MOZHARNESS_JITTEST + ANDROID_MOZHARNESS_CPPUNITTEST,
-    'debug_unittest_suites': ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_PLAIN_ROBOCOP + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_MOCHITESTGL + ANDROID_MOZHARNESS_PLAIN_REFTEST + ANDROID_MOZHARNESS_XPCSHELL + ANDROID_MOZHARNESS_JITTEST + ANDROID_MOZHARNESS_CPPUNITTEST,
+    'debug_unittest_suites': ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_JSREFTEST,
 }
 
 for suite in ANDROID_UNITTEST_DICT['opt_unittest_suites']:
@@ -991,6 +982,54 @@ ANDROID_2_3_MOZHARNESS_DICT = [
         'extra_args': [
             '--cfg', 'android/androidarm.py',
             '--test-suite', 'mochitest-12',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('mochitest-13', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'mochitest-13',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('mochitest-14', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'mochitest-14',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('mochitest-15', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'mochitest-15',
+        ],
+        'blob_upload': True,
+        'timeout': 2400,
+        'script_maxtime': 14400,
+    },
+    ),
+    ('mochitest-16', {
+        'use_mozharness': True,
+        'script_path': 'scripts/android_emulator_unittest.py',
+        'extra_args': [
+            '--cfg', 'android/androidarm.py',
+            '--test-suite', 'mochitest-16',
         ],
         'blob_upload': True,
         'timeout': 2400,
@@ -1384,18 +1423,6 @@ ANDROID_2_3_MOZHARNESS_DICT = [
 ]
 # End of Android 2.3 configurations
 
-for suite in ANDROID_2_3_MOZHARNESS_DICT:
-    if suite[0].startswith('mochitest-gl'):
-        continue
-    elif suite[0].startswith('plain-reftest'):
-        ANDROID_2_3_ARMV6_C3_DICT['opt_unittest_suites'].append(suite)
-    elif suite[0].startswith('crashtest'):
-        ANDROID_2_3_ARMV6_C3_DICT['opt_unittest_suites'].append(suite)
-    elif suite[0].startswith('jsreftest'):
-        ANDROID_2_3_ARMV6_C3_DICT['opt_unittest_suites'].append(suite)
-    else:
-        ANDROID_2_3_ARMV6_AWS_DICT['opt_unittest_suites'].append(suite)
-
 # You must define opt_unittest_suites when enable_opt_unittests is True for a
 # platform. Likewise debug_unittest_suites for enable_debug_unittests
 PLATFORM_UNITTEST_VARS = {
@@ -1419,14 +1446,17 @@ PLATFORM_UNITTEST_VARS = {
         'host_utils_url': 'http://talos-remote.pvt.build.mozilla.org/tegra/tegra-host-utils.%%(foopy_type)s.742597.zip',
         'enable_opt_unittests': True,
         'enable_debug_unittests': False,
-        'remote_extras': ANDROID_UNITTEST_REMOTE_EXTRAS,
-        'tegra_android-armv6': deepcopy(ANDROID_NOWEBGL_UNITTEST_DICT),
+        'remote_extras': ANDROID_UNITTEST_REMOTE_EXTRAS, 
+        'tegra_android-armv6': {
+            'opt_unittest_suites': [],
+            'debug_unittest_suites': [],
+        },
         'ubuntu64_vm_armv6_mobile': {
-            'opt_unittest_suites': deepcopy(ANDROID_2_3_ARMV6_AWS_DICT['opt_unittest_suites']),
+            'opt_unittest_suites': [],
             'debug_unittest_suites': [],
         },       
         'ubuntu64_vm_armv6_large': {
-            'opt_unittest_suites': deepcopy(ANDROID_2_3_ARMV6_C3_DICT['opt_unittest_suites']),
+            'opt_unittest_suites': [],
             'debug_unittest_suites': [],
         },
     },
@@ -1580,7 +1610,7 @@ for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
         for slave_plat in PLATFORMS[platform]['slave_platforms']:
             if not slave_plat in branch['platforms'][platform]:
                 continue
-            if not slave_plat in ('tegra_android', 'tegra_android-armv6'):
+            if not slave_plat in ('tegra_android', ):
                 continue
             BRANCHES[name]['platforms'][platform][slave_plat] =   {
                 'opt_unittest_suites': [],
@@ -1615,26 +1645,6 @@ for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
             'debug_unittest_suites': []
         }
 
-# bug 1020970 Schedule all Android 2.3 armv6 tests, except mochitest-gl, 
-# on all trunk trees and make them ride the trains 
-for name, branch in items_before(BRANCHES, 'gecko_version', 33):
-    # Loop removes it from any branch that gets beyond here
-    for platform in branch['platforms']:
-        if not platform in PLATFORMS:
-            continue
-        if not platform == ('android-armv6'):
-            continue
-        BRANCHES[name]['platforms']['android-armv6']['ubuntu64_vm_armv6_large'] = {
-            'opt_unittest_suites': [],
-        }    
-        BRANCHES[name]['platforms']['android-armv6']['ubuntu64_vm_armv6_mobile'] = {
-            'opt_unittest_suites': [],
-        }
-
-# otherwise spurious builders are created on ash
-# part of bug 1006082 Run Android 2.3 tests against armv6 builds, on Ash only
-del BRANCHES['ash']['platforms']['android-armv6']['tegra_android-armv6']
-
 # Panda debug enabled on trunk that rides the trains
 # this stanza is to disable it for branches on an older version of gecko
 for name, branch in items_before(BRANCHES, 'gecko_version', 31):
@@ -1655,12 +1665,10 @@ for name, branch in items_before(BRANCHES, 'gecko_version', 31):
                 branch['platforms'][platform]['enable_debug_unittests'] = False
 
 BRANCHES['cedar']['platforms']['android']['enable_debug_unittests'] = True
-# this loop is to limit the debug tests run on trunk branches to
-# M4,M5,M6,M7,J1,J2,J3 only for panda-android
-d = ['mochitest-1', 'mochitest-2', 'mochitest-3', 'mochitest-4',
-     'mochitest-5', 'mochitest-6', 'mochitest-7', 'mochitest-8',
-     'jsreftest-1', 'jsreftest-2', 'jsreftest-3', ]
-for name, branch in items_at_least(BRANCHES, 'gecko_version', 31):
+BRANCHES['cedar']['platforms']['android']['panda_android']['debug_unittest_suites'] = deepcopy(ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_PLAIN_ROBOCOP + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_MOCHITESTGL + ANDROID_MOZHARNESS_PLAIN_REFTEST + ANDROID_MOZHARNESS_XPCSHELL + ANDROID_MOZHARNESS_JITTEST + ANDROID_MOZHARNESS_CPPUNITTEST)
+
+# bug 1030753 limit the debug tests run on trunk branches
+for name, branch in items_at_least(BRANCHES, 'gecko_version', 34):
     # Loop removes it from any branch that gets beyond here
     if name in ('cedar', ):
         continue
@@ -1679,9 +1687,7 @@ for name, branch in items_at_least(BRANCHES, 'gecko_version', 31):
             if branch['platforms'][platform]['enable_debug_unittests'] is True:
                 for type in branch['platforms'][platform][slave_plat]:
                     if 'debug_unittest_suite' in type:
-                        for suite in branch['platforms'][platform][slave_plat][type][:]:
-                            if suite[0] not in d:
-                               branch['platforms'][platform][slave_plat][type].remove(suite)
+                        BRANCHES[name]['platforms'][platform][slave_plat]['debug_unittest_suites'] = deepcopy(ANDROID_MOZHARNESS_MOCHITEST + ANDROID_MOZHARNESS_JSREFTEST + ANDROID_MOZHARNESS_CRASHTEST + ANDROID_MOZHARNESS_PLAIN_REFTEST)
 
 # have to disable this manually or it blows up in misc.py
 BRANCHES['ash']['platforms']['android']['enable_debug_unittests'] = False

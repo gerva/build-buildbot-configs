@@ -25,7 +25,7 @@ for i in range(1,131):
 for i in range(1,131):
     SLAVES['win8']['t-w864-ix-%03i' % i] = {}
 
-for i in range(1,167):
+for i in range(1,166):
     SLAVES['snowleopard']['t-snow-r4-%04i' % i] = {}
 
 for i in range(1,87) + range(88,101):
@@ -94,10 +94,10 @@ SLAVES['ubuntu32_vm-b2gdt'] = SLAVES['ubuntu32_vm']
 SLAVES['ubuntu64_vm-b2g'] = SLAVES['ubuntu64_vm']
 SLAVES['ubuntu64_vm-b2gdt'] = SLAVES['ubuntu64_vm']
 SLAVES['ubuntu64_vm-b2g-emulator'] = SLAVES['ubuntu64_vm']
+SLAVES['ubuntu64_vm-b2g-lg-emulator'] = SLAVES['ubuntu64_vm_large']
 SLAVES['ubuntu64_vm-b2g-emulator-jb'] = SLAVES['ubuntu64_vm']
 SLAVES['ubuntu64_vm-b2g-emulator-kk'] = SLAVES['ubuntu64_vm']
 SLAVES['ubuntu64_hw-b2g'] = SLAVES['ubuntu64_hw']
-SLAVES['ubuntu64_hw-b2g-emulator'] = SLAVES['ubuntu64_hw']
 SLAVES['mountainlion-b2gdt'] = SLAVES['mountainlion']
 SLAVES['win8_64'] = SLAVES['win8']
 SLAVES['ubuntu64_vm_mobile'] = SLAVES['ubuntu64_vm']
