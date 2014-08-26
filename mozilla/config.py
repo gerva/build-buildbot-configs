@@ -158,7 +158,7 @@ PLATFORM_VARS = {
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
-                'config': 'single_locale/linux.py',
+                'platform_config': 'single_locale/linux.py',
             },
             'dep_signing_servers': 'dep-signing',
             'base_name': 'Linux %(branch)s',
