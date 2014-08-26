@@ -73,7 +73,7 @@ releaseConfig['otherReposToTag']     = {
 }
 
 # Platform configuration
-releaseConfig['enUSPlatforms']        = ('android', 'android-armv6')
+releaseConfig['enUSPlatforms']        = ('android', )
 releaseConfig['notifyPlatforms']      = releaseConfig['enUSPlatforms']
 releaseConfig['unittestPlatforms']    = ()
 releaseConfig['talosTestPlatforms']   = ()
@@ -106,7 +106,6 @@ releaseConfig['partnerRepackPlatforms'] = ()
 # mozconfigs
 releaseConfig['mozconfigs']          = {
     'android': 'mobile/android/config/mozconfigs/android/release',
-    'android-armv6': 'mobile/android/config/mozconfigs/android-armv6/release',
 }
 releaseConfig['releaseChannel']      = 'beta'
 
@@ -121,6 +120,7 @@ releaseConfig['disablePermissionCheck']   = True
 releaseConfig['disableVirusCheck']        = True
 releaseConfig['disablePushToMirrors']     = True
 releaseConfig['enableUpdatePackaging']    = False
+releaseConfig['balrog_api_root']          = None
 
 releaseConfig['single_locale_options'] = {
     'android': [
@@ -135,8 +135,6 @@ releaseConfig['multilocale_config'] = {
     'platforms': {
         'android':
             'multi_locale/staging_release_mozilla-beta_android.json',
-        'android-armv6':
-            'multi_locale/staging_release_mozilla-beta_android-armv6.json',
     },
     'multilocaleOptions': [
         '--tag-override=%s_RELEASE' % releaseConfig['baseTag'],
@@ -150,9 +148,8 @@ releaseConfig['multilocale_config'] = {
 
 # Staging config
 releaseConfig['build_tools_repo_path'] = "users/stage-ffxbld/tools"
-releaseConfig['skip_release_download'] = True
 releaseConfig['enableSigningAtBuildTime'] = True
 releaseConfig['enablePartialMarsAtBuildTime'] = False
 releaseConfig['autoGenerateChecksums'] = False
 releaseConfig['use_mock'] = True
-releaseConfig['mock_platforms'] = ('android','android-armv6', 'linux')
+releaseConfig['mock_platforms'] = ('android', 'linux')

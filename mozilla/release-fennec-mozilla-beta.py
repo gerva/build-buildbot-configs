@@ -9,7 +9,9 @@ releaseConfig['disable_tinderbox_mail'] = True
 releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
 
 # Release Notification
-releaseConfig['AllRecipients']       = ['<release@mozilla.com>','<release-mgmt@mozilla.com>']
+releaseConfig['AllRecipients']       = ['<release@mozilla.com>',
+                                        '<release-mgmt@mozilla.com>',
+                                        '<qa-drivers@mozilla.com>']
 releaseConfig['ImportantRecipients'] = ['<release-drivers@mozilla.org>',]
 releaseConfig['releaseTemplates']    = 'release_templates'
 releaseConfig['messagePrefix']       = '[release] '
@@ -20,11 +22,11 @@ releaseConfig['productName']         = 'fennec'
 releaseConfig['appName']             = 'mobile'
 releaseConfig['relbranchPrefix']     = 'MOBILE'
 #  Current version info
-releaseConfig['version']             = '26.0b2'
-releaseConfig['appVersion']          = '26.0'
+releaseConfig['version']             = '32.0b10'
+releaseConfig['appVersion']          = '32.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FENNEC_26_0b2'
+releaseConfig['baseTag']             = 'FENNEC_32_0b10'
 #  Next (nightly) version info
 releaseConfig['nextAppVersion']      = releaseConfig['appVersion']
 releaseConfig['nextMilestone']       = releaseConfig['milestone']
@@ -33,7 +35,7 @@ releaseConfig['sourceRepositories']  = {
     'mobile': {
         'name': 'mozilla-beta',
         'path': 'releases/mozilla-beta',
-        'revision': 'd75a3d6ca762',
+        'revision': 'ebd0ee3e97dc',
         'relbranch': None,
         'bumpFiles': {
             'mobile/android/confvars.sh': {
@@ -45,10 +47,6 @@ releaseConfig['sourceRepositories']  = {
                 'nextVersion': releaseConfig['nextAppVersion']
             },
             'config/milestone.txt': {
-                'version': releaseConfig['milestone'],
-                'nextVersion': releaseConfig['nextMilestone']
-            },
-            'js/src/config/milestone.txt': {
                 'version': releaseConfig['milestone'],
                 'nextVersion': releaseConfig['nextMilestone']
             },
@@ -68,7 +66,7 @@ releaseConfig['otherReposToTag']     = {
 }
 
 # Platform configuration
-releaseConfig['enUSPlatforms']        = ('android', 'android-armv6', 'android-x86')
+releaseConfig['enUSPlatforms']        = ('android', 'android-x86')
 releaseConfig['notifyPlatforms']      = releaseConfig['enUSPlatforms']
 releaseConfig['unittestPlatforms']    = ()
 releaseConfig['talosTestPlatforms']   = ()
@@ -90,7 +88,7 @@ releaseConfig['stagingServer']       = 'stage.mozilla.org'
 releaseConfig['ausServerUrl']        = 'https://aus3.mozilla.org'
 releaseConfig['ausHost']             = 'aus3-staging.mozilla.org'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'auspush'
+releaseConfig['ausSshKey']           = 'ffxbld_dsa'
 
 # Partner repack configuration
 releaseConfig['doPartnerRepacks']       = False
@@ -100,7 +98,6 @@ releaseConfig['partnerRepackPlatforms'] = ()
 # mozconfigs
 releaseConfig['mozconfigs']          = {
     'android': 'mobile/android/config/mozconfigs/android/release',
-    'android-armv6': 'mobile/android/config/mozconfigs/android-armv6/release',
     'android-x86': 'mobile/android/config/mozconfigs/android-x86/release',
 }
 releaseConfig['releaseChannel']      = 'beta'
@@ -116,6 +113,7 @@ releaseConfig['disablePermissionCheck']   = True
 releaseConfig['disableVirusCheck']        = True
 releaseConfig['disablePushToMirrors']     = True
 releaseConfig['enableUpdatePackaging']    = False
+releaseConfig['balrog_api_root']          = None
 
 releaseConfig['single_locale_options'] = {
     'android': [
@@ -129,8 +127,6 @@ releaseConfig['multilocale_config'] = {
     'platforms': {
         'android':
             'multi_locale/release_mozilla-beta_android.json',
-        'android-armv6':
-            'multi_locale/release_mozilla-beta_android-armv6.json',
         'android-x86':
             'multi_locale/release_mozilla-beta_android-x86.json',
     },
@@ -146,4 +142,4 @@ releaseConfig['enableSigningAtBuildTime'] = True
 releaseConfig['enablePartialMarsAtBuildTime'] = False
 releaseConfig['autoGenerateChecksums'] = False
 releaseConfig['use_mock'] = True
-releaseConfig['mock_platforms'] = ('android', 'android-armv6', 'android-x86', 'linux')
+releaseConfig['mock_platforms'] = ('android', 'android-x86', 'linux')

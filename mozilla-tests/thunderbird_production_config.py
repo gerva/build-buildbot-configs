@@ -15,11 +15,11 @@ BRANCHES = {
     'comm-central': {
         'tinderbox_tree': 'Thunderbird',
     },
-    'comm-esr17': {
-        'tinderbox_tree': 'Thunderbird-Esr17',
-    },
     'comm-esr24': {
         'tinderbox_tree': 'Thunderbird-Esr24',
+    },
+    'comm-esr31': {
+        'tinderbox_tree': 'Thunderbird-Esr31',
     },
     'comm-beta': {
         'tinderbox_tree': 'Thunderbird-Beta',
@@ -33,7 +33,7 @@ BRANCHES = {
         'notify_real_author': True,
         'enable_merging': False,
         'slave_key': 'try_slaves',
-        'package_url': 'http://ftp.mozilla.org/pub/mozilla.org/thunderbird/try-builds',
+        'package_url': 'https://ftp-ssl.mozilla.org/pub/mozilla.org/thunderbird/try-builds',
         'package_dir': '%(who)s-%(got_revision)s',
         'stage_username': 'tbirdbld',
         'stage_ssh_key': 'tbirdbld_dsa',
@@ -43,4 +43,4 @@ BRANCHES = {
 PLATFORM_VARS = {}
 
 PROJECTS = {}
-
+B2G_PROJECTS = {}

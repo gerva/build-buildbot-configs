@@ -1,5 +1,3 @@
-from staging_config import SLAVES, TRY_SLAVES
-
 GLOBAL_VARS = {
     'staging': True,
     'config_repo_path': 'build/buildbot-configs',
@@ -13,7 +11,7 @@ GLOBAL_VARS = {
     'mobile_download_base_url': 'http://preproduction-stage.srv.releng.scl3.mozilla.com/pub/mozilla.org/mobile',
     'graph_server': 'graphs.allizom.org',
     # XXX: should point at aus4-admin-dev once production is pointing elsewhere
-    #'balrog_api_root': 'https://aus4-admin-dev.allizom.org',
+    # 'balrog_api_root': 'https://aus4-admin-dev.allizom.org',
     'base_clobber_url': 'http://clobberer-preproduction.pvt.build.mozilla.org/index.php',
     'pollInterval': 6*60*60,
     'l10nPollInterval': 6*60*60,
@@ -37,7 +35,6 @@ GLOBAL_VARS = {
     'tinderbox_tree': 'MozillaTest',
     'mobile_tinderbox_tree': 'MobileTest',
     'hg_username': 'stage-ffxbld',
-    'base_mirror_urls': ['http://hg-internal.dmz.scl3.mozilla.com'],
     'base_bundle_urls': ['http://preproduction-master.srv.releng.scl3.mozilla.com/pub/mozilla.org/firefox/bundles'],
     'tooltool_url_list': ['http://runtime-binaries.pvt.build.mozilla.org/tooltool'],
 }
@@ -49,46 +46,60 @@ SYMBOL_SERVER_HOST = 'preproduction-stage.srv.releng.scl3.mozilla.com'
 BRANCHES = {
     'mozilla-central': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
     'mozilla-release': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
     'mozilla-beta': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
     'mozilla-aurora': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
-    },
-    'mozilla-esr17': {
-        'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
     'mozilla-esr24': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
-    'mozilla-b2g18': {
+    'mozilla-b2g28_v1_3': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
-    'mozilla-b2g18_v1_0_1': {
+    'mozilla-b2g28_v1_3t': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
-    'mozilla-b2g18_v1_1_0_hd': {
+    'mozilla-b2g30_v1_4': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
-    'mozilla-b2g26_v1_2': {
+    'mozilla-b2g32_v2_0': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'enable_hsts_update': False,
+        'enable_hpkp_update': False,
+        'file_update_on_closed_tree': False,
     },
     'try': {
-        'email_override': [], # Set to your address when testing
+        'email_override': [],  # Set to your address when testing
         'download_base_url': 'http://preproduction-stage.srv.releng.scl3.mozilla.com/pub/mozilla.org/firefox',
         'mobile_download_base_url': 'http://preproduction-stage.srv.releng.scl3.mozilla.com/pub/mozilla.org/mobile',
         'enable_mail_notifier': False,
@@ -117,7 +128,7 @@ PLATFORM_VARS = {
 PROJECTS = {
     'fuzzing': {
         'disable_tinderbox_mail': True,
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'fuzzing_bundle': 'http://pvtbuilds.pvt.build.mozilla.org/bundles/fuzzing.hg',
         'fuzzing_repo': 'ssh://stage-ffxbld@hg.mozilla.org/private/fuzzing',
         'fuzzing_remote_host': 'ffxbld@preproduction-stage.srv.releng.scl3.mozilla.com',
@@ -125,27 +136,21 @@ PROJECTS = {
         'fuzzing_base_dir': '/pub/mozilla.org/firefox/tinderbox-builds/fuzzing/',
         'idle_slaves': 0,
     },
-    'nanojit': {
-        'disable_tinderbox_mail': True,
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
-        'idle_slaves': 0,
-        'tinderbox_tree': 'MozillaTest',
-    },
 }
 
 BRANCH_PROJECTS = {
     'spidermonkey_tier_1': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
         'disable_tinderbox_mail': False,
     },
     'spidermonkey_try': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
         'disable_tinderbox_mail': False,
     },
     'spidermonkey_info': {
-        'scripts_repo': 'http://hg.mozilla.org/build/tools',
+        'scripts_repo': 'https://hg.mozilla.org/build/tools',
         'idle_slaves': 0,
         'disable_tinderbox_mail': False,
     },

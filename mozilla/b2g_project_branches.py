@@ -1,23 +1,23 @@
 # Additional branches that start as identical (individual variables can be overriden here)
 PROJECT_BRANCHES = {
     ### PLEASE ADD NEW BRANCHES ALPHABETICALLY (twigs at the bottom, also alphabetically)
-    'build-system': {},
+    # 'build-system': {},  # Bug 1010674
     'fx-team': {
         'repo_path': 'integration/fx-team',
+        'periodic_start_hours': range(2, 24, 3),
         'enable_perproduct_builds': True,
         'enable_nightly': False,
     },
     'graphics': {},
-    'ionmonkey': {
-        'enable_nightly': True
-    },
     # Please sync any customizations made to mozilla-inbound to cypress.
     'mozilla-inbound': {
         'repo_path': 'integration/mozilla-inbound',
+        'periodic_start_hours': range(1, 24, 3),
         'enable_perproduct_builds': True,
     },
     'b2g-inbound': {
         'repo_path': 'integration/b2g-inbound',
+        'periodic_start_hours': range(2, 24, 3),
         'enable_perproduct_builds': True,
         'platforms': {
             'macosx64_gecko': {
@@ -28,11 +28,7 @@ PROJECT_BRANCHES = {
             },
         },
     },
-    # B2G builds not required on the profiling branch
-    #'profiling': {},
-    'services-central': {
-        'repo_path': 'services/services-central'
-    },
+    #'services-central': {},  # Bug 1010674
     # B2G builds not required on the UX branch
     #'ux': {
     #    'branch_name': 'UX',
@@ -41,38 +37,39 @@ PROJECT_BRANCHES = {
     #    'enable_nightly': True,
     #},
     #####  TWIGS aka RENTABLE BRANCHES
-    'alder': {},
+    # Booked for Thunderbird
+    #'alder': {},
     'ash': {
-        'mozharness_repo_path': 'users/asasaki_mozilla.com/ash-mozharness',
-        'mozharness_repo': 'http://hg.mozilla.org/users/asasaki_mozilla.com/ash-mozharness',
+        'mozharness_repo_path': 'build/ash-mozharness',
+        'mozharness_repo': 'https://hg.mozilla.org/build/ash-mozharness',
         'mozharness_tag': 'default',
     },
-    'birch': {},
+    # Not needed on Birch at the moment, bug 977420.
+    #'birch': {},
     'cedar': {
         'mozharness_tag': 'default',
     },
     'cypress': {
+        'mozharness_tag': 'default',
     },
     # B2G builds not required on date
     # 'date': {},
-    # Customizations for windows update service changes (bug 481815)
-    #'elm': {},
     'fig': {
         'lock_platforms': True,
         'platforms': {},
     },
     'gum': {},
-    'holly': {},
+    # disabled for bug 985718
+    #'holly': {},
     'jamun': {},
-    'larch': {},
+    # disabled for bug 1033704
+    #'larch': {},
     'maple': {},
     # Customizations for integration work for bugs 481815 and 307181
     'oak': {
         'enable_nightly': True
     },
-    'pine': {
-        'mozharness_tag': 'default',
-    }
+    'pine': {}
 }
 
 # All is the default

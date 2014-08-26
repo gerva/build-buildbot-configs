@@ -28,7 +28,6 @@ GLOBAL_VARS = {
     'packaged_unittest_tinderbox_tree': 'MozillaTest',
     'tinderbox_tree': 'MozillaTest',
     'hg_username': 'stage-tbirdbld',
-    'base_mirror_urls': ['http://hg-internal.dmz.scl3.mozilla.com'],
     'base_bundle_urls': ['http://preproduction-master.srv.releng.scl3.mozilla.com/pub/mozilla.org/thunderbird/bundles'],
 }
 
@@ -39,25 +38,25 @@ SYMBOL_SERVER_HOST = 'preproduction-stage.srv.releng.scl3.mozilla.com'
 BRANCHES = {
     'comm-central': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'file_update_on_closed_tree': False,
         'download_base_url': 'http://preproduction-stage.srv.releng.scl3.mozilla.com/pub/mozilla.org/thunderbird',
     },
     'comm-beta': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'file_update_on_closed_tree': False,
     },
     'comm-aurora': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'file__update_on_closed_tree': False,
         'download_base_url': 'http://preproduction-stage.srv.releng.scl3.mozilla.com/pub/mozilla.org/thunderbird',
-    },
-    'comm-esr17': {
-        'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
     },
     'comm-esr24': {
         'enable_blocklist_update': False,
-        'blocklist_update_on_closed_tree': False,
+        'file_update_on_closed_tree': False,
+    },
+    'comm-esr31': {
+        'enable_blocklist_update': False,
+        'file_update_on_closed_tree': False,
     },
     'try-comm-central': {
         'download_base_url': 'http://preproduction-stage.srv.releng.scl3.mozilla.com/pub/mozilla.org/thunderbird/',
