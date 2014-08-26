@@ -92,10 +92,10 @@ PROJECT_BRANCHES = {
     #},
     'ash': {
         'desktop_mozharness_repacks_enabled': True,
+        'enable_nightly': True,
         'mozharness_repo_path': 'build/ash-mozharness',
         'mozharness_repo': 'https://hg.mozilla.org/build/ash-mozharness',
         'mozharness_tag': 'default',
-        'use_mozharness_repo_cache': False,
         'lock_platforms': True,
         'talos_suites': {
             'xperf': 1,
@@ -194,6 +194,7 @@ PROJECT_BRANCHES = {
             'win32': {},
             'macosx64': {},
             'linux-debug': {},
+            'linux64-asan': {},
             'linux64-debug': {},
             'macosx64-debug': {},
             'win32-debug': {},

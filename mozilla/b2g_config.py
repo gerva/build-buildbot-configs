@@ -869,11 +869,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -891,11 +886,6 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -914,11 +904,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -936,11 +921,6 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -959,13 +939,10 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
         },
         'env': {
             'PATH': '/tools/python27-mercurial/bin:/tools/python27/bin:/usr/local/bin:/usr/lib64/ccache:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/cltbld/bin',
             'PYTHONPATH': '/tools/python27/lib',
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -983,13 +960,10 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
         },
         'env': {
             'PATH': '/tools/python27-mercurial/bin:/tools/python27/bin:/usr/local/bin:/usr/lib64/ccache:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/cltbld/bin',
             'PYTHONPATH': '/tools/python27/lib',
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1008,11 +982,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1031,11 +1000,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1055,11 +1019,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1078,11 +1037,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1102,11 +1056,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1125,11 +1074,6 @@ PLATFORM_VARS = {
                 '--config-file', 'hazards/common.py',
                 '--config-file', 'hazards/build_b2g.py',
             ],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1150,11 +1094,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1176,11 +1115,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1201,11 +1135,6 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1224,11 +1153,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1246,11 +1170,6 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_all.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1269,11 +1188,6 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1291,11 +1205,6 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_all.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
-            'mozharness_repo_cache': '/tools/checkouts/mozharness',
-            'tools_repo_cache': '/tools/checkouts/build-tools',
-        },
-        'env': {
-            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1470,6 +1379,8 @@ BRANCHES['mozilla-central']['platforms']['emulator-jb-debug']['enable_nightly'] 
 BRANCHES['mozilla-central']['platforms']['linux64-b2g-haz']['enable_nightly'] = False
 BRANCHES['mozilla-central']['platforms']['emulator-kk']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['emulator-kk-debug']['enable_nightly'] = True
+BRANCHES['mozilla-central']['platforms']['dolphin']['enable_nightly'] = True
+BRANCHES['mozilla-central']['platforms']['dolphin_eng']['enable_nightly'] = True
 
 ######### mozilla-aurora
 ## This is a path, relative to HGURL, where the repository is located
@@ -1496,6 +1407,8 @@ BRANCHES['mozilla-central']['platforms']['emulator-kk-debug']['enable_nightly'] 
 #BRANCHES['mozilla-aurora']['platforms']['emulator-jb-debug']['enable_nightly'] = True
 #BRANCHES['mozilla-aurora']['platforms']['emulator-kk']['enable_nightly'] = True
 #BRANCHES['mozilla-aurora']['platforms']['emulator-kk-debug']['enable_nightly'] = True
+#BRANCHES['mozilla-aurora']['platforms']['dolphin']['enable_nightly'] = True
+#BRANCHES['mozilla-aurora']['platforms']['dolphin_eng']['enable_nightly'] = True
 
 ######## mozilla-b2g32_v2_0
 # This is a path, relative to HGURL, where the repository is located
@@ -1651,9 +1564,11 @@ for branch in BRANCHES:
         if 'tarako_eng' in BRANCHES[branch]['platforms']:
             del BRANCHES[branch]['platforms']['tarako_eng']
 
-# dolphin is for B2G 1.4 only
+# dolphin is for selected branches only
 for branch in BRANCHES:
-    if branch not in ('mozilla-b2g30_v1_4',):
+    if branch not in ('mozilla-b2g30_v1_4', 'mozilla-aurora',
+                      'mozilla-central', 'mozilla-inbound',
+                      'b2g-inbound', 'fx-team'):
         if 'dolphin' in BRANCHES[branch]['platforms']:
             del BRANCHES[branch]['platforms']['dolphin']
         if 'dolphin_eng' in BRANCHES[branch]['platforms']:
