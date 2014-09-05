@@ -36,13 +36,10 @@ BRANCHES = {
     # 'birch': {},
     'cedar': {},
     'cypress': {},
+    'jamun': {},
     'pine': {},
     'fx-team': {},
     'graphics': {},
-    'mozilla-b2g28_v1_3': {
-        'gecko_version': 28,
-        'b2g_version': (1, 3, 0),
-    },
     'mozilla-b2g28_v1_3t': {
         'gecko_version': 28,
         'b2g_version': (1, 3, 0),
@@ -1121,8 +1118,8 @@ PLATFORM_UNITTEST_VARS = {
         'enable_opt_unittests': True,
         'enable_debug_unittests': True,
         'ubuntu64_vm-b2g-emulator': {
-            'opt_unittest_suites': MOCHITEST + CRASHTEST + XPCSHELL + MARIONETTE,
-            'debug_unittest_suites': MOCHITEST_EMULATOR_DEBUG + XPCSHELL_CHUNKED,
+            'opt_unittest_suites': MOCHITEST + CRASHTEST + XPCSHELL + MARIONETTE + CPPUNIT,
+            'debug_unittest_suites': MOCHITEST_EMULATOR_DEBUG + XPCSHELL_CHUNKED + CPPUNIT,
             'suite_config': {
                 'marionette-webapi': {
                     'extra_args': [
@@ -1139,7 +1136,7 @@ PLATFORM_UNITTEST_VARS = {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'mochitest',
-                        '--test-path', 'content/media/',
+                        '--test-path', 'dom/media/tests/',
                     ],
                 },
                 'mochitest-1': {
@@ -1541,7 +1538,7 @@ PLATFORM_UNITTEST_VARS = {
                     'extra_args': [
                         '--cfg', 'b2g/emulator_automation_config.py',
                         '--test-suite', 'mochitest',
-                        '--test-path', 'content/media/',
+                        '--test-path', 'dom/media/tests/',
                     ],
                 },
            },
@@ -1692,9 +1689,9 @@ BRANCHES['pine']['platforms']['linux32_gecko']['ubuntu32_vm-b2gdt']['opt_unittes
 BRANCHES['cypress']['branch_name'] = "Cypress"
 BRANCHES['cypress']['repo_path'] = "projects/cypress"
 BRANCHES['cypress']['mozharness_tag'] = "default"
+BRANCHES['jamun']['repo_path'] = "projects/jamun"
 BRANCHES['fx-team']['repo_path'] = "integration/fx-team"
 BRANCHES['graphics']['repo_path'] = "projects/graphics"
-BRANCHES['mozilla-b2g28_v1_3']['repo_path'] = "releases/mozilla-b2g28_v1_3"
 BRANCHES['mozilla-b2g28_v1_3t']['repo_path'] = "releases/mozilla-b2g28_v1_3t"
 BRANCHES['mozilla-b2g30_v1_4']['repo_path'] = "releases/mozilla-b2g30_v1_4"
 BRANCHES['mozilla-b2g32_v2_0']['repo_path'] = "releases/mozilla-b2g32_v2_0"
@@ -1818,7 +1815,7 @@ for suite_to_remove in ('reftest-10', 'reftest-15'):
 
 # Disable macosx64_gecko gaia-ui tests on older branches
 for branch in BRANCHES.keys():
-    if branch in ('mozilla-b2g28_v1_3', 'mozilla-b2g28_v1_3t'):
+    if branch in ('mozilla-b2g28_v1_3t',):
         for platform in ('macosx64_gecko',):
             if platform in BRANCHES[branch]['platforms']:
                 for slave_platform in ('mountainlion-b2gdt',):
@@ -1844,6 +1841,16 @@ for branch in BRANCHES.keys():
                     if slave_platform in BRANCHES[branch]['platforms'][platform]:
                         del BRANCHES[branch]['platforms'][platform][slave_platform]
 
+# Disable emulator cppunit tests on older branches
+OLD_BRANCHES = set([name for name, branch in items_before(BRANCHES, 'gecko_version', 34)])
+for b in BRANCHES.keys():
+    branch = BRANCHES[b]
+    if b in OLD_BRANCHES:
+        if nested_haskey(branch['platforms'], 'emulator', 'ubuntu64_vm-b2g-emulator'):
+            slave_p = branch['platforms']['emulator']['ubuntu64_vm-b2g-emulator']
+            for suites in ['opt_unittest_suites', 'debug_unittest_suites']:
+                slave_p[suites] = [x for x in slave_p[suites]
+                                   if not x[0].startswith('cppunit')]
 
 ### PROJECTS ###
 PROJECTS = {
