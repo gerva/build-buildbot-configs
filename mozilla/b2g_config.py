@@ -398,12 +398,13 @@ PLATFORM_VARS = {
         },
 
         'consider_for_nightly': False,
+        'build_space': 15,
         'multi_locale': False,
         'enable_nightly': True,
         'enable_xulrunner': False,
         'enable_opt_unittests': True,
         'try_by_default': True,
-        'upload_symbols': True,
+        'upload_symbols': False,
         'update_platform': 'Linux_x86_64-gcc3',
         'packageTests': True,
         'dep_signing_servers': None,
@@ -1556,8 +1557,8 @@ BRANCHES['mozilla-central']['platforms']['helix']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['wasabi']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['flame']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['flame_eng']['enable_nightly'] = True
-BRANCHES['mozilla-central']['platforms']['flame-kk']['enable_nightly'] = False
-BRANCHES['mozilla-central']['platforms']['flame-kk_eng']['enable_nightly'] = False
+BRANCHES['mozilla-central']['platforms']['flame-kk']['enable_nightly'] = True
+BRANCHES['mozilla-central']['platforms']['flame-kk_eng']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['emulator']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['emulator-debug']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['emulator-jb']['enable_nightly'] = True
@@ -1589,8 +1590,8 @@ BRANCHES['mozilla-aurora']['platforms']['helix']['enable_nightly'] = True
 BRANCHES['mozilla-aurora']['platforms']['wasabi']['enable_nightly'] = True
 BRANCHES['mozilla-aurora']['platforms']['flame']['enable_nightly'] = True
 BRANCHES['mozilla-aurora']['platforms']['flame_eng']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['flame-kk']['enable_nightly'] = False
-BRANCHES['mozilla-aurora']['platforms']['flame-kk_eng']['enable_nightly'] = False
+BRANCHES['mozilla-aurora']['platforms']['flame-kk']['enable_nightly'] = True
+BRANCHES['mozilla-aurora']['platforms']['flame-kk_eng']['enable_nightly'] = True
 BRANCHES['mozilla-aurora']['platforms']['emulator']['enable_nightly'] = True
 BRANCHES['mozilla-aurora']['platforms']['emulator-debug']['enable_nightly'] = True
 BRANCHES['mozilla-aurora']['platforms']['emulator-jb']['enable_nightly'] = True
@@ -1619,8 +1620,8 @@ BRANCHES['mozilla-b2g32_v2_0']['platforms']['helix']['enable_nightly'] = True
 BRANCHES['mozilla-b2g32_v2_0']['platforms']['wasabi']['enable_nightly'] = True
 BRANCHES['mozilla-b2g32_v2_0']['platforms']['flame']['enable_nightly'] = True
 BRANCHES['mozilla-b2g32_v2_0']['platforms']['flame_eng']['enable_nightly'] = True
-BRANCHES['mozilla-b2g32_v2_0']['platforms']['flame-kk']['enable_nightly'] = False
-BRANCHES['mozilla-b2g32_v2_0']['platforms']['flame-kk_eng']['enable_nightly'] = False
+BRANCHES['mozilla-b2g32_v2_0']['platforms']['flame-kk']['enable_nightly'] = True
+BRANCHES['mozilla-b2g32_v2_0']['platforms']['flame-kk_eng']['enable_nightly'] = True
 BRANCHES['mozilla-b2g32_v2_0']['platforms']['emulator']['enable_nightly'] = True
 BRANCHES['mozilla-b2g32_v2_0']['platforms']['emulator-debug']['enable_nightly'] = True
 BRANCHES['mozilla-b2g32_v2_0']['platforms']['emulator-jb']['enable_nightly'] = True

@@ -91,6 +91,7 @@ PROJECT_BRANCHES = {
     #'alder': {
     #},
     'ash': {
+        'enable_perproduct_builds': False,
         'desktop_mozharness_repacks_enabled': True,
         'enable_nightly': True,
         'mozharness_repo_path': 'build/ash-mozharness',
@@ -123,6 +124,7 @@ PROJECT_BRANCHES = {
     },
     #'birch': {},  # Bug 1010674
     'cedar': {
+        'enable_perproduct_builds': False,
         'mozharness_tag': 'default',
         'enable_talos': True,
         'talos_suites': {
@@ -140,6 +142,7 @@ PROJECT_BRANCHES = {
         'desktop_mozharness_builds_enabled': True,
     },
     'cypress': {
+        'enable_perproduct_builds': False,
         'mozharness_tag': 'default',
         'enable_talos': True,
         # once ready, we can flip this switch and any platform with
@@ -193,7 +196,7 @@ PROJECT_BRANCHES = {
             'macosx64-debug': {},
             'win32-debug': {},
         },
-        'enable_talos': False,
+        'enable_talos': True,
     },
     'jamun': {},
     'larch': {
