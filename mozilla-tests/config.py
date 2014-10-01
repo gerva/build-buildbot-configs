@@ -267,7 +267,7 @@ SUITES = {
         'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, NO_LINUX64),
     },
-    'other_nol64-e10s': {
+    'other-e10s_nol64': {
         'enable_by_default': False,
         'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, NO_LINUX64),
@@ -277,7 +277,7 @@ SUITES = {
         'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, LINUX64_ONLY),
     },
-    'other_l64-e10s': {
+    'other-e10s_l64': {
         'enable_by_default': False,
         'suites': GRAPH_CONFIG + ['--activeTests', 'tscrollr:a11yr:ts_paint:tpaint', '--mozAfterPaint', '--filter', 'ignore_first:5', '--filter', 'median'],
         'options': ({}, LINUX64_ONLY),
@@ -1829,13 +1829,13 @@ for platform in PLATFORMS.keys():
 
 # Enable wpt on opt linux64 for gecko >= 34
 for platform in PLATFORMS.keys():
-    if platform not in ('linux64',):
+    if platform not in ['linux', 'linux64']:
         continue
     for name, branch in items_at_least(BRANCHES, 'gecko_version', 35):
         for slave_platform in PLATFORMS[platform]['slave_platforms']:
             if platform in BRANCHES[name]['platforms']:
                 if slave_platform in BRANCHES[name]['platforms'][platform]:
-                    BRANCHES[name]['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_TESTS_CHUNKED[:]
+                    BRANCHES[name]['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_TESTS_CHUNKED[:] + WEB_PLATFORM_REFTESTS[:]
 
 # Enable Mn on opt linux/linux64 for gecko >= 32
 for platform in PLATFORMS.keys():
@@ -1894,8 +1894,8 @@ for platform in PLATFORMS.keys():
         if slave_platform not in BRANCHES['cedar']['platforms'][platform]:
             continue
 
-        BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_REFTESTS[:]
-        if platform not in ('linux64',):
+        if platform not in ('linux64', 'linux'):
+            BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_REFTESTS[:]
             BRANCHES['cedar']['platforms'][platform][slave_platform]['opt_unittest_suites'] += WEB_PLATFORM_TESTS_CHUNKED[:]
         BRANCHES['cedar']['platforms'][platform][slave_platform]['debug_unittest_suites'] += WEB_PLATFORM_TESTS_CHUNKED[:] + WEB_PLATFORM_REFTESTS
 
@@ -2030,7 +2030,7 @@ for name, branch in items_before(BRANCHES, 'gecko_version', 30):
 # Enable e10s versions of Talos on Holly (bug 1050706).  Once these are enabled
 # on all branches, this block of code can go away.
 branch = BRANCHES['holly']
-for s in SUITES.iterkeys():
+for s in ('tp5o-e10s', 'svgr-e10s', 'xperf-e10s'):
     if 'e10s' in s:
         test_key = '%s_tests' % s
         if test_key in branch:
