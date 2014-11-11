@@ -6,7 +6,7 @@
 # you're starting a release without Release Kickoff. You have been warned.
 releaseConfig = {}
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api.pub.build.mozilla.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = ['<release@mozilla.com>',
@@ -23,23 +23,23 @@ releaseConfig['productName']         = 'firefox'
 releaseConfig['stage_product']       = 'firefox'
 releaseConfig['appName']             = 'browser'
 #  Current version info
-releaseConfig['version']             = '33.0b9'
-releaseConfig['appVersion']          = '33.0'
+releaseConfig['version']             = '34.0b8'
+releaseConfig['appVersion']          = '34.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FIREFOX_33_0b9'
+releaseConfig['baseTag']             = 'FIREFOX_34_0b8'
 releaseConfig['partialUpdates']      = {
 
-    '33.0b8': {
-        'appVersion': '33.0',
+    '34.0b7': {
+        'appVersion': '34.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_33_0b8',
+        'baseTag': 'FIREFOX_34_0b7',
     },
 
-    '33.0b7': {
-        'appVersion': '33.0',
+    '34.0b6': {
+        'appVersion': '34.0',
         'buildNumber': 1,
-        'baseTag': 'FIREFOX_33_0b7',
+        'baseTag': 'FIREFOX_34_0b6',
     },
 
 }
@@ -51,7 +51,7 @@ releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-beta',
         'path': 'releases/mozilla-beta',
-        'revision': '9150826eaf1b',
+        'revision': '87fd4f56cfed',
         'relbranch': None,
         'bumpFiles': {
             'browser/config/version.txt': {
@@ -95,7 +95,7 @@ releaseConfig['l10nUsePymake']       = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'ffxbld'
-releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_dsa'
+releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_rsa'
 
 # Update-specific configuration
 releaseConfig['patcherConfig']       = 'mozBeta-branch-patcher2.cfg'
@@ -105,7 +105,7 @@ releaseConfig['bouncerServer']       = 'download.mozilla.org'
 releaseConfig['ausServerUrl']        = 'https://aus3.mozilla.org'
 releaseConfig['ausHost']             = 'aus3-staging.mozilla.org'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'ffxbld_dsa'
+releaseConfig['ausSshKey']           = 'ffxbld_rsa'
 releaseConfig['releaseNotesUrl']     = None
 releaseConfig['testOlderPartials']   = False
 releaseConfig['promptWaitTime']      = None

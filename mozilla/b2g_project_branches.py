@@ -8,7 +8,6 @@ PROJECT_BRANCHES = {
         'enable_perproduct_builds': True,
         'enable_nightly': False,
     },
-    'graphics': {},
     # Please sync any customizations made to mozilla-inbound to cypress.
     'mozilla-inbound': {
         'repo_path': 'integration/mozilla-inbound',
@@ -43,6 +42,7 @@ PROJECT_BRANCHES = {
         'mozharness_repo_path': 'build/ash-mozharness',
         'mozharness_repo': 'https://hg.mozilla.org/build/ash-mozharness',
         'mozharness_tag': 'default',
+        'use_mozharness_repo_cache': False,
     },
     # Not needed on Birch at the moment, bug 977420.
     #'birch': {},

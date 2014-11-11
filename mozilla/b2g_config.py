@@ -117,7 +117,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_rsa",
             'CCACHE_DIR': '/builds/ccache',
             'CCACHE_COMPRESS': '1',
             'CCACHE_UMASK': '002',
@@ -131,17 +131,39 @@ PLATFORM_VARS = {
         'test_pretty_names': False,
         'l10n_check_test': False,
         'use_mock': True,
-        'mock_target': 'mozilla-centos6-i386',
+        'mock_target': 'mozilla-centos6-x86_64',
         'mock_packages': ['autoconf213', 'mozilla-python27', 'zip', 'mozilla-python27-mercurial', 'git', 'ccache',
-                          'glibc-static', 'libstdc++-static', 'perl-Test-Simple',
-                          'perl-Config-General', 'gtk2-devel', 'libnotify-devel',
-                          'yasm', 'alsa-lib-devel', 'libcurl-devel', 'wireless-tools-devel',
-                          'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
-                          'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
+                          'glibc-static.i686', 'libstdc++-static.i686', 'perl-Test-Simple',
+                          'perl-Config-General', 'gtk2-devel.i686', 'libnotify-devel.i686',
+                          'yasm', 'alsa-lib-devel.i686', 'libcurl-devel.i686', 'wireless-tools-devel.i686',
+                          'libX11-devel.i686', 'libXt-devel.i686', 'mesa-libGL-devel.i686',
+                          'gnome-vfs2-devel.i686', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
                           'gcc472_0moz1', 'gcc473_0moz1',
-                          'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
-                          'gstreamer-devel', 'gstreamer-plugins-base-devel'],
+                          'freetype-2.3.11-6.el6_1.8.i686', 'freetype-devel-2.3.11-6.el6_1.8.i686',
+                          'freetype-2.3.11-6.el6_1.8.x86_64',
+                          'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
+                          # Packages already installed in the mock environment, as x86_64
+                          # packages.
+                          'glibc-devel.i686', 'libgcc.i686', 'libstdc++-devel.i686',
+                          # yum likes to install .x86_64 -devel packages that satisfy .i686
+                          # -devel packages dependencies. So manually install the dependencies
+                          # of the above packages.
+                          'ORBit2-devel.i686', 'atk-devel.i686', 'cairo-devel.i686',
+                          'check-devel.i686', 'dbus-devel.i686', 'dbus-glib-devel.i686',
+                          'fontconfig-devel.i686', 'glib2-devel.i686',
+                          'hal-devel.i686', 'libICE-devel.i686', 'libIDL-devel.i686',
+                          'libSM-devel.i686', 'libXau-devel.i686', 'libXcomposite-devel.i686',
+                          'libXcursor-devel.i686', 'libXdamage-devel.i686', 'libXdmcp-devel.i686',
+                          'libXext-devel.i686', 'libXfixes-devel.i686', 'libXft-devel.i686',
+                          'libXi-devel.i686', 'libXinerama-devel.i686', 'libXrandr-devel.i686',
+                          'libXrender-devel.i686', 'libXxf86vm-devel.i686', 'libdrm-devel.i686',
+                          'libidn-devel.i686', 'libpng-devel.i686', 'libxcb-devel.i686',
+                          'libxml2-devel.i686', 'pango-devel.i686', 'perl-devel.i686',
+                          'pixman-devel.i686', 'zlib-devel.i686',
+                          # Packages necessary to run host xpcshell
+                          'libXt.x86_64',
+                          ],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -193,7 +215,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_rsa",
             'CCACHE_DIR': '/builds/ccache',
             'CCACHE_COMPRESS': '1',
             'CCACHE_UMASK': '002',
@@ -207,17 +229,39 @@ PLATFORM_VARS = {
         'test_pretty_names': False,
         'l10n_check_test': False,
         'use_mock': True,
-        'mock_target': 'mozilla-centos6-i386',
+        'mock_target': 'mozilla-centos6-x86_64',
         'mock_packages': ['autoconf213', 'mozilla-python27', 'zip', 'mozilla-python27-mercurial', 'git', 'ccache',
-                          'glibc-static', 'libstdc++-static', 'perl-Test-Simple',
-                          'perl-Config-General', 'gtk2-devel', 'libnotify-devel',
-                          'yasm', 'alsa-lib-devel', 'libcurl-devel', 'wireless-tools-devel',
-                          'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
-                          'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
+                          'glibc-static.i686', 'libstdc++-static.i686', 'perl-Test-Simple',
+                          'perl-Config-General', 'gtk2-devel.i686', 'libnotify-devel.i686',
+                          'yasm', 'alsa-lib-devel.i686', 'libcurl-devel.i686', 'wireless-tools-devel.i686',
+                          'libX11-devel.i686', 'libXt-devel.i686', 'mesa-libGL-devel.i686',
+                          'gnome-vfs2-devel.i686', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
                           'gcc472_0moz1', 'gcc473_0moz1',
-                          'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
-                          'gstreamer-devel', 'gstreamer-plugins-base-devel'],
+                          'freetype-2.3.11-6.el6_1.8.i686', 'freetype-devel-2.3.11-6.el6_1.8.i686',
+                          'freetype-2.3.11-6.el6_1.8.x86_64',
+                          'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
+                          # Packages already installed in the mock environment, as x86_64
+                          # packages.
+                          'glibc-devel.i686', 'libgcc.i686', 'libstdc++-devel.i686',
+                          # yum likes to install .x86_64 -devel packages that satisfy .i686
+                          # -devel packages dependencies. So manually install the dependencies
+                          # of the above packages.
+                          'ORBit2-devel.i686', 'atk-devel.i686', 'cairo-devel.i686',
+                          'check-devel.i686', 'dbus-devel.i686', 'dbus-glib-devel.i686',
+                          'fontconfig-devel.i686', 'glib2-devel.i686',
+                          'hal-devel.i686', 'libICE-devel.i686', 'libIDL-devel.i686',
+                          'libSM-devel.i686', 'libXau-devel.i686', 'libXcomposite-devel.i686',
+                          'libXcursor-devel.i686', 'libXdamage-devel.i686', 'libXdmcp-devel.i686',
+                          'libXext-devel.i686', 'libXfixes-devel.i686', 'libXft-devel.i686',
+                          'libXi-devel.i686', 'libXinerama-devel.i686', 'libXrandr-devel.i686',
+                          'libXrender-devel.i686', 'libXxf86vm-devel.i686', 'libdrm-devel.i686',
+                          'libidn-devel.i686', 'libpng-devel.i686', 'libxcb-devel.i686',
+                          'libxml2-devel.i686', 'pango-devel.i686', 'perl-devel.i686',
+                          'pixman-devel.i686', 'zlib-devel.i686',
+                          # Packages necessary to run host xpcshell
+                          'libXt.x86_64',
+                          ],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -268,7 +312,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_rsa",
             'CCACHE_DIR': '/builds/ccache',
             'CCACHE_COMPRESS': '1',
             'CCACHE_UMASK': '002',
@@ -342,7 +386,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_rsa",
             'CCACHE_DIR': '/builds/ccache',
             'CCACHE_COMPRESS': '1',
             'CCACHE_UMASK': '002',
@@ -421,6 +465,7 @@ PLATFORM_VARS = {
         'platform_objdir': OBJDIR,
         'stage_product': 'b2g',
         'stage_platform': 'linux64-mulet',
+        'enable_shared_checkouts': True,
         'env': {
             'DISPLAY': ':2',
             'HG_SHARE_BASE_DIR': '/builds/hg-shared',
@@ -433,7 +478,7 @@ PLATFORM_VARS = {
             'LC_ALL': 'C',
             'PATH': '/tools/buildbot/bin:/usr/local/bin:/usr/lib64/ccache:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/tools/git/bin:/tools/python27/bin:/tools/python27-mercurial/bin:/home/cltbld/bin',
         },
-        'tooltool_manifest_src': 'browser/config/tooltool-manifests/linux64/releng.manifest',
+        'tooltool_manifest_src': 'b2g/dev/config/tooltool-manifests/linux64/releng.manifest',
         'tooltool_script': ['/builds/tooltool.py'],
         'use_mock': True,
         'mock_target': 'mozilla-centos6-x86_64',
@@ -494,7 +539,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_rsa",
             'CHOWN_ROOT': '~/bin/chown_root',
             'CHOWN_REVERT': '~/bin/chown_revert',
             'LC_ALL': 'C',
@@ -547,7 +592,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_rsa",
             'CHOWN_ROOT': '~/bin/chown_root',
             'CHOWN_REVERT': '~/bin/chown_revert',
             'LC_ALL': 'C',
@@ -579,19 +624,20 @@ PLATFORM_VARS = {
         'base_name': 'OS X Mulet %(branch)s',
         'mozconfig': 'in_tree',
         'src_mozconfig': 'b2g/dev/config/mozconfigs/macosx64/mulet',
-        'packageTests': True,
+        'packageTests': False,
         'profiled_build': False,
         'builds_before_reboot': b2g_localconfig.BUILDS_BEFORE_REBOOT,
         'build_space': 12,
         'upload_symbols': False,
         'download_symbols': False,
         'slaves': SLAVES['macosx64-lion'],
-        'platform_objdir': "%s/i386" % OBJDIR,
+        'platform_objdir': OBJDIR,
         'stage_product': 'b2g',
         'stage_platform': 'macosx64-mulet',
         'update_platform': 'Darwin_x86_64-gcc3',
         'enable_shared_checkouts': True,
-        'enable_nonunified_build': True,
+        'enable_nonunified_build': False,
+        'enable_nightly': True,
         'env': {
             'MOZ_OBJDIR': OBJDIR,
             'HG_SHARE_BASE_DIR': '/builds/hg-shared',
@@ -601,7 +647,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_rsa",
             'MOZ_SYMBOLS_EXTRA_BUILDID': 'macosx64-mulet',
             'CHOWN_ROOT': '~/bin/chown_root',
             'CHOWN_REVERT': '~/bin/chown_revert',
@@ -615,7 +661,7 @@ PLATFORM_VARS = {
         'enable_checktests': True,
         'talos_masters': None,
         'test_pretty_names': False,
-        'tooltool_manifest_src': 'browser/config/tooltool-manifests/macosx64/releng.manifest',
+        'tooltool_manifest_src': 'b2g/dev/config/tooltool-manifests/macosx64/releng.manifest',
         'tooltool_l10n_manifest_src': 'browser/config/tooltool-manifests/macosx64/l10n.manifest',
         'enable_ccache': True,
     },
@@ -646,7 +692,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_rsa",
             'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
             'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
             'BINSCOPE': 'C:\Program Files (x86)\Microsoft\SDL BinScope\BinScope.exe',
@@ -700,7 +746,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_rsa",
             'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
             'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
             'BINSCOPE': 'C:\Program Files (x86)\Microsoft\SDL BinScope\BinScope.exe',
@@ -757,7 +803,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_rsa",
             'CCACHE_DIR': '/builds/ccache',
             'CCACHE_COMPRESS': '1',
             'CCACHE_UMASK': '002',
@@ -774,17 +820,39 @@ PLATFORM_VARS = {
         'test_pretty_names': False,
         'l10n_check_test': False,
         'use_mock': True,
-        'mock_target': 'mozilla-centos6-i386',
+        'mock_target': 'mozilla-centos6-x86_64',
         'mock_packages': ['autoconf213', 'mozilla-python27', 'zip', 'mozilla-python27-mercurial', 'git', 'ccache',
-                          'glibc-static', 'libstdc++-static', 'gtk2-devel',
-                          'libnotify-devel', 'yasm', 'alsa-lib-devel',
-                          'libcurl-devel', 'wireless-tools-devel',
-                          'libX11-devel', 'libXt-devel', 'mesa-libGL-devel',
-                          'gnome-vfs2-devel', 'mpfr', 'xorg-x11-font',
+                          'glibc-static.i686', 'libstdc++-static.i686', 'perl-Test-Simple',
+                          'perl-Config-General', 'gtk2-devel.i686', 'libnotify-devel.i686',
+                          'yasm', 'alsa-lib-devel.i686', 'libcurl-devel.i686', 'wireless-tools-devel.i686',
+                          'libX11-devel.i686', 'libXt-devel.i686', 'mesa-libGL-devel.i686',
+                          'gnome-vfs2-devel.i686', 'mpfr', 'xorg-x11-font',
                           'imake', 'ccache', 'wget',
-                          'freetype-2.3.11-6.el6_2.9', 'freetype-devel-2.3.11-6.el6_2.9',
-                          'gstreamer-devel', 'gstreamer-plugins-base-devel',
-                          'gcc472_0moz1', 'gcc473_0moz1'],
+                          'gcc472_0moz1', 'gcc473_0moz1',
+                          'freetype-2.3.11-6.el6_1.8.i686', 'freetype-devel-2.3.11-6.el6_1.8.i686',
+                          'freetype-2.3.11-6.el6_1.8.x86_64',
+                          'gstreamer-devel.i686', 'gstreamer-plugins-base-devel.i686',
+                          # Packages already installed in the mock environment, as x86_64
+                          # packages.
+                          'glibc-devel.i686', 'libgcc.i686', 'libstdc++-devel.i686',
+                          # yum likes to install .x86_64 -devel packages that satisfy .i686
+                          # -devel packages dependencies. So manually install the dependencies
+                          # of the above packages.
+                          'ORBit2-devel.i686', 'atk-devel.i686', 'cairo-devel.i686',
+                          'check-devel.i686', 'dbus-devel.i686', 'dbus-glib-devel.i686',
+                          'fontconfig-devel.i686', 'glib2-devel.i686',
+                          'hal-devel.i686', 'libICE-devel.i686', 'libIDL-devel.i686',
+                          'libSM-devel.i686', 'libXau-devel.i686', 'libXcomposite-devel.i686',
+                          'libXcursor-devel.i686', 'libXdamage-devel.i686', 'libXdmcp-devel.i686',
+                          'libXext-devel.i686', 'libXfixes-devel.i686', 'libXft-devel.i686',
+                          'libXi-devel.i686', 'libXinerama-devel.i686', 'libXrandr-devel.i686',
+                          'libXrender-devel.i686', 'libXxf86vm-devel.i686', 'libdrm-devel.i686',
+                          'libidn-devel.i686', 'libpng-devel.i686', 'libxcb-devel.i686',
+                          'libxml2-devel.i686', 'pango-devel.i686', 'perl-devel.i686',
+                          'pixman-devel.i686', 'zlib-devel.i686',
+                          # Packages necessary to run host xpcshell
+                          'libXt.x86_64',
+                          ],
         'tooltool_manifest_src': 'b2g/config/tooltool-manifests/linux32/releng.manifest',
         'gaia_repo': gaia_repo,
         'gaia_revision_file': gaia_revision_file,
@@ -811,6 +879,7 @@ PLATFORM_VARS = {
         'src_mozconfig': 'b2g/dev/config/mozconfigs/win32/mulet',
         'enable_dep': True,
         'profiled_build': False,
+        'enable_nightly': True,
         'builds_before_reboot': b2g_localconfig.BUILDS_BEFORE_REBOOT,
         'build_space': 13,
         'upload_symbols': False,
@@ -831,7 +900,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_rsa",
             'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
             'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
             'BINSCOPE': 'C:\Program Files (x86)\Microsoft\SDL BinScope\BinScope.exe',
@@ -844,7 +913,7 @@ PLATFORM_VARS = {
         'test_pretty_names': False,
         'l10n_check_test': False,
         'multi_locale': False,
-        'tooltool_manifest_src': 'browser/config/tooltool-manifests/win32/releng.manifest',
+        'tooltool_manifest_src': 'b2g/dev/config/tooltool-manifests/win32/releng.manifest',
         'tooltool_script': ['python', '/c/mozilla-build/tooltool.py'],
     },
     'linux64_gecko_localizer': {
@@ -878,7 +947,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/home/cltbld/.ssh/ffxbld_rsa",
             'CCACHE_DIR': '/builds/ccache',
             'CCACHE_COMPRESS': '1',
             'CCACHE_UMASK': '002',
@@ -954,7 +1023,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/Users/cltbld/.ssh/ffxbld_rsa",
             'CHOWN_ROOT': '~/bin/chown_root',
             'CHOWN_REVERT': '~/bin/chown_revert',
             'LC_ALL': 'C',
@@ -1007,7 +1076,7 @@ PLATFORM_VARS = {
             'SYMBOL_SERVER_USER': 'ffxbld',
             'SYMBOL_SERVER_PATH': SYMBOL_SERVER_PATH,
             'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
-            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_dsa",
+            'SYMBOL_SERVER_SSH_KEY': "/c/Users/cltbld/.ssh/ffxbld_rsa",
             'PDBSTR_PATH': '/c/Program Files (x86)/Windows Kits/8.0/Debuggers/x64/srcsrv/pdbstr.exe',
             'HG_SHARE_BASE_DIR': 'c:/builds/hg-shared',
             'BINSCOPE': 'C:\Program Files (x86)\Microsoft\SDL BinScope\BinScope.exe',
@@ -1046,6 +1115,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1063,6 +1137,11 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1081,6 +1160,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1098,6 +1182,11 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1116,10 +1205,13 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
         },
         'env': {
             'PATH': '/tools/python27-mercurial/bin:/tools/python27/bin:/usr/local/bin:/usr/lib64/ccache:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/cltbld/bin',
             'PYTHONPATH': '/tools/python27/lib',
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1137,10 +1229,13 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
         },
         'env': {
             'PATH': '/tools/python27-mercurial/bin:/tools/python27/bin:/usr/local/bin:/usr/lib64/ccache:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/cltbld/bin',
             'PYTHONPATH': '/tools/python27/lib',
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1159,6 +1254,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1177,6 +1277,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1196,6 +1301,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1214,6 +1324,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1233,6 +1348,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1251,6 +1371,11 @@ PLATFORM_VARS = {
                 '--config-file', 'hazards/common.py',
                 '--config-file', 'hazards/build_b2g.py',
             ],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1271,6 +1396,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1292,6 +1422,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'non_unified_extra_args': ['--non-unified'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'enable_nonunified_build': True,
         'stage_product': 'b2g',
@@ -1312,6 +1447,11 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_dev.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1330,6 +1470,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1347,6 +1492,11 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_all.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1418,6 +1568,11 @@ PLATFORM_VARS = {
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales',
                            '--config', GLOBAL_VARS['mozharness_configs']['balrog']],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1435,6 +1590,11 @@ PLATFORM_VARS = {
                            '--gaia-languages-file', 'locales/languages_all.json',
                            '--gecko-languages-file', 'gecko/b2g/locales/all-locales'],
             'reboot_command': ['bash', '-c', 'sudo reboot; sleep 600'],
+            'mozharness_repo_cache': '/tools/checkouts/mozharness',
+            'tools_repo_cache': '/tools/checkouts/build-tools',
+        },
+        'env': {
+            'HG_SHARE_BASE_DIR': '/builds/hg-shared',
         },
         'stage_product': 'b2g',
         'product_name': 'b2g',
@@ -1457,10 +1617,6 @@ for platform in PLATFORM_VARS.values():
 BRANCHES = {
     'mozilla-central': {
     },
-    'mozilla-aurora': {
-        'gecko_version': 34,
-        'b2g_version': (2, 1, 0),
-    },
     'mozilla-b2g28_v1_3t': {
         'gecko_version': 28,
         'b2g_version': (1, 3, 0),
@@ -1479,6 +1635,10 @@ BRANCHES = {
     'mozilla-b2g32_v2_0': {
         'gecko_version': 32,
         'b2g_version': (2, 0, 0),
+    },
+    'mozilla-b2g34_v2_1': {
+        'gecko_version': 34,
+        'b2g_version': (2, 1, 0),
     },
     'try': {
         'lock_platforms': True,
@@ -1613,35 +1773,37 @@ BRANCHES['mozilla-central']['platforms']['emulator-kk-debug']['enable_nightly'] 
 BRANCHES['mozilla-central']['platforms']['dolphin']['enable_nightly'] = True
 BRANCHES['mozilla-central']['platforms']['dolphin_eng']['enable_nightly'] = True
 
-######## mozilla-aurora
+######## mozilla-b2g34_v2_1
 # This is a path, relative to HGURL, where the repository is located
 # HGURL + repo_path should be a valid repository
-BRANCHES['mozilla-aurora']['repo_path'] = 'releases/mozilla-aurora'
-BRANCHES['mozilla-aurora']['gaia_l10n_root'] = 'https://hg.mozilla.org/gaia-l10n'
-BRANCHES['mozilla-aurora']['gecko_l10n_root'] = 'https://hg.mozilla.org/releases/l10n/mozilla-aurora'
-BRANCHES['mozilla-aurora']['start_hour'] = [0, 16]
-BRANCHES['mozilla-aurora']['start_minute'] = [2]
-BRANCHES['mozilla-aurora']['periodic_start_minute'] = 30
-BRANCHES['mozilla-aurora']['aus2_base_upload_dir'] = 'fake'
-BRANCHES['mozilla-aurora']['aus2_base_upload_dir_l10n'] = 'fake'
-BRANCHES['mozilla-aurora']['platforms']['hamachi']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['hamachi_eng']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['hamachi_eng']['consider_for_nightly'] = False
-BRANCHES['mozilla-aurora']['platforms']['nexus-4']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['nexus-4_eng']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['nexus-4_eng']['consider_for_nightly'] = False
-BRANCHES['mozilla-aurora']['platforms']['helix']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['wasabi']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['flame-kk']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['flame-kk_eng']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['emulator']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['emulator-debug']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['emulator-jb']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['emulator-jb-debug']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['emulator-kk']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['emulator-kk-debug']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['dolphin']['enable_nightly'] = True
-BRANCHES['mozilla-aurora']['platforms']['dolphin_eng']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['repo_path'] = 'releases/mozilla-b2g34_v2_1'
+BRANCHES['mozilla-b2g34_v2_1']['gaia_l10n_root'] = 'https://hg.mozilla.org/releases/gaia-l10n/v2_1/'
+BRANCHES['mozilla-b2g34_v2_1']['gecko_l10n_root'] = 'https://hg.mozilla.org/releases/l10n/mozilla-beta'
+BRANCHES['mozilla-b2g34_v2_1']['start_hour'] = [0, 16]
+BRANCHES['mozilla-b2g34_v2_1']['start_minute'] = [12]
+BRANCHES['mozilla-b2g34_v2_1']['periodic_start_minute'] = 30
+BRANCHES['mozilla-b2g34_v2_1']['aus2_base_upload_dir'] = 'fake'
+BRANCHES['mozilla-b2g34_v2_1']['aus2_base_upload_dir_l10n'] = 'fake'
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['hamachi']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['hamachi_eng']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['hamachi_eng']['consider_for_nightly'] = False
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['nexus-4']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['nexus-4_eng']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['nexus-4_eng']['consider_for_nightly'] = False
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['helix']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['wasabi']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['flame']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['flame_eng']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['flame-kk']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['flame-kk_eng']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['emulator']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['emulator-debug']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['emulator-jb']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['emulator-jb-debug']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['emulator-kk']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['emulator-kk-debug']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['dolphin']['enable_nightly'] = True
+BRANCHES['mozilla-b2g34_v2_1']['platforms']['dolphin_eng']['enable_nightly'] = True
 
 ######## mozilla-b2g32_v2_0
 # This is a path, relative to HGURL, where the repository is located
@@ -1758,13 +1920,12 @@ for name, branch in items_before(BRANCHES, 'gecko_version', 34):
     if 'linux64-mulet' in branch['platforms']:
         del branch['platforms']['linux64-mulet']
 
-# OSX and Win32 Mulet only on cedar for now (bug 1067628)
-for branch in BRANCHES:
-    if branch not in ('cedar',):
-        if 'macosx64-mulet' in BRANCHES[branch]['platforms']:
-            del BRANCHES[branch]['platforms']['macosx64-mulet']
-        if 'win32-mulet' in BRANCHES[branch]['platforms']:
-            del BRANCHES[branch]['platforms']['win32-mulet']
+# Enable win32/macosx64 mulet in gecko 36+
+for name, branch in items_before(BRANCHES, 'gecko_version', 36):
+    if 'win32-mulet' in branch['platforms']:
+        del branch['platforms']['win32-mulet']
+    if 'macosx64-mulet' in branch['platforms']:
+        del branch['platforms']['macosx64-mulet']
 
 # tarako is for B2G 1.3t only (gecko28)
 for branch in BRANCHES:

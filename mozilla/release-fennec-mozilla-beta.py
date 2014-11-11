@@ -6,7 +6,7 @@
 # you're starting a release without Release Kickoff. You have been warned.
 releaseConfig = {}
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api.pub.build.mozilla.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = ['<release@mozilla.com>',
@@ -23,11 +23,11 @@ releaseConfig['stage_product']       = 'mobile'
 releaseConfig['appName']             = 'mobile'
 releaseConfig['relbranchPrefix']     = 'MOBILE'
 #  Current version info
-releaseConfig['version']             = '33.0b10'
-releaseConfig['appVersion']          = '33.0'
+releaseConfig['version']             = '34.0b8'
+releaseConfig['appVersion']          = '34.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FENNEC_33_0b10'
+releaseConfig['baseTag']             = 'FENNEC_34_0b8'
 #  Next (nightly) version info
 releaseConfig['nextAppVersion']      = releaseConfig['appVersion']
 releaseConfig['nextMilestone']       = releaseConfig['milestone']
@@ -36,7 +36,7 @@ releaseConfig['sourceRepositories']  = {
     'mobile': {
         'name': 'mozilla-beta',
         'path': 'releases/mozilla-beta',
-        'revision': '8574e35b5177',
+        'revision': '87fd4f56cfed',
         'relbranch': None,
         'bumpFiles': {
             'mobile/android/confvars.sh': {
@@ -81,7 +81,7 @@ releaseConfig['enableMultiLocale']   = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'ffxbld'
-releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_dsa'
+releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_rsa'
 
 # Update-specific configuration
 releaseConfig['ftpServer']           = 'ftp.mozilla.org'
@@ -89,7 +89,7 @@ releaseConfig['stagingServer']       = 'stage.mozilla.org'
 releaseConfig['ausServerUrl']        = 'https://aus3.mozilla.org'
 releaseConfig['ausHost']             = 'aus3-staging.mozilla.org'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'ffxbld_dsa'
+releaseConfig['ausSshKey']           = 'ffxbld_rsa'
 
 # Partner repack configuration
 releaseConfig['doPartnerRepacks']       = False
@@ -108,7 +108,6 @@ releaseConfig['enable_repo_setup']       = False
 
 # Fennec specific
 releaseConfig['usePrettyNames']           = False
-releaseConfig['disableBouncerEntries']    = True
 releaseConfig['disableStandaloneRepacks'] = True
 releaseConfig['disablePermissionCheck']   = True
 releaseConfig['disableVirusCheck']        = True
@@ -145,3 +144,15 @@ releaseConfig['use_mock'] = True
 releaseConfig['mock_platforms'] = ('android', 'android-x86', 'linux')
 releaseConfig['ftpSymlinkName'] = 'latest-beta'
 releaseConfig['enableAutomaticPushToMirrors'] = True
+releaseConfig['localTestChannel']      = 'beta-localtest'
+releaseConfig['cdnTestChannel']        = 'beta-cdntest'
+releaseConfig['partialUpdates']      = {}
+releaseConfig['bouncerServer']       = 'download.mozilla.org'
+releaseConfig['testChannelRuleIds']    = []
+# Tuxedo/Bouncer configuration
+releaseConfig['tuxedoServerUrl']     = 'https://bounceradmin.mozilla.com/api'
+releaseConfig['bouncer_submitter_config'] = 'releases/bouncer_fennec.py'
+releaseConfig['bouncerServer']       = 'download.mozilla.org'
+releaseConfig['bouncer_aliases'] = {
+    'Fennec-%(version)s': 'fennec-beta-latest',
+}

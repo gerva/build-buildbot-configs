@@ -8,7 +8,7 @@ EMAIL_RECIPIENTS = []
 
 releaseConfig = {}
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer-stage.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api-pub-build.allizom.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = EMAIL_RECIPIENTS
@@ -89,7 +89,7 @@ releaseConfig['enableMultiLocale']   = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'stage-ffxbld'
-releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_dsa'
+releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_rsa'
 
 # Update-specific configuration
 releaseConfig['ftpServer']           = 'dev-stage01.srv.releng.scl3.mozilla.com'
@@ -97,7 +97,7 @@ releaseConfig['stagingServer']       = 'dev-stage01.srv.releng.scl3.mozilla.com'
 releaseConfig['ausServerUrl']        = 'http://dev-stage01.srv.releng.scl3.mozilla.com'
 releaseConfig['ausHost']             = 'dev-stage01.srv.releng.scl3.mozilla.com'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'ffxbld_dsa'
+releaseConfig['ausSshKey']           = 'ffxbld_rsa'
 
 # Partner repack configuration
 releaseConfig['doPartnerRepacks']       = False
@@ -115,7 +115,6 @@ releaseConfig['enable_repo_setup']       = False
 
 # Fennec specific
 releaseConfig['usePrettyNames']           = False
-releaseConfig['disableBouncerEntries']    = True
 releaseConfig['disableStandaloneRepacks'] = True
 releaseConfig['disablePermissionCheck']   = True
 releaseConfig['disableVirusCheck']        = True
@@ -155,3 +154,14 @@ releaseConfig['use_mock'] = True
 releaseConfig['mock_platforms'] = ('android', 'linux')
 releaseConfig['ftpSymlinkName'] = 'latest-beta'
 releaseConfig['enableAutomaticPushToMirrors'] = True
+releaseConfig['localTestChannel']      = 'beta-localtest'
+releaseConfig['cdnTestChannel']        = 'beta-cdntest'
+releaseConfig['partialUpdates']      = {}
+releaseConfig['bouncerServer']       = 'download.mozilla.org'
+releaseConfig['testChannelRuleIds']    = [37]
+releaseConfig['tuxedoServerUrl']     = 'https://bounceradmin.mozilla.com/api'
+releaseConfig['bouncer_submitter_config'] = 'releases/bouncer_fennec.py'
+releaseConfig['bouncerServer']       = 'download.mozilla.org'
+releaseConfig['bouncer_aliases'] = {
+    'Fennec-%(version)s': 'fennec-beta-latest',
+}

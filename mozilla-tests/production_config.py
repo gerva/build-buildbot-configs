@@ -15,13 +15,13 @@ SLAVES = {
     'win64_vm': {},
 }
 
-for i in range(1,131):
+for i in range(1,163):
     SLAVES['xp-ix']['t-xp32-ix-%03i' % i] = {}
 
-for i in range(1,131):
+for i in range(1,163):
     SLAVES['win7-ix']['t-w732-ix-%03i' % i] = {}
 
-for i in range(1,131):
+for i in range(1,171):
     SLAVES['win8']['t-w864-ix-%03i' % i] = {}
 
 for i in range(1,166):
@@ -33,7 +33,7 @@ for i in range(1,87) + range(88,101):
 for i in range(1,4):
     SLAVES['mavericks']['t-mavericks-r5-%03i' % i] = {}
 
-for i in range(22,307) + range(320,874) + range(885,910):
+for i in range(22,910):
     SLAVES['panda_android']['panda-%04i' % i] = {
         'http_port': '30%03i' % i,
         'ssl_port': '31%03i' % i,
@@ -101,7 +101,7 @@ GLOBAL_VARS = {
     'mozharness_tag': 'production',
     'stage_server': 'stage.mozilla.org',
     'stage_username': 'ffxbld',
-    'stage_ssh_key': 'ffxbld_dsa',
+    'stage_ssh_key': 'ffxbld_rsa',
     'datazilla_url': 'https://datazilla.mozilla.org/talos',
     'blob_upload': True,
 }
@@ -116,10 +116,6 @@ BRANCHES = {
     'mozilla-release': {
         'tinderbox_tree': 'Mozilla-Release',
         'mobile_tinderbox_tree': 'Mozilla-Release',
-    },
-    'mozilla-esr24': {
-        'tinderbox_tree': 'Mozilla-Esr24',
-        'mobile_tinderbox_tree': 'Mozilla-Esr24',
     },
     'mozilla-esr31': {
         'tinderbox_tree': 'Mozilla-Esr31',
@@ -136,6 +132,10 @@ BRANCHES = {
     'mozilla-b2g32_v2_0': {
         'tinderbox_tree': 'Mozilla-B2g32-v2.0',
         'mobile_tinderbox_tree': 'Mozilla-B2g32-v2.0',
+    },
+    'mozilla-b2g34_v2_1': {
+        'tinderbox_tree': 'Mozilla-B2g34-v2.1',
+        'mobile_tinderbox_tree': 'Mozilla-B2g34-v2.1',
     },
     'mozilla-beta': {
         'tinderbox_tree': 'Mozilla-Beta',

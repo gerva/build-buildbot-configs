@@ -7,7 +7,7 @@
 releaseConfig = {}
 
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api.pub.build.mozilla.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = ['<release@mozilla.com>',
@@ -24,11 +24,11 @@ releaseConfig['productName']         = 'firefox'
 releaseConfig['stage_product']       = 'firefox'
 releaseConfig['appName']             = 'browser'
 #  Current version info
-releaseConfig['version']             = '31.2.0esr'
-releaseConfig['appVersion']          = '31.2.0'
+releaseConfig['version']             = '31.2.1esr'
+releaseConfig['appVersion']          = '31.2.1'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FIREFOX_31_2_0esr'
+releaseConfig['baseTag']             = 'FIREFOX_31_2_1esr'
 releaseConfig['partialUpdates']      = {
 
     '31.1.1esr': {
@@ -37,16 +37,22 @@ releaseConfig['partialUpdates']      = {
         'baseTag': 'FIREFOX_31_1_1esr',
     },
 
+    '24.8.0esr': {
+        'appVersion': '24.8.0',
+        'buildNumber': 1,
+        'baseTag': 'FIREFOX_24_8_0esr',
+    },
+
 }
 #  Next (nightly) version info
-releaseConfig['nextAppVersion']      = '31.2.0esrpre'
+releaseConfig['nextAppVersion']      = '31.2.1esrpre'
 releaseConfig['nextMilestone']       = releaseConfig['nextAppVersion']
 #  Repository configuration, for tagging
 releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-esr31',
         'path': 'releases/mozilla-esr31',
-        'revision': 'c2a095b714f2',
+        'revision': 'd38075a0a0f6',
         'relbranch': None,
         'bumpFiles': {
             'browser/config/version.txt': {
@@ -89,7 +95,7 @@ releaseConfig['l10nUsePymake']       = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'ffxbld'
-releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_dsa'
+releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_rsa'
 
 # Update-specific configuration
 releaseConfig['patcherConfig']       = 'mozEsr31-branch-patcher2.cfg'
@@ -99,7 +105,7 @@ releaseConfig['bouncerServer']       = 'download.mozilla.org'
 releaseConfig['ausServerUrl']        = 'https://aus3.mozilla.org'
 releaseConfig['ausHost']             = 'aus3-staging.mozilla.org'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'ffxbld_dsa'
+releaseConfig['ausSshKey']           = 'ffxbld_rsa'
 releaseConfig['releaseNotesUrl']     = None
 releaseConfig['testOlderPartials']   = False
 releaseConfig['promptWaitTime']      = None

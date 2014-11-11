@@ -6,7 +6,7 @@
 # you're starting a release without Release Kickoff. You have been warned.
 releaseConfig = {}
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api.pub.build.mozilla.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = ['<release@mozilla.com>',
@@ -23,17 +23,17 @@ releaseConfig['productName']         = 'firefox'
 releaseConfig['stage_product']       = 'firefox'
 releaseConfig['appName']             = 'browser'
 #  Current version info
-releaseConfig['version']             = '33.0'
-releaseConfig['appVersion']          = '33.0'
+releaseConfig['version']             = '33.1'
+releaseConfig['appVersion']          = '33.1'
 releaseConfig['milestone']           = releaseConfig['appVersion']
-releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FIREFOX_33_0'
+releaseConfig['buildNumber']         = 3
+releaseConfig['baseTag']             = 'FIREFOX_33_1'
 releaseConfig['partialUpdates']      = {
 
-    '31.0': {
-        'appVersion': '31.0',
+    '33.0.2': {
+        'appVersion': '33.0.2',
         'buildNumber': 2,
-        'baseTag': 'FIREFOX_31_0',
+        'baseTag': 'FIREFOX_33_0_2',
     },
 
     '32.0.3': {
@@ -42,19 +42,14 @@ releaseConfig['partialUpdates']      = {
         'baseTag': 'FIREFOX_32_0_3',
     },
 
-    '32.0.2': {
-        'appVersion': '32.0.2',
-        'buildNumber': 1,
-        'baseTag': 'FIREFOX_32_0_2',
+    '33.0.3': {
+        'appVersion': '33.0.3',
+        'buildNumber': 2,
+        'baseTag': 'FIREFOX_33_0_3',
     },
 
 }
 releaseConfig['extraPartials']       = {
-    '33.0b9': {
-        'appVersion': '33.0',
-        'buildNumber': 1,
-        'baseTag': 'FIRFOX_33_0b9',
-    },
 }
 #  Next (nightly) version info
 releaseConfig['nextAppVersion']      = releaseConfig['appVersion']
@@ -64,7 +59,7 @@ releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-release',
         'path': 'releases/mozilla-release',
-        'revision': '9bf2a5b5162d',
+        'revision': '818480839115',
         'relbranch': None,
         'bumpFiles': {
             'browser/config/version.txt': {
@@ -91,7 +86,7 @@ releaseConfig['otherReposToTag']     = {
 }
 
 # Platform configuration
-releaseConfig['enUSPlatforms']       = ('linux', 'linux64', 'win32', 'macosx64')
+releaseConfig['enUSPlatforms']       = ('win32',)
 releaseConfig['notifyPlatforms']     = releaseConfig['enUSPlatforms']
 releaseConfig['talosTestPlatforms']  = releaseConfig['enUSPlatforms']
 releaseConfig['xulrunnerPlatforms']  = releaseConfig['enUSPlatforms']
@@ -108,7 +103,7 @@ releaseConfig['l10nUsePymake']       = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'ffxbld'
-releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_dsa'
+releaseConfig['hgSshKey']            = '/home/mock_mozilla/.ssh/ffxbld_rsa'
 
 # Update-specific configuration
 releaseConfig['patcherConfig']       = 'mozRelease-branch-patcher2.cfg'
@@ -118,7 +113,7 @@ releaseConfig['bouncerServer']       = 'download.mozilla.org'
 releaseConfig['ausServerUrl']        = 'https://aus3.mozilla.org'
 releaseConfig['ausHost']             = 'aus3-staging.mozilla.org'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'ffxbld_dsa'
+releaseConfig['ausSshKey']           = 'ffxbld_rsa'
 releaseConfig['releaseNotesUrl']     = None
 releaseConfig['testOlderPartials']   = False
 releaseConfig['promptWaitTime']      = None

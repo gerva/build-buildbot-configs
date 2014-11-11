@@ -6,7 +6,7 @@
 # you're starting a release without Release Kickoff. You have been warned.
 releaseConfig = {}
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api.pub.build.mozilla.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = ['<release@mozilla.com>',
@@ -29,11 +29,11 @@ def bumpIntegerInFile(previousContents):
     return str(int(previousContents) + 1)
 
 #  Current version info
-releaseConfig['version']             = '31.1.1esr'
-releaseConfig['appVersion']          = '31.1.1'
+releaseConfig['version']             = '31.2.0esr'
+releaseConfig['appVersion']          = '31.2.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
-releaseConfig['buildNumber']         = 1
-releaseConfig['baseTag']             = 'FENNEC_31_1_1esr'
+releaseConfig['buildNumber']         = 2
+releaseConfig['baseTag']             = 'FENNEC_31_2_0esr'
 #  Next (nightly) version info
 releaseConfig['nextAppVersion']      = releaseConfig['version']
 releaseConfig['nextMilestone']       = releaseConfig['version']
@@ -42,7 +42,7 @@ releaseConfig['sourceRepositories']  = {
     'mobile': {
         'name': 'mozilla-esr31',
         'path': 'releases/mozilla-esr31',
-        'revision': '4a510243669e',
+        'revision': 'f5690f9ca229',
         'relbranch': None,
         'bumpFiles': {
             'mobile/android/confvars.sh': {
@@ -91,7 +91,7 @@ releaseConfig['enableMultiLocale']   = True
 
 # Mercurial account
 releaseConfig['hgUsername']          = 'ffxbld'
-releaseConfig['hgSshKey']            = '~cltbld/.ssh/ffxbld_dsa'
+releaseConfig['hgSshKey']            = '~cltbld/.ssh/ffxbld_rsa'
 
 # Update-specific configuration
 releaseConfig['ftpServer']           = 'ftp.mozilla.org'
@@ -99,7 +99,7 @@ releaseConfig['stagingServer']       = 'stage.mozilla.org'
 releaseConfig['ausServerUrl']        = 'https://aus3.mozilla.org'
 releaseConfig['ausHost']             = 'aus3-staging.mozilla.org'
 releaseConfig['ausUser']             = 'ffxbld'
-releaseConfig['ausSshKey']           = 'ffxbld_dsa'
+releaseConfig['ausSshKey']           = 'ffxbld_rsa'
 
 # Partner repack configuration
 releaseConfig['doPartnerRepacks']       = False

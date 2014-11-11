@@ -6,7 +6,7 @@
 # you're starting a release without Release Kickoff. You have been warned.
 releaseConfig = {}
 releaseConfig['disable_tinderbox_mail'] = True
-releaseConfig['base_clobber_url'] = 'http://clobberer.pvt.build.mozilla.org/always_clobber.php'
+releaseConfig['base_clobber_url'] = 'https://api.pub.build.mozilla.org/clobberer/forceclobber'
 
 # Release Notification
 releaseConfig['AllRecipients']       = ['<release@mozilla.com>']
@@ -20,21 +20,19 @@ releaseConfig['messagePrefix']       = '[release] '
 releaseConfig['productName']         = 'thunderbird'
 releaseConfig['stage_product']       = 'thunderbird'
 releaseConfig['appName']             = 'mail'
-# MERGE DAY (remove 'mozilla_dir' once comm-beta no longer services Gecko 33 and lower)
-releaseConfig['mozilla_dir']         = 'mozilla'
 releaseConfig['mozilla_srcdir']      = 'mozilla'
 #  Current version info
-releaseConfig['version']             = '33.0b1'
-releaseConfig['appVersion']          = '33.0'
+releaseConfig['version']             = '34.0b1'
+releaseConfig['appVersion']          = '34.0'
 releaseConfig['milestone']           = releaseConfig['appVersion']
 releaseConfig['buildNumber']         = 2
-releaseConfig['baseTag']             = 'THUNDERBIRD_33_0b1'
+releaseConfig['baseTag']             = 'THUNDERBIRD_34_0b1'
 releaseConfig['partialUpdates']      = {
 
-    '32.0b1': {
-        'appVersion': '32.0',
-        'buildNumber': 1,
-        'baseTag': 'THUNDERBIRD_32_0b1',
+    '33.0b1': {
+        'appVersion': '33.0',
+        'buildNumber': 2,
+        'baseTag': 'THUNDERBIRD_33_0b1',
     },
 
 }
@@ -46,7 +44,7 @@ releaseConfig['sourceRepositories']  = {
     'comm': {
         'name': 'comm-beta',
         'path': 'releases/comm-beta',
-        'revision': 'd8cb004900e8',
+        'revision': 'dce40c9f24d8',
         'relbranch': None,
         'bumpFiles': {
             'mail/config/version.txt': {
@@ -58,7 +56,7 @@ releaseConfig['sourceRepositories']  = {
     'mozilla': {
         'name': 'mozilla-beta',
         'path': 'releases/mozilla-beta',
-        'revision': '2431af782661',
+        'revision': '8e812440658b',
         'relbranch': None,
         'bumpFiles': {
             'config/milestone.txt': {
