@@ -2865,19 +2865,6 @@ for b in ('b2g-inbound',):
             BRANCHES[b]['platforms'][p]['enable_checktests'] = False
 # END B2G's INBOUND
 
-# desktop repacks with mozharness
-for name, branch in BRANCHES.items():
-    if branch.get('desktop_mozharness_repacks_enabled'):
-        for platform_name in branch['platforms']:
-            if platform_name in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:
-                pf = branch['platforms'][platform_name]
-                pf['desktop_mozharness_repacks_enabled'] = True
-        continue
-    # for all other branches delete mozharness_desktop_l10n
-    for p in branch["platforms"]:
-        if "mozharness_desktop_l10n" in p:
-            del p["mozharness_desktop_l10n"]
-
 # enable mozharness desktop builds across all twigs
 for name, branch in items_at_least(BRANCHES, 'gecko_version', mc_gecko_version):
     if name in ('mozilla-central', 'mozilla-inbound', 'b2g-inbound', 'fx-team', 'try'):
