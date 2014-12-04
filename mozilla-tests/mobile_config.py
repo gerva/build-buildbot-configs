@@ -689,6 +689,26 @@ ANDROID_MOZHARNESS_PLAIN_ROBOCOP = [
       'script_maxtime': 14400,
       },
      ),
+    ('robocop-6',
+     {'suite': 'mochitest-robocop',
+      'use_mozharness': True,
+      'script_path': 'scripts/android_panda.py',
+      'extra_args': ['--cfg', 'android/android_panda_releng.py', '--robocop-suite', 'robocop-6'],
+      'blob_upload': True,
+      'timeout': 2400,
+      'script_maxtime': 14400,
+      },
+     ),
+     ('robocop-7',
+     {'suite': 'mochitest-robocop',
+      'use_mozharness': True,
+      'script_path': 'scripts/android_panda.py',
+      'extra_args': ['--cfg', 'android/android_panda_releng.py', '--robocop-suite', 'robocop-7'],
+      'blob_upload': True,
+      'timeout': 2400,
+      'script_maxtime': 14400,
+      },
+     ),
 ]
 
 ANDROID_MOZHARNESS_INSTRUMENTATION = [
@@ -1664,13 +1684,11 @@ BRANCHES['mozilla-central']['platforms']['android-api-9']['enable_debug_unittest
 BRANCHES['mozilla-central']['platforms']['android-api-10']['enable_debug_unittests'] = True
 
 ######### mozilla-release
-BRANCHES['mozilla-release']['release_tests'] = 1
 BRANCHES['mozilla-release']['repo_path'] = "releases/mozilla-release"
 BRANCHES['mozilla-release']['pgo_strategy'] = 'per-checkin'
 BRANCHES['mozilla-release']['pgo_platforms'] = []
 
 ######### mozilla-beta
-BRANCHES['mozilla-beta']['release_tests'] = 1
 BRANCHES['mozilla-beta']['repo_path'] = "releases/mozilla-beta"
 BRANCHES['mozilla-beta']['pgo_strategy'] = 'per-checkin'
 BRANCHES['mozilla-beta']['pgo_platforms'] = []
@@ -1696,10 +1714,15 @@ BRANCHES['try']['platforms']['android-api-10']['enable_debug_unittests'] = True
 BRANCHES['try']['pgo_strategy'] = 'try'
 BRANCHES['try']['pgo_platforms'] = []
 BRANCHES['try']['enable_try'] = True
+BRANCHES['try']['script_repo_manifest'] = \
+        "https://hg.mozilla.org/%(repo_path)s/raw-file/%(revision)s/testing/mozharness/mozharness.json"
+
+######## ash 
+BRANCHES['ash']['script_repo_manifest'] = \
+        "https://hg.mozilla.org/%(repo_path)s/raw-file/%(revision)s/testing/mozharness/mozharness.json"
 
 # Until we green out these Android x86 tests
 BRANCHES['cedar']['platforms']['android-x86']['ubuntu64_hw']['opt_unittest_suites'] += ANDROID_X86_NOT_GREEN_DICT[:]
-BRANCHES['ash']['platforms']['android-x86']['ubuntu64_hw']['opt_unittest_suites'] += ANDROID_X86_NOT_GREEN_DICT[:]
 
 #split 2.3 tests to ones that can run on ix and AWS
 for suite in ANDROID_2_3_MOZHARNESS_DICT:
@@ -1716,7 +1739,7 @@ for suite in ANDROID_2_3_MOZHARNESS_DICT:
 branches = BRANCHES.keys()
 for branch_name in branches:
     # for now, let's just enabled the new split on cedar for testing
-    if branch_name == 'cedar':
+    if branch_name in ['cedar', 'ash']:
         # remove original 'android'
         if 'android' in BRANCHES[branch_name]['platforms']:
             del BRANCHES[branch_name]['platforms']['android']
@@ -1733,7 +1756,7 @@ for name, branch in items_at_least(BRANCHES, 'gecko_version', 32):
     for platform in branch['platforms']:
         if not platform in PLATFORMS:
             continue
-        if platform not in ('android', 'android-api-9', 'android-api-10'):
+        if platform not in ('android', 'android-api-9'):
             continue
         BRANCHES[name]['platforms'][platform]['ubuntu64_vm_large'] = {
             'opt_unittest_suites': deepcopy(ANDROID_2_3_C3_DICT['opt_unittest_suites']),

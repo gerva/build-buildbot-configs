@@ -124,6 +124,12 @@ GLOBAL_VARS = {
         'nightly': ['--enable-nightly'],
         'pgo': ['--enable-pgo'],
     },
+    # list platforms with mozharness l10n repacks enabled.
+    # mozharness repacks will be enabled per branch
+    'mozharness_desktop_l10n_platforms': [
+        'linux', 'linux64', 'macosx64'
+    ],
+    # bug 1027890: excluding win32/win64 for now
 
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
@@ -158,7 +164,6 @@ PLATFORM_VARS = {
                 'script_maxtime': int(5.5 * 3600),
             },
             'mozharness_desktop_l10n': {
-                'capable': True,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -284,7 +289,6 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
             'mozharness_desktop_l10n': {
-                'capable': True,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -809,7 +813,6 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
             'mozharness_desktop_l10n': {
-                'capable': True,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -893,7 +896,6 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
             'mozharness_desktop_l10n': {
-                'capable': False,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -955,7 +957,6 @@ PLATFORM_VARS = {
         'win64': {
             'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n': {
-                'capable': False,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -1495,7 +1496,7 @@ PLATFORM_VARS = {
                 'SYMBOL_SERVER_HOST': localconfig.SYMBOL_SERVER_HOST,
                 'SYMBOL_SERVER_USER': 'ffxbld',
                 'SYMBOL_SERVER_PATH': SYMBOL_SERVER_MOBILE_PATH,
-                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_dsa",
+                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_rsa",
                 'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
                 'SHIP_LICENSED_FONTS': '1',
                 'CCACHE_DIR': '/builds/ccache',
@@ -1507,14 +1508,16 @@ PLATFORM_VARS = {
             'enable_opt_unittests': False,
             'talos_masters': GLOBAL_VARS['talos_masters'],
             'unittest_masters': GLOBAL_VARS['unittest_masters'],
-            'stage_platform': "android-api-10",
+            'stage_platform': "android-api-9",
             'stage_product': 'mobile',
             'post_upload_include_platform': True,
             'is_mobile_l10n': True,
             'l10n_chunks': 5,
             'multi_locale': True,
+            'multi_locale_config_platform': 'android',
             'multi_locale_script': 'scripts/multil10n.py',
             'tooltool_manifest_src': 'mobile/android/config/tooltool-manifests/android/releng.manifest',
+            'update_platform': 'Android_arm-eabi-gcc3',
         },
         'android-api-10': {
             'product_name': 'firefox',
@@ -1565,7 +1568,7 @@ PLATFORM_VARS = {
                 'SYMBOL_SERVER_HOST': localconfig.SYMBOL_SERVER_HOST,
                 'SYMBOL_SERVER_USER': 'ffxbld',
                 'SYMBOL_SERVER_PATH': SYMBOL_SERVER_MOBILE_PATH,
-                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_dsa",
+                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_rsa",
                 'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
                 'SHIP_LICENSED_FONTS': '1',
                 'CCACHE_DIR': '/builds/ccache',
@@ -1584,7 +1587,9 @@ PLATFORM_VARS = {
             'l10n_chunks': 5,
             'multi_locale': True,
             'multi_locale_script': 'scripts/multil10n.py',
+            'multi_locale_config_platform': 'android',
             'tooltool_manifest_src': 'mobile/android/config/tooltool-manifests/android/releng.manifest',
+            'update_platform': 'Android_arm-eabi-gcc3',
         },
         'android-armv6': {
             'enable_nightly': True,
@@ -1833,7 +1838,7 @@ PLATFORM_VARS = {
                 'SYMBOL_SERVER_HOST': localconfig.SYMBOL_SERVER_HOST,
                 'SYMBOL_SERVER_USER': 'ffxbld',
                 'SYMBOL_SERVER_PATH': SYMBOL_SERVER_MOBILE_PATH,
-                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_dsa",
+                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_rsa",
                 'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
                 'SHIP_LICENSED_FONTS': '1',
                 'CCACHE_DIR': '/builds/ccache',
@@ -1899,7 +1904,7 @@ PLATFORM_VARS = {
                 'SYMBOL_SERVER_HOST': localconfig.SYMBOL_SERVER_HOST,
                 'SYMBOL_SERVER_USER': 'ffxbld',
                 'SYMBOL_SERVER_PATH': SYMBOL_SERVER_MOBILE_PATH,
-                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_dsa",
+                'SYMBOL_SERVER_SSH_KEY': "/home/mock_mozilla/.ssh/ffxbld_rsa",
                 'POST_SYMBOL_UPLOAD_CMD': SYMBOL_SERVER_POST_UPLOAD_CMD,
                 'SHIP_LICENSED_FONTS': '1',
                 'CCACHE_DIR': '/builds/ccache',
@@ -2069,17 +2074,27 @@ apply_localconfig(BRANCH_PROJECTS, localconfig.BRANCH_PROJECTS)
 # platforms (if different from the default set).
 BRANCHES = {
     'mozilla-central': {
+        'merge_builds': False,
     },
     'mozilla-release': {
+        'merge_builds': False,
         'branch_projects': []
     },
+    'mozilla-release-34.1': {
+        'merge_builds': False,
+        'branch_projects': [],
+        'gecko_version': 34,
+    },
     'mozilla-beta': {
+        'merge_builds': False,
         'branch_projects': []
     },
     'mozilla-aurora': {
+        'merge_builds': False,
         'branch_projects': []
     },
     'mozilla-esr31': {
+        'merge_builds': False,
         'branch_projects': [],
         'lock_platforms': True,
         'gecko_version': 31,
@@ -2096,12 +2111,14 @@ BRANCHES = {
         },
     },
     'mozilla-b2g28_v1_3t': {
+        'merge_builds': False,
         'branch_projects': [],
         'lock_platforms': True,
         'gecko_version': 28,
         'platforms': {},
     },
     'mozilla-b2g30_v1_4': {
+        'merge_builds': False,
         'branch_projects': [],
         'lock_platforms': True,
         'gecko_version': 30,
@@ -2117,6 +2134,7 @@ BRANCHES = {
         },
     },
     'mozilla-b2g32_v2_0': {
+        'merge_builds': False,
         'branch_projects': [],
         'lock_platforms': True,
         'gecko_version': 32,
@@ -2132,6 +2150,7 @@ BRANCHES = {
         },
     },
     'mozilla-b2g34_v2_1': {
+        'merge_builds': False,
         'branch_projects': [],
         'lock_platforms': True,
         'gecko_version': 34,
@@ -2313,6 +2332,13 @@ BRANCHES['mozilla-central']['platforms']['android-api-9']['nightly_signing_serve
 BRANCHES['mozilla-central']['platforms']['android-api-10']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['mozilla-central']['platforms']['macosx64']['nightly_signing_servers'] = 'nightly-signing'
 BRANCHES['mozilla-central']['l10n_extra_configure_args'] = ['--with-macbundlename-prefix=Firefox']
+
+######## mozilla-release-34.1
+BRANCHES['mozilla-release-34.1']['repo_path'] = 'releases/mozilla-release'
+BRANCHES['mozilla-release-34.1']['enable_l10n'] = False
+BRANCHES['mozilla-release-34.1']['start_hour'] = [0]
+BRANCHES['mozilla-release-34.1']['start_minute'] = [0]
+BRANCHES['mozilla-release-34.1']['aus2_base_upload_dir'] = 'fake'
 
 ######## mozilla-release
 BRANCHES['mozilla-release']['repo_path'] = 'releases/mozilla-release'
@@ -2750,12 +2776,7 @@ for branch in branches:
 branches = BRANCHES.keys()
 branches.extend(ACTIVE_PROJECT_BRANCHES)
 for branch in branches:
-    if branch == 'cedar':
-        # remove the soon to be replaced android builds
-        if 'android' in BRANCHES[branch]['platforms']:
-            del BRANCHES[branch]['platforms']['android']
-        if 'android-debug' in BRANCHES[branch]['platforms']:
-            del BRANCHES[branch]['platforms']['android-debug']
+    if branch in ['cedar', 'ash']:
         continue
     ## enable new split android builds on cedar only to start.
     if 'android-api-9' in BRANCHES[branch]['platforms']:
@@ -2864,11 +2885,21 @@ for b in ('b2g-inbound',):
             BRANCHES[b]['platforms'][p]['enable_checktests'] = False
 # END B2G's INBOUND
 
-# enable mozharness desktop builds across all twigs
-for name, branch in items_at_least(BRANCHES, 'gecko_version', mc_gecko_version):
-    if name in ('mozilla-central', 'mozilla-inbound', 'b2g-inbound', 'fx-team', 'try'):
-        # only enable on twigs for now
+# desktop repacks with mozharness
+for name, branch in BRANCHES.items():
+    if branch.get('desktop_mozharness_repacks_enabled'):
+        for platform_name in branch['platforms']:
+            if platform_name in GLOBAL_VARS['mozharness_desktop_l10n_platforms']:
+                pf = branch['platforms'][platform_name]
+                pf['desktop_mozharness_repacks_enabled'] = True
         continue
+    # for all other branches delete mozharness_desktop_l10n
+    for p in branch["platforms"]:
+        if "mozharness_desktop_l10n" in p:
+            del p["mozharness_desktop_l10n"]
+
+# enable mozharness desktop builds across m-c and related branches
+for name, branch in items_at_least(BRANCHES, 'gecko_version', mc_gecko_version):
     # if true, any platform with mozharness_desktop_build in its config
     # will use mozharness instead of MozillaBuildFactory
     branch['desktop_mozharness_builds_enabled'] = True
