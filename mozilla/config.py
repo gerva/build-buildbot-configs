@@ -126,10 +126,6 @@ GLOBAL_VARS = {
     },
     # list platforms with mozharness l10n repacks enabled.
     # mozharness repacks will be enabled per branch
-    'mozharness_desktop_l10n_platforms': [
-        'linux', 'linux64', 'macosx64'
-    ],
-    # bug 1027890: excluding win32/win64 for now
 
 }
 GLOBAL_VARS.update(localconfig.GLOBAL_VARS.copy())
@@ -164,6 +160,7 @@ PLATFORM_VARS = {
                 'script_maxtime': int(5.5 * 3600),
             },
             'mozharness_desktop_l10n': {
+                'capable': True,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -289,6 +286,7 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
             'mozharness_desktop_l10n': {
+                'capable': True,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -813,6 +811,7 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
             'mozharness_desktop_l10n': {
+                'capable': True,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -896,6 +895,7 @@ PLATFORM_VARS = {
                 '--custom-build-variant-cfg', 'non-unified',
             ],
             'mozharness_desktop_l10n': {
+                'capable': False,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
@@ -957,6 +957,7 @@ PLATFORM_VARS = {
         'win64': {
             'mozharness_python': ['c:/mozilla-build/python27/python', '-u'],
             'mozharness_desktop_l10n': {
+                'capable': False,
                 'scriptName': 'scripts/desktop_l10n.py',
                 'l10n_chunks': 10,
                 'use_credentials_file': True,
