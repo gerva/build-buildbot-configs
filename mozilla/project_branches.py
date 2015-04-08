@@ -2,6 +2,7 @@ PROJECT_BRANCHES = {
     ### PLEASE ADD NEW BRANCHES ALPHABETICALLY (twigs at the bottom, also alphabetically)
     # 'build-system': {},  # Bug 1010674
     'fx-team': {
+        'merge_builds': False,
         'enable_perproduct_builds': True,
         'repo_path': 'integration/fx-team',
         'mozconfig_dir': 'mozilla-central',
@@ -11,6 +12,7 @@ PROJECT_BRANCHES = {
         'enable_weekly_bundle': True,
     },
     'mozilla-inbound': {
+        'merge_builds': False,
         'repo_path': 'integration/mozilla-inbound',
         'enable_perproduct_builds': True,
         'mozconfig_dir': 'mozilla-central',
@@ -23,6 +25,7 @@ PROJECT_BRANCHES = {
         'branch_projects': ['spidermonkey_tier_1', 'spidermonkey_info'],
     },
     'b2g-inbound': {
+        'merge_builds': False,
         'repo_path': 'integration/b2g-inbound',
         'enable_perproduct_builds': True,
         'mozconfig_dir': 'mozilla-central',
@@ -54,125 +57,19 @@ PROJECT_BRANCHES = {
         },
     },
     #'services-central': {},  # Bug 1010674
-    'ux': {
-        'branch_name': 'UX',
-        'mobile_branch_name': 'UX',
-        'build_branch': 'UX',
-        'tinderbox_tree': 'UX',
-        'mobile_tinderbox_tree': 'UX',
-        'packaged_unittest_tinderbox_tree': 'UX',
-        'enabled_products': ['firefox'],
-        'enable_weekly_bundle': True,
-        'mozconfig_dir': 'ux',
-        'enable_nightly': True,
-        'create_snippet': True,
-        'create_partial': True,
-        'enable_talos': False,
-        'lock_platforms': True,
-        'platforms': {
-            'macosx64': {
-                'nightly_signing_servers': 'nightly-signing',
-            },
-            'linux': {
-                'nightly_signing_servers': 'nightly-signing',
-            },
-            'linux64': {
-                'nightly_signing_servers': 'nightly-signing',
-            },
-            'win32': {
-                'nightly_signing_servers': 'nightly-signing',
-            },
-            'win64': {
-                'nightly_signing_servers': 'nightly-signing',
-            },
-        },
-    },
-    'alder': {
-        # Per bug 1083853, this disable mozharness mach and other
-        # mozilla-central oriented features
-        'gecko_version': 33,
-        # Make every checkin trigger builds, remove after 33.1 (or sooner)
-        'enable_perproduct_builds': False,
-        'enable_nightly': True,
-        'create_snippet': True,
-        'create_partial': True,
-        'nightly_signing_servers': 'nightly-signing',
-        'l10n_repo_path': 'releases/l10n/mozilla-release',
-        'pgo_strategy': 'per-checkin',
-        'enable_mac_a11y': True,
-        'enable_l10n': True,
-        'enable_l10n_onchange': True,
-        'enUS_binaryURL': '/nightly/latest-alder',
-        'l10nNightlyUpdate': True,
-        'l10nDatedDirs': True,
-        'l10n_tree': 'fxrel',
-        'l10n_platforms': ['linux', 'linux64', 'win32', 'macosx64'],
-        # explicitly set the server to avoid using variables
-        'localesURL': 'http://hg.mozilla.org/build/buildbot-configs/raw-file/production/mozilla/l10n/all-locales.alder',
-        'enable_multi_locale': True,
-        'upload_mobile_symbols': True,
-        'enable_valgrind': False,
-        'enabled_products': ['firefox'],
-        'lock_platforms': True,
-        'platforms': {
-            'macosx64': {
-                'test_pretty_names': True,
-            },
-            'linux': {
-                'test_pretty_names': True,
-            },
-            'linux64': {
-                'test_pretty_names': True,
-            },
-            'win32': {
-                'test_pretty_names': True,
-            },
-            'win64': {},
-            'linux-debug': {},
-            'linux64-br-haz': {},
-            'linux64-debug': {},
-            'linux64-asan': {},
-            'linux64-asan-debug': {},
-            'linux64-st-an-debug': {},
-            'linux64-cc': {},
-            'macosx64-debug': {},
-            'win32-debug': {},
-            'win64-debug': {},
-        },
-    },
+    # no desktop builds for bug 1100150
+    # 'alder': {},
     'ash': {
         'enable_perproduct_builds': False,
+        'desktop_mozharness_builds_enabled': True,
         'desktop_mozharness_repacks_enabled': True,
         'enable_nightly': True,
-        'mozharness_repo_path': 'build/ash-mozharness',
-        'mozharness_repo': 'https://hg.mozilla.org/build/ash-mozharness',
-        'mozharness_tag': 'default',
+        'create_snippet': True,
+        'create_partial': True,
         'use_mozharness_repo_cache': False,
         'lock_platforms': True,
         'talos_suites': {
             'xperf': 1,
-        },
-        'platforms': {
-            'linux': {},
-            'linux64': {},
-            'win32': {},
-            'macosx64': {},
-            'linux-debug': {},
-            'linux64-debug': {},
-            'linux64-br-haz': {},
-            'linux64-sh-haz': {},
-            'macosx64-debug': {},
-            'win32-debug': {},
-            'win64': {},
-            'win64-debug': {},
-        },
-        'mobile_platforms': {
-            'android': {
-                'slave_platforms': ['panda_android', 'ubuntu64_vm_large'],
-            },
-            'android-x86': {
-                'enable_opt_unittests': True,
-            },
         },
     },
     #'birch': {},  # Bug 1010674
@@ -192,23 +89,37 @@ PROJECT_BRANCHES = {
     },
     'cypress': {
         'enable_perproduct_builds': False,
-        'mozharness_tag': 'default',
         'enable_talos': True,
     },
     'date': {
+        'gecko_version': 38,
+        'mozharness_repo_path': 'users/nthomas_mozilla.com/mozharness-build-promotion',
+        'mozharness_repo': 'https://hg.mozilla.org/users/nthomas_mozilla.com/mozharness-build-promotion',
+        'mozharness_tag': 'default',
+        'desktop_mozharness_builds_enabled': True,
+        'use_mozharness_repo_cache': False,
+        'branch_projects': [],
+        'enable_talos': True,
         'lock_platforms': True,
         'platforms': {
-            'win32': {
-                'enable_opt_unittests': True,
-            },
-            'win64': {
-                'enable_opt_unittests': True,
-            },
-            'win64-debug': {
-                'enable_debug_unittests': True,
-            },
+            'linux': {},
+            'linux64': {},
+            'win32': {},
+            'macosx64': {},
+            'linux-debug': {},
+            'linux64-debug': {},
+            'linux64-asan': {},
+            'linux64-asan-debug': {},
+            'macosx64-debug': {},
+            'win32-debug': {},
+            'win64': {},
+            'win64-debug': {},
         },
-        'enable_merging': False,
+        'enable_valgrind': False,
+        'pgo_strategy': 'per-checkin',
+        'enable_release_promotion': True,
+        'partners_repo_path': 'build/partner-repacks',
+        'partner_repack_platforms': ('linux', 'linux64', 'win32', 'macosx64'),
     },
     'elm': {
         'branch_projects': [],
@@ -224,28 +135,33 @@ PROJECT_BRANCHES = {
     },
     'fig': {},
     'gum': {
-        'gecko_version': 35,
-        'enable_perproduct_builds': False,
         'enable_nightly': True,
-        'create_snippet': True,
-        'create_partial': True,
-        'nightly_signing_servers': 'nightly-signing',
-        'l10n_repo_path': 'releases/l10n/mozilla-aurora',
         'pgo_strategy': 'per-checkin',
-        'enable_mac_a11y': True,
-        'enable_l10n': True,
-        'enable_l10n_onchange': False,
-        'enUS_binaryURL': '/nightly/latest-gum',
-        'l10nNightlyUpdate': True,
-        'l10nDatedDirs': True,
-        'l10n_tree': 'fxrel',
-        'l10n_platforms': ['linux', 'linux64', 'win32', 'macosx64'],
-        # explicitly set the server to avoid using variables
-        'localesURL': 'http://hg.mozilla.org/build/buildbot-configs/raw-file/production/mozilla/l10n/all-locales.mozilla-aurora',
-        'enable_multi_locale': True,
-        'upload_mobile_symbols': True,
-        'enable_valgrind': False,
-        'enabled_products': ['firefox'],
+        'branch_projects': [],
+        'lock_platforms': True,
+        'platforms': {
+            'linux': {
+                'nightly_signing_servers': 'nightly-signing',
+            },
+            'linux64': {
+                'nightly_signing_servers': 'nightly-signing',
+            },
+            'win32': {
+                'nightly_signing_servers': 'nightly-signing',
+            },
+            'macosx64': {
+                'nightly_signing_servers': 'nightly-signing',
+            },
+            'win64': {
+                'nightly_signing_servers': 'nightly-signing',
+            },
+            'linux-debug': {},
+            'linux64-asan': {},
+            'linux64-debug': {},
+            'macosx64-debug': {},
+            'win32-debug': {},
+            'win64-debug': {},
+        },
     },
     'holly': {
         'branch_projects': [],
@@ -271,27 +187,18 @@ PROJECT_BRANCHES = {
     'larch': {
         'lock_platforms': True,
         'platforms': {
-            # uncomment api-9/10 and delete 'android' / 'android-debug' once bug
-            # 1073772 hits trunk
-            # 'android-api-9': {},
-            # 'android-api-10': {},
-            # 'android-debug-api-9': {},
-            # 'android-debug-api-10': {},
-            'android': {},
-            'android-x86': {},
-            'android-debug': {},
         },
     },
     'maple': {
         'enable_nightly': True,
-        'create_snippet': True,
+        'updates_enabled': True,
         'create_partial': True,
         'nightly_signing_servers': 'nightly-signing',
     },
     # customizations for integration work for bugs 481815 and 307181
     'oak': {
         'enable_nightly': True,
-        'create_snippet': True,
+        'updates_enabled': True,
         'create_partial': True,
         'enable_talos': False,
         'platforms': {
