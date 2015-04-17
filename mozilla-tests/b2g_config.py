@@ -28,8 +28,10 @@ BRANCHES = {
     # Not needed right now, see bug 977420
     # 'birch': {},
     'cedar': {},
-    'cypress': {},
-    'jamun': {},
+    # Disabled for bug 1151699
+    # 'cypress': {},
+    # Disabled for Bug 1150320
+    # 'jamun': {},
     'maple': {},
     'pine': {},
     'fx-team': {},
@@ -780,15 +782,6 @@ MARIONETTE = [
      ),
 ]
 
-MARIONETTE_UNIT = [
-    ('marionette', {'suite': 'marionette',
-                     'use_mozharness': True,
-                     'script_path': 'scripts/marionette.py',
-                     'blob_upload': True,
-                     },
-    ),
-]
-
 XPCSHELL = [
     ('xpcshell', {'suite': 'xpcshell',
                   'use_mozharness': True,
@@ -920,7 +913,7 @@ CPPUNIT = [(
     },
 )]
 
-ALL_UNITTESTS = MOCHITEST + REFTEST + CRASHTEST + MARIONETTE + MARIONETTE_UNIT + XPCSHELL
+ALL_UNITTESTS = MOCHITEST + REFTEST + CRASHTEST + MARIONETTE + XPCSHELL
 
 # Default set of unit tests
 UNITTEST_SUITES = {
@@ -1351,7 +1344,7 @@ PLATFORM_UNITTEST_VARS = {
         'enable_opt_unittests': True,
         'enable_debug_unittests': True,
         'ubuntu64_vm-b2g-emulator': {
-            'opt_unittest_suites': MOCHITEST + CRASHTEST + XPCSHELL + MARIONETTE + MARIONETTE_UNIT + CPPUNIT + REFTEST_20,
+            'opt_unittest_suites': MOCHITEST + CRASHTEST + XPCSHELL + MARIONETTE + CPPUNIT + REFTEST_20,
             'debug_unittest_suites': MOCHITEST_EMULATOR_DEBUG + XPCSHELL_CHUNKED + CPPUNIT,
             'suite_config': {
                 'marionette': {
@@ -2498,15 +2491,15 @@ BRANCHES['cedar']['branch_name'] = "Cedar"
 BRANCHES['cedar']['repo_path'] = "projects/cedar"
 BRANCHES['cedar']['mozharness_tag'] = "default"
 BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unittest_suites'] = \
-    MOCHITEST + REFTEST_20 + CRASHTEST + XPCSHELL + MARIONETTE + MARIONETTE_UNIT + JSREFTEST + CPPUNIT
+    MOCHITEST + REFTEST_20 + CRASHTEST + XPCSHELL + MARIONETTE + JSREFTEST + CPPUNIT
 BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['debug_unittest_suites'] = \
-    MOCHITEST_EMULATOR_DEBUG[:] + REFTEST + CRASHTEST + MARIONETTE + MARIONETTE_UNIT + XPCSHELL_CHUNKED + CPPUNIT
+    MOCHITEST_EMULATOR_DEBUG[:] + REFTEST + CRASHTEST + MARIONETTE + XPCSHELL_CHUNKED + CPPUNIT
 BRANCHES['cedar']['platforms']['emulator']['ubuntu64_vm-b2g-lg-emulator']['opt_unittest_suites'] = MOCHITEST_MEDIA
 BRANCHES['cedar']['platforms']['emulator-jb']['ubuntu64_vm-b2g-emulator-jb']['opt_unittest_suites'] = MOCHITEST_EMULATOR_JB[:]
 BRANCHES['cedar']['platforms']['emulator-kk']['ubuntu64_vm-b2g-emulator-kk']['opt_unittest_suites'] = \
-    MOCHITEST + REFTEST_20 + CRASHTEST + XPCSHELL + MARIONETTE + MARIONETTE_UNIT + JSREFTEST + CPPUNIT + MOCHITEST_CHROME
+    MOCHITEST + REFTEST_20 + CRASHTEST + XPCSHELL + MARIONETTE + JSREFTEST + CPPUNIT + MOCHITEST_CHROME
 BRANCHES['cedar']['platforms']['emulator-kk']['ubuntu64_vm-b2g-emulator-kk']['debug_unittest_suites'] = \
-    MOCHITEST_EMULATOR_DEBUG[:] + REFTEST + CRASHTEST + MARIONETTE + MARIONETTE_UNIT + XPCSHELL_CHUNKED + CPPUNIT
+    MOCHITEST_EMULATOR_DEBUG[:] + REFTEST + CRASHTEST + MARIONETTE + XPCSHELL_CHUNKED + CPPUNIT
 BRANCHES['cedar']['platforms']['linux64_gecko']['ubuntu64_vm-b2gdt']['opt_unittest_suites'] += \
   REFTEST_DESKTOP + GAIA_UI_OOP + GAIA_UNITTESTS_OOP
 BRANCHES['cedar']['platforms']['linux64_gecko']['ubuntu64_vm-b2gdt']['debug_unittest_suites'] += GAIA_JS_INTEGRATION[:]
@@ -2519,9 +2512,8 @@ BRANCHES['pine']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['opt_unitt
     MOCHITEST + CRASHTEST + XPCSHELL + MARIONETTE + JSREFTEST + REFTEST_20
 BRANCHES['pine']['platforms']['emulator']['ubuntu64_vm-b2g-emulator']['debug_unittest_suites'] = \
     MOCHITEST_EMULATOR_DEBUG[:] + REFTEST + CRASHTEST + MARIONETTE + XPCSHELL_CHUNKED
-BRANCHES['cypress']['branch_name'] = "Cypress"
-BRANCHES['cypress']['repo_path'] = "projects/cypress"
-BRANCHES['jamun']['repo_path'] = "projects/jamun"
+# disabled for Bug 1150320
+# BRANCHES['jamun']['repo_path'] = "projects/jamun"
 BRANCHES['fx-team']['repo_path'] = "integration/fx-team"
 BRANCHES['mozilla-b2g30_v1_4']['repo_path'] = "releases/mozilla-b2g30_v1_4"
 BRANCHES['mozilla-b2g32_v2_0']['repo_path'] = "releases/mozilla-b2g32_v2_0"
